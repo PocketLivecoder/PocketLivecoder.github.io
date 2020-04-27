@@ -6,6 +6,7 @@
   <title>Blockly</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel='stylesheet' type='text/css' media='screen' href='blockly.css'>
+  <link rel='stylesheet' type='text/css' media='screen' href='lib/nunpad/numpad.css'>
 
 
 
@@ -32,11 +33,13 @@
       <block type="cone"></block>
       <block type="circle"></block>
       <block type="ball"></block>
+      <!-- <block type="line"></block> -->
     </category>
 
     </category>
     <category name="Logic" colour="50">
       <block type="rotate"></block>
+      <block type="randomRotate"></block>
       <!-- <block type="pohyb"></block> -->
       <block type="move"></block>
       <block type="randomMove"></block>
@@ -61,6 +64,7 @@
   </xml>
 
 
+  <script src="lib/nunpad/numpad.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.js"></script>
   <script src="lib/blockly_compressed.js"></script>

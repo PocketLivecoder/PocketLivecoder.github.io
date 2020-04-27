@@ -92,6 +92,7 @@ function rotate(object,n) {
     }
     object.rotation.x += 0.02;
     object.rotation.y += 0.02;
+    console.log(time);
     // console.log(n + Math.cos(time + Math.PI) * radius)
     // object.rotation.set(
     //     Math.cos(time * Math.PI) * Math.PI/(2*((n+1)/10)),
@@ -214,7 +215,8 @@ function render() {
         // }
     }
 
-    // findPeaks();
+
+    // console.log(new THREE.Clock().getElapsedTime());
 
     controls.update();
 
@@ -357,7 +359,7 @@ function runCode(event) {
             var code = Blockly.JavaScript.workspaceToCode(workspace);
             Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
             try {
-                console.log("code: " + code)
+                // console.log("code: " + code)
                 eval(code);
                 movecode = '';
             } catch (e) {

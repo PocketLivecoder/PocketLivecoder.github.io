@@ -5,7 +5,7 @@ Blockly.Blocks['jump'] = {
             .appendField("Jump");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setColour(0);
+        this.setColour(130);
         this.setTooltip("");
         this.setHelpUrl("");
     }
@@ -18,7 +18,7 @@ Blockly.Blocks['80svibe'] = {
             .appendField("80svibe");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setColour(0);
+        this.setColour(130);
         this.setTooltip("");
         this.setHelpUrl("");
     }
@@ -31,7 +31,7 @@ Blockly.Blocks['collision'] = {
             .appendField("collision");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setColour(0);
+        this.setColour(130);
         this.setTooltip("");
         this.setHelpUrl("");
     }
@@ -44,7 +44,7 @@ Blockly.Blocks['test'] = {
             .appendField("test");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setColour(0);
+        this.setColour(130);
         this.setTooltip("");
         this.setHelpUrl("");
     }
@@ -171,7 +171,7 @@ Blockly.Blocks['volume'] = {
             .appendField(new Blockly.FieldNumber(1, 0, 1, 0.1), "volume");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setColour(0);
+        this.setColour(130);
         this.setTooltip("");
         this.setHelpUrl("");
     }
@@ -184,7 +184,7 @@ Blockly.Blocks['rate'] = {
             .appendField(new Blockly.FieldNumber(0.5, 0, 4, 0.1), "rate");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setColour(0);
+        this.setColour(130);
         this.setTooltip("");
         this.setHelpUrl("");
     }
@@ -197,7 +197,7 @@ Blockly.Blocks['delay'] = {
             .appendField(new Blockly.FieldNumber(1, 0, 10, 0.1), "delay");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setColour(0);
+        this.setColour(130);
         this.setTooltip("");
         this.setHelpUrl("");
     }
