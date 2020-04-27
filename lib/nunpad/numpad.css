@@ -83,15 +83,19 @@
 }
 .numpad-btn.ng {
   background: #333;
+  color: orangered;
 }
 .numpad-btn.cx {
   background: #B23025;
   border: 1px solid #C73D32;
 }
 .numpad-btn.ok {
-  background: #1FA83A;
-  border: 1px solid #1FC72D;
+  background: orangered;
+  /* border: 1px solid orangered; */
 }
 .numpad-btn:hover {
   cursor: pointer;
+}
+.numpad-btn.org{
+  width: 50%;
 }
