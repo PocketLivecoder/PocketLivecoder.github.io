@@ -84,21 +84,30 @@ var clock = new THREE.Clock();
 var time = 0;
 var radius = 1.5;
 
-function rotate(object,n) {
+function rotate(object,n, vector) {
     time = clock.getElapsedTime();
+
+    // console.log(vector);
+
+    if (!vector) {
+        vector = new THREE.Vector3(0, 0, 0);
+    }
 
     if(!n){
         n = 0;
     }
-    object.rotation.x += 0.02;
-    object.rotation.y += 0.02;
-    console.log(time);
+
+
+    // if(object){
+    // object.rotation.x += 0.02;
+    // object.rotation.y += 0.02;
+    // }
     // console.log(n + Math.cos(time + Math.PI) * radius)
-    // object.rotation.set(
-    //     Math.cos(time * Math.PI) * Math.PI/(2*((n+1)/10)),
-    //     Math.cos(time * Math.PI) * Math.PI/(2*((n+1)/10)),
-    //     Math.cos(time * Math.PI) * Math.PI/(2*((n+1)/10))
-    // )
+    object.rotation.set(
+        vector.x + Math.cos(time * Math.PI*0.5),
+        vector.y + Math.cos(time * Math.PI*0.5),
+        vector.z + Math.cos(time * Math.PI*0.5)
+    )
 }
 
 function move(object, n, radiusNumber, vector) {
@@ -156,14 +165,26 @@ function render() {
     }
 
     if (arrRotate.length > 0) {
-        for (i = 0; i < arrRotate.length; i++) {
+        // for (i = 0; i < arrRotate.length; i++) {
+        //     objektyNaScene.forEach((x) => {
+        //         if (arrRotate[i] == x.name.slice(0, 20)) {
+        //             rotate(scene.getObjectByName(x.name), x.name[20])
+        //         }
+        //     })
+        //     // rotate(scene.getObjectByName(arrRotate[i]));
+        // }
+
+
+        // console.log(arrRotate);
+
+        arrRotate.forEach(m => {
+            // console.log(m);
             objektyNaScene.forEach((x) => {
-                if (arrRotate[i] == x.name.slice(0, 20)) {
-                    rotate(scene.getObjectByName(x.name), x.name[20])
-                }
+                //         if (arrMove[i][0] == x.name.slice(0, 20)) {
+                // console.log(m[2]);
+                rotate(scene.getObjectByName(m[0]), m[0].slice(20), m[1]);
             })
-            // rotate(scene.getObjectByName(arrRotate[i]));
-        }
+        })
     }
 
     if (arrMove.length > 0) {
@@ -256,6 +277,8 @@ function runCode(event) {
 
     objektyNaScene = scene.children;
 
+    console.log(blokyNaScene);
+
     //pre kazdy objekt pozriet ci existuje block ak nie prec
     //vsetky objekty
     //vsetky bloky
@@ -268,7 +291,11 @@ function runCode(event) {
     //     }
     // })
 
+
     for (i = 0; i < objektyNaScene.length; i++) {
+    // console.log("runcode")
+    // console.log(objektyNaScene.length)
+
         if (!blokyNaScene.includes(objektyNaScene[i].name) && objektyNaScene[i].name.length == 20) {
             console.log(objektyNaScene[i].name);
             scene.remove(scene.getObjectByName(objektyNaScene[i].name));
@@ -290,7 +317,7 @@ function runCode(event) {
             arr = [];
             arr = event.ids;
 
-            console.log(event.ids);
+            // console.log(event.ids);
 
             //chybna funkcia
             for (var i = scene.children.length - 1; i >= 0; i--) {
@@ -316,7 +343,13 @@ function runCode(event) {
                 }
             })
 
+            // console.log(arr);
+            for(i=0;i<arr.length;i++){
+                // console.log(arr[i]);
+                scene.remove(scene.getObjectByName(arr[i]));
+            }
             // arr.every(x => {
+            //     console.log(x);
             //     scene.remove(scene.getObjectByName(x))
             //     console.log("arr remove")
             // })
@@ -353,6 +386,7 @@ function runCode(event) {
             for (i = 0; i < scene.children.length; i++) {
                 var obj = scene.getObjectByName(scene.children[i].name);
                 obj.position.set(0, 0, 0);
+                obj.rotation.set(0,0,0);
                 obj.scale.set(1, 1, 1);
             }
 
