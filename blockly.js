@@ -26,6 +26,7 @@ var arrRotate = [];
 var arrMove = [];
 var arrScale = [];
 var controls;
+var light;
 
 var requestId;
 
@@ -52,12 +53,17 @@ function init() {
     camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 1, 10000);
     controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+    light = new THREE.DirectionalLight(0xffffff, 5);
+
     // controls = new THREE.OrbitControls( camera, render.domElement );
 
 
     camera.position.z = 5;
     //looks in the center of the scene since that where we always sstart when creating a scene
     camera.lookAt(scene.position);
+
+    light.position = camera.position;
+    scene.add(light);
 
     controls.update();
 
@@ -84,7 +90,7 @@ var clock = new THREE.Clock();
 var time = 0;
 var radius = 1.5;
 
-function rotate(object,n, vector) {
+function rotate(object, n, vector) {
     time = clock.getElapsedTime();
 
     // console.log(vector);
@@ -93,7 +99,7 @@ function rotate(object,n, vector) {
         vector = new THREE.Vector3(0, 0, 0);
     }
 
-    if(!n){
+    if (!n) {
         n = 0;
     }
 
@@ -104,9 +110,9 @@ function rotate(object,n, vector) {
     // }
     // console.log(n + Math.cos(time + Math.PI) * radius)
     object.rotation.set(
-        vector.x + Math.cos(time * Math.PI*0.5),
-        vector.y + Math.cos(time * Math.PI*0.5),
-        vector.z + Math.cos(time * Math.PI*0.5)
+        vector.x + Math.cos(time * Math.PI * 0.5),
+        vector.y + Math.cos(time * Math.PI * 0.5),
+        vector.z + Math.cos(time * Math.PI * 0.5)
     )
 }
 
@@ -132,18 +138,18 @@ function move(object, n, radiusNumber, vector) {
     }
 }
 
-function scale(object,x) {
+function scale(object, vector) {
     time = clock.getElapsedTime() * 0.5 * Math.PI;
 
-    if(!x){
-        x = 1;
+    if (!vector) {
+        vector = new THREE.Vector3(1, 1, 1);
     }
 
     if (object) {
         object.scale.set(
-            x + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
-            x + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
-            x + Math.abs(Math.sin(time + Math.PI * 0.5) * radius)
+            vector.x + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
+            vector.y + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
+            vector.z + Math.abs(Math.sin(time + Math.PI * 0.5) * radius)
         )
     }
 }
@@ -151,6 +157,8 @@ function scale(object,x) {
 var i;
 
 function render() {
+
+    light.position.copy(camera.position);
 
     var paintOver = true;
 
@@ -222,7 +230,7 @@ function render() {
                 //         if (arrMove[i][0] == x.name.slice(0, 20)) {
                 // console.log(m[2]);
                 // move(scene.getObjectByName(m[0]), m[0].slice(20), m[1], m[2]);
-                scale(scene.getObjectByName(m[0]),m[2])
+                scale(scene.getObjectByName(m[0]), m[2])
             })
         })
 
@@ -277,7 +285,8 @@ function runCode(event) {
 
     objektyNaScene = scene.children;
 
-    console.log(blokyNaScene);
+
+    // console.log(blokyNaScene);
 
     //pre kazdy objekt pozriet ci existuje block ak nie prec
     //vsetky objekty
@@ -293,14 +302,16 @@ function runCode(event) {
 
 
     for (i = 0; i < objektyNaScene.length; i++) {
-    // console.log("runcode")
-    // console.log(objektyNaScene.length)
+        // console.log("runcode")
+        // console.log(objektyNaScene.length)
 
         if (!blokyNaScene.includes(objektyNaScene[i].name) && objektyNaScene[i].name.length == 20) {
-            console.log(objektyNaScene[i].name);
+            // console.log(objektyNaScene[i].name);
             scene.remove(scene.getObjectByName(objektyNaScene[i].name));
         }
     }
+
+    console.log()
 
     if (workspace.getAllBlocks().length == 0) {
         blokyNaScene = []
@@ -328,10 +339,12 @@ function runCode(event) {
                 //     }
                 // }
 
-                if (!blokyNaScene.includes(scene.children[i].name)) {
-                    scene.remove(scene.getObjectByName(scene.children[i].name));
-                    console.log("delete")
-                }
+                scene.remove(scene.getObjectByName(scene.children[i].name));
+
+                // if (!blokyNaScene.includes(scene.children[i].name)) {
+                //     scene.remove(scene.getObjectByName(scene.children[i].name));
+                //     console.log("delete")
+                // }
             }
 
             arr.every(e => {
@@ -344,7 +357,7 @@ function runCode(event) {
             })
 
             // console.log(arr);
-            for(i=0;i<arr.length;i++){
+            for (i = 0; i < arr.length; i++) {
                 // console.log(arr[i]);
                 scene.remove(scene.getObjectByName(arr[i]));
             }
@@ -386,7 +399,7 @@ function runCode(event) {
             for (i = 0; i < scene.children.length; i++) {
                 var obj = scene.getObjectByName(scene.children[i].name);
                 obj.position.set(0, 0, 0);
-                obj.rotation.set(0,0,0);
+                obj.rotation.set(0, 0, 0);
                 obj.scale.set(1, 1, 1);
             }
 
