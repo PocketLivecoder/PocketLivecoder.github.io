@@ -109,7 +109,7 @@ function rotate(object, n, vector) {
     } else {
 
         x = vector[0];
-        x.replace("time", time);
+        x = x.replace("time", time);
         x = x.replace("frame", frames);
         x = x.replace("sin", "Math.sin");
         x = x.replace("cos", "Math.cos");
@@ -126,6 +126,13 @@ function rotate(object, n, vector) {
         z = z.replace("sin", "Math.sin");
         z = z.replace("cos", "Math.cos");
         z = z.replace("tan", "Math.tan");
+
+        x = x.replace("t^[^i]*$",time);
+        x = x.replace("f^[^r]*$",frames);
+        y = y.replace("t^[^i]*$",time);
+        y = y.replace("f^[^r]*$",frames);
+        z = z.replace("t^[^i]*$",time);
+        z = z.replace("f^[^r]*$",frames);
 
         try {
             x = eval(x);
@@ -191,7 +198,12 @@ function move(object, n, radiusNumber, vector) {
         z = z.replace("cos", "Math.cos");
         z = z.replace("tan", "Math.tan");
 
-        console.log(x);
+        x = x.replace("t^[^i]*$",time);
+        x = x.replace("f^[^r]*$",frames);
+        y = y.replace("t^[^i]*$",time);
+        y = y.replace("f^[^r]*$",frames);
+        z = z.replace("t^[^i]*$",time);
+        z = z.replace("f^[^r]*$",frames);
 
         try {
             x = eval(x);
@@ -295,7 +307,13 @@ function render() {
         z = z.replace("cos", "Math.cos");
         z = z.replace("tan", "Math.tan");
 
-        console.log(x);
+        x = x.replace("t^[^i]*$",time);
+        x = x.replace("f^[^r]*$",frames);
+        y = y.replace("t^[^i]*$",time);
+        y = y.replace("f^[^r]*$",frames);
+        z = z.replace("t^[^i]*$",time);
+        z = z.replace("f^[^r]*$",frames);
+
 
         try {
             scene.getObjectByName(k[0]).position.set(eval(x), eval(y), eval(z));
@@ -335,6 +353,13 @@ function render() {
         z = z.replace("sin", "Math.sin");
         z = z.replace("cos", "Math.cos");
         z = z.replace("tan", "Math.tan");
+
+        x = x.replace("t^[^i]*$",time);
+        x = x.replace("f^[^r]*$",frames);
+        y = y.replace("t^[^i]*$",time);
+        y = y.replace("f^[^r]*$",frames);
+        z = z.replace("t^[^i]*$",time);
+        z = z.replace("f^[^r]*$",frames);
 
 
         try {
