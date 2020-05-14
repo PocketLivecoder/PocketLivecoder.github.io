@@ -22,12 +22,12 @@ Blockly.Blocks['box'] = {
             .setCheck()
             .appendField("Box")
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
-            // this.appendDummyInput("Box")
-            // .appendField("Box")
-            // .appendField(new Blockly.FieldNumber(1, 0.01, 1, 0.01), "X")
-            // .appendField(new Blockly.FieldNumber(1, 0.01, 1, 0.01), "Y")
-            // .appendField(new Blockly.FieldNumber(1, 0.01, 1, 0.01), "Z")
-            this.setInputsInline(true);
+        // this.appendDummyInput("Box")
+        // .appendField("Box")
+        // .appendField(new Blockly.FieldNumber(1, 0.01, 1, 0.01), "X")
+        // .appendField(new Blockly.FieldNumber(1, 0.01, 1, 0.01), "Y")
+        // .appendField(new Blockly.FieldNumber(1, 0.01, 1, 0.01), "Z")
+        this.setInputsInline(true);
         this.setPreviousStatement(true, "Box");
         this.setNextStatement(true, "Box");
         this.setColour(230);
@@ -117,9 +117,12 @@ Blockly.Blocks['rotate'] = {
         this.appendDummyInput()
             .appendField("Rotate")
             // .appendField(new Blockly.FieldTextInput('0'),'FIELDNAME')
-            .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "X")
-            .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "Y")
-            .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "Z");
+            // .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "X")
+            // .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "Y")
+            // .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "Z");
+            .appendField(new Blockly.FieldTextInput("0"), "X")
+            .appendField(new Blockly.FieldTextInput("0"), "Y")
+            .appendField(new Blockly.FieldTextInput("0"), "Z");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour(30);
@@ -132,9 +135,12 @@ Blockly.Blocks['move'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("Move")
-            .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "X")
-            .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "Y")
-            .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "Z");
+            // .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "X")
+            // .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "Y")
+            // .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0.1), "Z");
+            .appendField(new Blockly.FieldTextInput("0"), "X")
+            .appendField(new Blockly.FieldTextInput("0"), "Y")
+            .appendField(new Blockly.FieldTextInput("0"), "Z");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour(30);
@@ -334,15 +340,15 @@ Blockly.JavaScript['box'] = function (block) {
     //     + "scene.add(cube);"
     //     + "cube.rotation.set(0.5,1,0);}";
 
-        scene.children.forEach(x => {
-                if(x.name.includes(name)){
-                    if(colour_name == '#ffffff'){
-                        scene.getObjectByName(x.name).material = new THREE.MeshNormalMaterial();
-                    }else{
-                        scene.getObjectByName(x.name).material = new THREE.MeshStandardMaterial( { color: colour_name } );
-                    }
-                }
-            })
+    scene.children.forEach(x => {
+        if (x.name.includes(name)) {
+            if (colour_name == '#ffffff') {
+                scene.getObjectByName(x.name).material = new THREE.MeshNormalMaterial();
+            } else {
+                scene.getObjectByName(x.name).material = new THREE.MeshStandardMaterial({ color: colour_name });
+            }
+        }
+    })
 
     return movecode;
 };
@@ -528,11 +534,11 @@ Blockly.JavaScript['ball'] = function (block) {
     //     + "cube.rotation.set(0.5,1,0);}";
 
     scene.children.forEach(x => {
-        if(x.name.includes(name)){
-            if(colour_name == '#ffffff'){
+        if (x.name.includes(name)) {
+            if (colour_name == '#ffffff') {
                 scene.getObjectByName(x.name).material = new THREE.MeshNormalMaterial();
-            }else{
-                scene.getObjectByName(x.name).material = new THREE.MeshStandardMaterial( { color: colour_name } );
+            } else {
+                scene.getObjectByName(x.name).material = new THREE.MeshStandardMaterial({ color: colour_name });
             }
         }
     })
@@ -582,11 +588,11 @@ Blockly.JavaScript['randomRotate'] = function (block) {
         // movecode += "if(!arrRotate.includes('"+this.getSurroundParent().id+"')){arrRotate.push(['"+this.getSurroundParent().id+"',"+number+"]);}"
 
         if (!arrRotate.includes(this.getSurroundParent().id))
-            arrRotate.push([this.getSurroundParent().id,number]);
+            arrRotate.push([this.getSurroundParent().id, number]);
     }
     if (this.getChildren()[0]) {
 
-        movecode += "recursion('"+this.id+"',null,null,null,"+number+",'randomRotate');";
+        movecode += "recursion('" + this.id + "',null,null,null," + number + ",'randomRotate');";
         // recursion(this.id, null, null, null, number, "randomRotate");
     }
 
@@ -679,11 +685,11 @@ Blockly.JavaScript['cone'] = function (block) {
     }
 
     scene.children.forEach(x => {
-        if(x.name.includes(name)){
-            if(colour_name == '#ffffff'){
+        if (x.name.includes(name)) {
+            if (colour_name == '#ffffff') {
                 scene.getObjectByName(x.name).material = new THREE.MeshNormalMaterial();
-            }else{
-                scene.getObjectByName(x.name).material = new THREE.MeshStandardMaterial( { color: colour_name } );
+            } else {
+                scene.getObjectByName(x.name).material = new THREE.MeshStandardMaterial({ color: colour_name });
             }
         }
     })
@@ -777,11 +783,11 @@ Blockly.JavaScript['circle'] = function (block) {
     }
 
     scene.children.forEach(x => {
-        if(x.name.includes(name)){
-            if(colour_name == '#ffffff'){
+        if (x.name.includes(name)) {
+            if (colour_name == '#ffffff') {
                 scene.getObjectByName(x.name).material = new THREE.MeshNormalMaterial();
-            }else{
-                scene.getObjectByName(x.name).material = new THREE.MeshStandardMaterial( { color: colour_name } );
+            } else {
+                scene.getObjectByName(x.name).material = new THREE.MeshStandardMaterial({ color: colour_name });
             }
         }
     })
@@ -856,12 +862,12 @@ Blockly.JavaScript['move'] = function (block) {
     if (this.getSurroundParent() != null && this.getSurroundParent().type != "repeat") {
 
         // movecode += "scene.children.forEach((x) => {if(x.name.includes('" + this.getSurroundParent().id + "')){movecode +=scene.getObjectByName(x.name).position.set(" + number_x + "," + number_y + "," + number_z + ") }});"
-        movecode += "recursiveMove('" + this.getSurroundParent().id + "'," + number_x + "," + number_y + "," + number_z + ");";
+        movecode += "recursiveMove('" + this.getSurroundParent().id + "','" + number_x + "','" + number_y + "','" + number_z + "');";
 
     }
     if (this.getChildren()[0]) {
 
-        movecode += "recursion('" + this.id + "'," + number_x + "," + number_y + "," + number_z + "," + number + ",'move');";
+        movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'move');";
 
     }
 
@@ -873,6 +879,10 @@ Blockly.JavaScript['rotate'] = function (block) {
     var number_x = block.getFieldValue('X');
     var number_y = block.getFieldValue('Y');
     var number_z = block.getFieldValue('Z');
+
+    // console.log(number_x);
+
+
     var xx = number_x;
     var yy = number_y;
     var zz = number_z;
@@ -908,12 +918,14 @@ Blockly.JavaScript['rotate'] = function (block) {
     if (this.getSurroundParent() != null && this.getSurroundParent().type != "repeat") {
 
         // movecode += "scene.children.forEach((x) => {if(x.name.includes('" + this.getSurroundParent().id + "')){movecode +=scene.getObjectByName(x.name).rotation.set(" + number_x + "," + number_y + "," + number_z + ") }});"
-        movecode += "recursiveRotate('" + this.getSurroundParent().id + "'," + number_x + "," + number_y + "," + number_z + ");";
+        // xx.toString.replace("time",)
+        movecode += "recursiveRotate('" + this.getSurroundParent().id + "','" + number_x + "','" + number_y + "','" + number_z + "');";
 
     }
     if (this.getChildren()[0]) {
 
-        movecode += "recursion('" + this.id + "'," + number_x + "," + number_y + "," + number_z + "," + number + ",'rotate');";
+        //prepisat to na stringy
+        movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'rotate');";
 
     }
 
@@ -961,11 +973,10 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                     // console.log(x.name + ", "+nx);
                     arrMove.forEach(k => {
                         if (k[0] == x.name) {
-                            console.log(x_num, y_num, z_num);
-                            k[2] = new THREE.Vector3(x_num, y_num, z_num);
+                            k[2] = [x_num,y_num,z_num];
                         }
                     })
-                    scene.getObjectByName(x.name).position.set(x_num, y_num, z_num);
+                    moveInDirection.push([block.id, [x_num, y_num, z_num]]);
                 }
                 if (type == "randomMove") {
                     arrMove.push([x.name, number]);
@@ -976,7 +987,7 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                         if (k[0] == x.name) {
                             console.log(x_num, y_num, z_num);
                             // k[2] = number_x;
-                            k[2] = new THREE.Vector3(x_num,y_num,z_num);
+                            k[2] = new THREE.Vector3(x_num, y_num, z_num);
                         }
                     })
 
@@ -988,7 +999,7 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                 if (type == "randomRotate") {
                     arrRotate.push([x.name, number]);
                 }
-                if (type == "rotate"){
+                if (type == "rotate") {
                     console.log(arrRotate);
                     console.log(x.name);
                     if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
@@ -1000,11 +1011,11 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                         console.log(f);
                         if (f[0] == x.name) {
                             // console.log(x_num, y_num, z_num);
-                            f[1] = new THREE.Vector3(x_num, y_num, z_num);
+                            f[1] = [x_num,y_num,z_num]
                             // console.log(f[1])
                         }
                     })
-                    scene.getObjectByName(x.name).rotation.set(x_num, y_num, z_num);
+                    rotateInDirection.push([block.id, [x_num, y_num, z_num]]);
                 }
             }
         })
@@ -1115,7 +1126,7 @@ function recursiveScale(ID, num_x, num_y, num_z) {
 
             arrScale.forEach(k => {
                 if (k[0] == x.name) {
-                    k[2] = new THREE.Vector3(num_x,num_y,num_z);
+                    k[2] = new THREE.Vector3(num_x, num_y, num_z);
                 }
             })
 
@@ -1124,34 +1135,37 @@ function recursiveScale(ID, num_x, num_y, num_z) {
     })
 }
 
-function recursiveMove(ID, num_x, num_y, num_z){
+function recursiveMove(ID, num_x, num_y, num_z) {
     scene.children.forEach((x) => {
         if (x.name.includes(ID)) {
 
             arrMove.forEach(k => {
                 if (k[0] == x.name) {
-                    k[2] = new THREE.Vector3(num_x,num_y,num_z);
+                    k[2] = [num_x, num_y, num_z];
                 }
             })
 
-            scene.getObjectByName(x.name).position.set(num_x, num_y, num_z);
+            moveInDirection.push([ID, [num_x, num_y, num_z]]);
         }
     })
 }
 
-function recursiveRotate(ID, num_x, num_y, num_z){
+function recursiveRotate(ID, num_x, num_y, num_z) {
+    // console.log("rec")
     scene.children.forEach((x) => {
         if (x.name.includes(ID)) {
 
             arrRotate.forEach(f => {
-                console.log(f);
                 if (f[0] == x.name) {
                     // console.log(x_num, y_num, z_num);
-                    f[1] = new THREE.Vector3(num_x, num_y, num_z);
+                    // f[1] = new THREE.Vector3(num_x, num_y, num_z);
+                    f[1] = [num_x, num_y, num_z];
                     // console.log(f[1])
                 }
             })
-            scene.getObjectByName(x.name).rotation.set(num_x, num_y, num_z);
+
+            rotateInDirection.push([ID, [num_x, num_y, num_z]]);
+            // scene.getObjectByName(x.name).rotation.set(num_x, num_y, num_z);
         }
     })
 }

@@ -34,6 +34,12 @@ var volume;
 var jumpObject = new Object;
 var blokyNaScene = [];
 
+var moveInDirection = [];
+var rotateInDirection = [];
+
+var clock = new THREE.Clock();
+
+
 
 var element = document.getElementById("scene");
 
@@ -86,7 +92,7 @@ init();
 
 
 // var t = 0;
-var clock = new THREE.Clock();
+var frames = 0;
 var time = 0;
 var radius = 1.5;
 
@@ -96,31 +102,136 @@ function rotate(object, n, vector) {
     // console.log(vector);
 
     if (!vector) {
-        vector = new THREE.Vector3(0, 0, 0);
+        vector = [0,0,0];
+        x=0;
+        y=0;
+        z=0;
+    } else {
+
+        x = vector[0];
+        x.replace("time", time);
+        x = x.replace("frame", frames);
+        x = x.replace("sin", "Math.sin");
+        x = x.replace("cos", "Math.cos");
+        x = x.replace("tan", "Math.tan");
+        y = vector[1];
+        y = y.replace("frame", frames);
+        y.replace("time", time);
+        y = y.replace("sin", "Math.sin");
+        y = y.replace("cos", "Math.cos");
+        y = y.replace("tan", "Math.tan");
+        z = vector[2];
+        z = z.replace("frame", frames);
+        z.replace("time", time);
+        z = z.replace("sin", "Math.sin");
+        z = z.replace("cos", "Math.cos");
+        z = z.replace("tan", "Math.tan");
+
+        try {
+            x = eval(x);
+            y = eval(y);
+            z = eval(z);
+
+            if (eval(x) == undefined || isNaN(eval(x))) {
+                x = 0;
+            }
+            if (eval(y) == undefined || isNaN(eval(y))) {
+                y = 0;
+            }
+            if (eval(z) == undefined || isNaN(eval(z))) {
+                z = 0;
+            }
+
+        } catch (e) {
+            x = 0;
+            y = 0;
+            z = 0;
+        }
+
     }
 
     if (!n) {
         n = 0;
     }
 
-
-    // if(object){
-    // object.rotation.x += 0.02;
-    // object.rotation.y += 0.02;
-    // }
-    // console.log(n + Math.cos(time + Math.PI) * radius)
     object.rotation.set(
-        vector.x + Math.cos(time * Math.PI * 0.5),
-        vector.y + Math.cos(time * Math.PI * 0.5),
-        vector.z + Math.cos(time * Math.PI * 0.5)
+        x + Math.cos(time * Math.PI * 0.5),
+        y + Math.cos(time * Math.PI * 0.5),
+        z + Math.cos(time * Math.PI * 0.5)
     )
 }
 
 function move(object, n, radiusNumber, vector) {
 
+
+    time = clock.getElapsedTime();
+
     if (!vector) {
-        vector = new THREE.Vector3(0, 0, 0);
+        vector = [0,0,0];
+        x=0;
+        y=0;
+        z=0;
+    } else {
+        x = vector[0];
+        x = x.replace("frame", frames);
+        x.replace("time", time);
+        x = x.replace("sin", "Math.sin");
+        x = x.replace("cos", "Math.cos");
+        x = x.replace("tan", "Math.tan");
+        y = vector[1];
+        y = y.replace("frame", frames);
+        y.replace("time", time);
+        y = y.replace("sin", "Math.sin");
+        y = y.replace("cos", "Math.cos");
+        y = y.replace("tan", "Math.tan");
+        z = vector[2];
+        z = z.replace("frame", frames);
+        z.replace("time", time);
+        z = z.replace("sin", "Math.sin");
+        z = z.replace("cos", "Math.cos");
+        z = z.replace("tan", "Math.tan");
+
+        console.log(x);
+
+        try {
+            x = eval(x);
+
+            if (eval(x) == undefined || isNaN(eval(x))) {
+                x = 0;
+            }
+
+        } catch (e) {
+            console.log("XXX")
+            x = 0;
+        }
+
+        try {
+            y = eval(y);
+
+            if (eval(y) == undefined || isNaN(eval(y))) {
+                y = 0;
+            }
+
+        } catch (e) {
+            console.log("YYY")
+            y = 0;
+        }
+
     }
+
+    try {
+        z = eval(z);
+
+        if (eval(z) == undefined || isNaN(eval(z))) {
+            z = 0;
+        }
+
+    } catch (e) {
+        console.log("ZZZ")
+        z = 0;
+    }
+
+
     radius = radiusNumber;
     var number = 0
     if (n) {
@@ -131,9 +242,9 @@ function move(object, n, radiusNumber, vector) {
     // console.log(object);
     if (object) {
         object.position.set(
-            vector.x + Math.cos(number * 0.8 + time + Math.PI * 0.5) * radius,
-            vector.y + Math.sin(number * 0.8 + time + Math.PI * 0.5) * radius,
-            vector.z + Math.cos(number * 0.8 + time + Math.PI * 0.5) * radius
+            x + Math.cos(number * 0.8 + time + Math.PI * 0.5) * radius,
+            y + Math.sin(number * 0.8 + time + Math.PI * 0.5) * radius,
+            z + Math.cos(number * 0.8 + time + Math.PI * 0.5) * radius
         )
     }
 }
@@ -155,8 +266,97 @@ function scale(object, vector) {
 }
 
 var i;
+var x, y, z;
 
 function render() {
+
+    frames++;
+    time = clock.getElapsedTime();
+
+    //move in dir
+    moveInDirection.forEach(k => {
+
+        x = k[1][0];
+        x = x.replace("frame", frames);
+        x.replace("time", time);
+        x = x.replace("sin", "Math.sin");
+        x = x.replace("cos", "Math.cos");
+        x = x.replace("tan", "Math.tan");
+        y = k[1][1];
+        y = y.replace("frame", frames);
+        y.replace("time", time);
+        y = y.replace("sin", "Math.sin");
+        y = y.replace("cos", "Math.cos");
+        y = y.replace("tan", "Math.tan");
+        z = k[1][2];
+        z = z.replace("frame", frames);
+        z.replace("time", time);
+        z = z.replace("sin", "Math.sin");
+        z = z.replace("cos", "Math.cos");
+        z = z.replace("tan", "Math.tan");
+
+        console.log(x);
+
+        try {
+            scene.getObjectByName(k[0]).position.set(eval(x), eval(y), eval(z));
+            if (eval(x) == undefined || isNaN(eval(x))) {
+                scene.getObjectByName(k[0]).position.set(0, 0, 0);
+            }
+            if (eval(y) == undefined || isNaN(eval(y))) {
+                scene.getObjectByName(k[0]).position.set(0, 0, 0);
+            }
+            if (eval(z) == undefined || isNaN(eval(z))) {
+                scene.getObjectByName(k[0]).position.set(0, 0, 0);
+            }
+        } catch (e) {
+            scene.getObjectByName(k[0]).position.set(0, 0, 0);
+        }
+    })
+
+    //rotate in dir
+    rotateInDirection.forEach(k => {
+
+
+        x = k[1][0];
+        x.replace("time", time);
+        x = x.replace("frame", frames);
+        x = x.replace("sin", "Math.sin");
+        x = x.replace("cos", "Math.cos");
+        x = x.replace("tan", "Math.tan");
+        y = k[1][1];
+        y = y.replace("frame", frames);
+        y.replace("time", time);
+        y = y.replace("sin", "Math.sin");
+        y = y.replace("cos", "Math.cos");
+        y = y.replace("tan", "Math.tan");
+        z = k[1][2];
+        z = z.replace("frame", frames);
+        z.replace("time", time);
+        z = z.replace("sin", "Math.sin");
+        z = z.replace("cos", "Math.cos");
+        z = z.replace("tan", "Math.tan");
+
+
+        try {
+            console.log(eval(x));
+            scene.getObjectByName(k[0]).rotation.set(eval(x), eval(y), eval(z));
+            if (eval(x) == undefined || isNaN(eval(x))) {
+                scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
+            }
+            if (eval(y) == undefined || isNaN(eval(y))) {
+                scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
+            }
+            if (eval(z) == undefined || isNaN(eval(z))) {
+                scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
+            }
+        } catch (e) {
+            console.log(x);
+            scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
+        }
+
+    })
+
+    // console.log(moveInDirection);
 
     light.position.copy(camera.position);
 
@@ -311,8 +511,6 @@ function runCode(event) {
         }
     }
 
-    console.log()
-
     if (workspace.getAllBlocks().length == 0) {
         blokyNaScene = []
     } else {
@@ -395,6 +593,8 @@ function runCode(event) {
             arrRotate = [];
             arrMove = [];
             arrScale = [];
+            moveInDirection = [];
+            rotateInDirection = [];
 
             for (i = 0; i < scene.children.length; i++) {
                 var obj = scene.getObjectByName(scene.children[i].name);
