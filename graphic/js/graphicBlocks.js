@@ -862,7 +862,7 @@ function recursiveRotate(ID, num_x, num_y, num_z) {
                 }
             })
 
-            rotateInDirection.push([x.name [num_x, num_y, num_z]]);
+            rotateInDirection.push([x.name, [num_x, num_y, num_z]]);
         }
     })
 }

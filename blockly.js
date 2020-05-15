@@ -219,6 +219,8 @@ function render() {
         }
     })
 
+    console.log(rotateInDirection);
+
     //rotate in dir
     rotateInDirection.forEach(k => {
 
