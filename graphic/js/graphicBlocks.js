@@ -135,9 +135,9 @@ Blockly.Blocks['scale'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("Scale")
-            .appendField(new Blockly.FieldNumber(1, 0.1, 2, 0.1), "X")
-            .appendField(new Blockly.FieldNumber(1, 0.1, 2, 0.1), "Y")
-            .appendField(new Blockly.FieldNumber(1, 0.1, 2, 0.1), "Z");
+            .appendField(new Blockly.FieldNumber(1, 0.1, 5, 0.1), "X")
+            .appendField(new Blockly.FieldNumber(1, 0.1, 5, 0.1), "Y")
+            .appendField(new Blockly.FieldNumber(1, 0.1, 5, 0.1), "Z");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour(30);
