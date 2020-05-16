@@ -237,7 +237,7 @@ Blockly.JavaScript['box'] = function (block) {
         cube.rotation.set(0, 0, 0);
     }
 
-    for (i = 2; i < repeat_number+1; i++) {
+    for (i = 1; i < repeat_number; i++) {
         if (scene.getObjectByName(name + i)) {
         }
         else {
@@ -322,7 +322,7 @@ Blockly.JavaScript['ball'] = function (block) {
         ball.rotation.set(0, 0, 0);
     }
 
-    for (i = 2; i < repeat_number+1; i++) {
+    for (i = 1; i < repeat_number; i++) {
         if (scene.getObjectByName(name + i)) { }
         else {
             var geometry = new THREE.DodecahedronBufferGeometry(1, 2);
@@ -447,7 +447,7 @@ Blockly.JavaScript['cone'] = function (block) {
         cone.rotation.set(0, 0, 0);
     }
 
-    for (i = 2; i < repeat_number+1; i++) {
+    for (i = 1; i < repeat_number; i++) {
         if (scene.getObjectByName(name + i)) { }
         else {
             var geometry = new THREE.ConeGeometry(1, 2);
@@ -533,7 +533,7 @@ Blockly.JavaScript['circle'] = function (block) {
         circle.rotation.set(0, 0, 0);
     }
 
-    for (i = 2; i < repeat_number+1; i++) {
+    for (i = 1; i < repeat_number; i++) {
         if (scene.getObjectByName(name + i)) { }
         else {
             var geometry = new THREE.CircleGeometry(1, 30);
@@ -683,9 +683,9 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
             if (x.name.includes(block.id)) {
                 if (type == "move") {
                     if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
-                        x_num = x.name.slice(20) + "*" + number_x;
-                        z_num = x.name.slice(20) + "*" + number_z;
-                        y_num = x.name.slice(20) + "*" + number_y;
+                        x_num = x_num + "+" + number_x;
+                        z_num = z_num + "+" + number_z;
+                        y_num = y_num + "+" + number_y;
                         console.log(x_num);
                     }
                     arrMove.forEach(k => {
@@ -716,9 +716,9 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                 }
                 if (type == "rotate") {
                     if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
-                        x_num = x.name.slice(20) + "*" + number_x;
-                        z_num = x.name.slice(20) + "*" + number_z;
-                        y_num = x.name.slice(20) + "*" + number_y;
+                        x_num = x_num + "+" + number_x;
+                        z_num = z_num + "+" + number_z;
+                        y_num = y_num + "+" + number_y;
                     }
                     arrRotate.forEach(f => {
                         if (f[0] == x.name) {
