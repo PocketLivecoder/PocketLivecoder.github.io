@@ -94,7 +94,7 @@ function modifyStringToValidForm(str) {
     str.forEach(x => {
 
         x = x.split("time").join(time);
-        x = x.split("frame").join(frames);
+        x = x.split("frames").join(frames);
         // x = x.split("sin").join("Math.sin");
         // x = x.split("cos").join("Math.cos");
         // x = x.split("tan").join("Math.tan");
@@ -207,19 +207,19 @@ function render() {
 
         x = k[1][0];
         x = x.split("time").join(time);
-        x = x.split("frame").join(frames);
+        x = x.split("frames").join(frames);
         // x = x.split("sin").join("Math.sin");
         // x = x.split("cos").join("Math.cos");
         // x = x.split("tan").join("Math.tan");
         y = k[1][1];
         y = y.split("time").join(time);
-        y = y.split("frame").join(frames);
+        y = y.split("frames").join(frames);
         // y = y.split("sin").join("Math.sin");
         // y = y.split("cos").join("Math.cos");
         // y = y.split("tan").join("Math.tan");
         z = k[1][2];
         z = z.split("time").join(time);
-        z = z.split("frame").join(frames);
+        z = z.split("frames").join(frames);
         // z = z.split("sin").join("Math.sin");
         // z = z.split("cos").join("Math.cos");
         // z = z.split("tan").join("Math.tan");
@@ -252,22 +252,22 @@ function render() {
 
         x = k[1][0];
         x = x.split("time").join(time);
-        x = x.split("frame").join(frames);
-        x = x.split("sin").join("Math.sin");
-        x = x.split("cos").join("Math.cos");
-        x = x.split("tan").join("Math.tan");
+        x = x.split("frames").join(frames);
+        // x = x.split("sin").join("Math.sin");
+        // x = x.split("cos").join("Math.cos");
+        // x = x.split("tan").join("Math.tan");
         y = k[1][1];
         y = y.split("time").join(time);
-        y = y.split("frame").join(frames);
-        y = y.split("sin").join("Math.sin");
-        y = y.split("cos").join("Math.cos");
-        y = y.split("tan").join("Math.tan");
+        y = y.split("frames").join(frames);
+        // y = y.split("sin").join("Math.sin");
+        // y = y.split("cos").join("Math.cos");
+        // y = y.split("tan").join("Math.tan");
         z = k[1][2];
         z = z.split("time").join(time);
-        z = z.split("frame").join(frames);
-        z = z.split("sin").join("Math.sin");
-        z = z.split("cos").join("Math.cos");
-        z = z.split("tan").join("Math.tan");
+        z = z.split("frames").join(frames);
+        // z = z.split("sin").join("Math.sin");
+        // z = z.split("cos").join("Math.cos");
+        // z = z.split("tan").join("Math.tan");
 
         try {
             scene.getObjectByName(k[0]).rotation.set(eval(x), eval(y), eval(z));
