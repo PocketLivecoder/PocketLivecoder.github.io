@@ -101,7 +101,7 @@ function modifyStringToValidForm(str) {
 
         try {
             x = eval(x);
-            if (eval(x) == undefined || isNaN(eval(x))) {
+            if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
                 x = 0;
             }
             vector.push(x);
@@ -229,13 +229,13 @@ function render() {
         try {
             console.log(eval(x));
             scene.getObjectByName(k[0]).position.set(eval(x), eval(y), eval(z));
-            if (eval(x) == undefined || isNaN(eval(x))) {
+            if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
                 scene.getObjectByName(k[0]).position.set(0, 0, 0);
             }
-            if (eval(y) == undefined || isNaN(eval(y))) {
+            if (eval(y) == undefined || isNaN(eval(y)) || eval(y) == Infinity) {
                 scene.getObjectByName(k[0]).position.set(0, 0, 0);
             }
-            if (eval(z) == undefined || isNaN(eval(z))) {
+            if (eval(z) == undefined || isNaN(eval(z)) || eval(z) == Infinity) {
                 scene.getObjectByName(k[0]).position.set(0, 0, 0);
             }
         } catch (e) {
@@ -271,13 +271,13 @@ function render() {
 
         try {
             scene.getObjectByName(k[0]).rotation.set(eval(x), eval(y), eval(z));
-            if (eval(x) == undefined || isNaN(eval(x))) {
+            if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
                 scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
             }
-            if (eval(y) == undefined || isNaN(eval(y))) {
+            if (eval(y) == undefined || isNaN(eval(y)) || eval(y) == Infinity) {
                 scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
             }
-            if (eval(z) == undefined || isNaN(eval(z))) {
+            if (eval(z) == undefined || isNaN(eval(z)) || eval(z) == Infinity) {
                 scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
             }
         } catch (e) {
