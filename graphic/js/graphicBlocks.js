@@ -933,7 +933,26 @@ Blockly.Blocks['MoveValueInput'] = {
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(30);
+   this.setTooltip("");
+   this.setHelpUrl("");
+    }
+  };
+
+  Blockly.Blocks['RotateValueInput'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Rotate");
+      this.appendValueInput("x")
+          .setCheck(null);
+      this.appendValueInput("y")
+          .setCheck(null);
+      this.appendValueInput("z")
+          .setCheck(null);
+      this.setInputsInline(true);
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(40);
    this.setTooltip("");
    this.setHelpUrl("");
     }
@@ -985,6 +1004,58 @@ Blockly.JavaScript['MoveValueInput'] = function(block) {
     if (this.getChildren()[0]) {
 
         movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'move');";
+
+    }
+
+    return code;
+
+  };
+
+
+  Blockly.JavaScript['RotateValueInput'] = function(block) {
+    var number_x = Blockly.JavaScript.valueToCode(block, 'x', Blockly.JavaScript.ORDER_NONE);
+    var number_y = Blockly.JavaScript.valueToCode(block, 'y', Blockly.JavaScript.ORDER_NONE);
+    var number_z = Blockly.JavaScript.valueToCode(block, 'z', Blockly.JavaScript.ORDER_NONE);
+
+    if(!number_x) number_x = 0;
+    if(!number_y) number_y = 0;
+    if(!number_z) number_z = 0;
+
+    var nx = 0;
+
+    var number = 1;
+    var code = '';
+
+    if (this.getSurroundParent()) {
+        var parent = this.getSurroundParent();
+        while (parent.type == "repeat") {
+            number *= parent.inputList[0].fieldRow[1].value_;
+
+            if (parent.getSurroundParent()) {
+                parent = parent.getSurroundParent();
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    var blok;
+
+    scene.children.forEach(y => {
+        if (y.name.includes(block.id)) {
+            nx += 1;
+        }
+    });
+
+    if (this.getSurroundParent() != null && this.getSurroundParent().type != "repeat") {
+
+        movecode += "recursiveRotate('" + this.getSurroundParent().id + "','" + number_x + "','" + number_y + "','" + number_z + "');";
+
+    }
+    if (this.getChildren()[0]) {
+
+        movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'rotate');";
 
     }
 
