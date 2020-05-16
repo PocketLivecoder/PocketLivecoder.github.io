@@ -1,9 +1,21 @@
 Blockly.Blocks['SinCos'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField(new Blockly.FieldDropdown([["sin", "Math.sin"], ["cos", "Math.cos"], ["tan", "Math.tan"]]), "Opt");
+            .appendField(new Blockly.FieldDropdown([["sin", "Math.sin"], ["cos", "Math.cos"], ["tan", "Math.tan"], ["sqrt", "Math.sqrt"]]), "Opt");
         this.appendValueInput("value")
             .setCheck(null)
+        this.setInputsInline(true);
+        this.setOutput(true, null);
+        this.setColour(230);
+        this.setTooltip("");
+        this.setHelpUrl("");
+    }
+};
+
+Blockly.Blocks['Random'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown([["rand", "Math.random()"], ["PI", "Math.PI"] ]), "Opt");
         this.setInputsInline(true);
         this.setOutput(true, null);
         this.setColour(230);
@@ -61,7 +73,7 @@ Blockly.JavaScript['Operation'] = function (block) {
     // console.log(operation);
     var operation = '';
     if(value_left && value_right){
-        operation = value_left + dropdown_opt + value_right + ";";
+        operation = value_left + dropdown_opt + value_right;
     }
     // console.log(operation);
     // TODO: Change ORDER_NONE to the correct strength.
@@ -85,6 +97,14 @@ Blockly.JavaScript['SinCos'] = function (block) {
     var code = '';
     // TODO: Change ORDER_NONE to the correct strength.
     return [dropdown_opt + "(" + value_name + ")", Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['Random'] = function (block) {
+    var dropdown_opt = block.getFieldValue('Opt');
+    // TODO: Assemble JavaScript into code variable.
+    var code = '';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [dropdown_opt , Blockly.JavaScript.ORDER_NONE];
 };
 
 Blockly.JavaScript['TimeOrFrame'] = function (block) {

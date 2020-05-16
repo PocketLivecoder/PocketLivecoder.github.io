@@ -1,3 +1,37 @@
+
+// TODO:
+// - Logic by som premenoval napr. na Movement. //DONE
+
+
+// - Rotate/Move/Scale bez parametrov by som možno odstránil, pričom toto
+// náhodné správanie by nadobudli bloky, ktoré majú všetky sloty prázdne.
+// (Snáď nebudú tie pohyby príliš rušivé ako predvolené.) //DONE
+
+
+// - K sin, cos, tan by som pridal možno nejaké ďalšie funkcie podľa potreby. //DONE
+
+
+// - Loops by som premenoval na Logic. //DONE
+
+
+// - Graphic by som premenoval a Shapes a dat tam rôzne ďalšie útvary.
+// Napr. Circle je tam momentálne jediný 2D útvar. //DONE
+
+
+// - Do Logic by som pridal aspoň nejaký "For" cyklus, ktorý by automaticky
+// vytvoril nejakú premennú (napr. i, j, k, ...), ktorú by bolo možné
+// využiť vnútri cyklu - bol by to blok v sekcii Math, kde by sa z
+// drop-downu vybrala daná premenná.
+
+
+// - Popremýšľal by som nad nejakou formou podmienky "If", momentálne mi
+// ale nenapadajú detaily.
+
+
+// - Pri zvukoch by sa mala dať vytvoriť nejaká melódia, teda klasicky z
+// tónov nástrojov (klavír a pod.).
+
+
 localStorage.clear();
 
 var blocklyArea = document.getElementById('blocklyArea');
@@ -91,6 +125,8 @@ function modifyStringToValidForm(str) {
 
     var vector = [];
 
+    console.log(str);
+
     str.forEach(x => {
 
         x = x.split("time").join(time);
@@ -100,7 +136,7 @@ function modifyStringToValidForm(str) {
         // x = x.split("tan").join("Math.tan");
 
         try {
-            x = eval(x);
+            console.log(x = eval(x));
             if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
                 x = 0;
             }
@@ -116,6 +152,8 @@ function modifyStringToValidForm(str) {
 
 
 function rotate(object, n, vector) {
+
+    console.log(vector);
 
     if (!vector) {
         vector = [0, 0, 0];
@@ -227,7 +265,7 @@ function render() {
 
 
         try {
-            console.log(eval(x));
+            // console.log(eval(x));
             scene.getObjectByName(k[0]).position.set(eval(x), eval(y), eval(z));
             if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
                 scene.getObjectByName(k[0]).position.set(0, 0, 0);
@@ -248,6 +286,8 @@ function render() {
 
     //rotate in dir
     rotateInDirection.forEach(k => {
+
+        console.log(rotateInDirection);
 
 
         x = k[1][0];
@@ -303,7 +343,7 @@ function render() {
     if (arrRotate.length > 0) {
         arrRotate.forEach(m => {
             objektyNaScene.forEach((x) => {
-                rotate(scene.getObjectByName(m[0]), m[0].slice(20), m[1]);
+                rotate(scene.getObjectByName(m[0]), m[0].slice(20), m[2]);
             })
         })
     }
