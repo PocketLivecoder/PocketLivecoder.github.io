@@ -93,11 +93,11 @@ function modifyStringToValidForm(str) {
 
     str.forEach(x => {
 
-        x = x.replace("time", time);
-        x = x.replace("frame", frames);
-        x = x.replace("sin", "Math.sin");
-        x = x.replace("cos", "Math.cos");
-        x = x.replace("tan", "Math.tan");
+        x = x.split("time").join(time);
+        x = x.split("frame").join(frames);
+        x = x.split("sin").join("Math.sin");
+        x = x.split("cos").join("Math.cos");
+        x = x.split("tan").join("Math.tan");
 
         try {
             x = eval(x);
@@ -183,27 +183,51 @@ function render() {
     //move in dir
     moveInDirection.forEach(k => {
 
+        // x = k[1][0];
+        // x = x.replace("frame", frames);
+        // x.replace("time", time);
+        // // str.split(search).join(replacement)
+        // x = x.split("sin").join("Math.sin"); // --------------->>>>> for EACH!
+        // console.log(x);
+        // // x = x.replace("sin", "Math.sin");
+        // x = x.replace("cos", "Math.cos");
+        // x = x.replace("tan", "Math.tan");
+        // y = k[1][1];
+        // y = y.replace("frame", frames);
+        // y.replace("time", time);
+        // y = y.replace("sin", "Math.sin");
+        // y = y.replace("cos", "Math.cos");
+        // y = y.replace("tan", "Math.tan");
+        // z = k[1][2];
+        // z = z.replace("frame", frames);
+        // z.replace("time", time);
+        // z = z.replace("sin", "Math.sin");
+        // z = z.replace("cos", "Math.cos");
+        // z = z.replace("tan", "Math.tan");
+
         x = k[1][0];
-        x = x.replace("frame", frames);
-        x.replace("time", time);
-        x = x.replace("sin", "Math.sin");
-        x = x.replace("cos", "Math.cos");
-        x = x.replace("tan", "Math.tan");
+        x = x.split("time").join(time);
+        x = x.split("frame").join(frames);
+        x = x.split("sin").join("Math.sin");
+        x = x.split("cos").join("Math.cos");
+        x = x.split("tan").join("Math.tan");
         y = k[1][1];
-        y = y.replace("frame", frames);
-        y.replace("time", time);
-        y = y.replace("sin", "Math.sin");
-        y = y.replace("cos", "Math.cos");
-        y = y.replace("tan", "Math.tan");
+        y = y.split("time").join(time);
+        y = y.split("frame").join(frames);
+        y = y.split("sin").join("Math.sin");
+        y = y.split("cos").join("Math.cos");
+        y = y.split("tan").join("Math.tan");
         z = k[1][2];
-        z = z.replace("frame", frames);
-        z.replace("time", time);
-        z = z.replace("sin", "Math.sin");
-        z = z.replace("cos", "Math.cos");
-        z = z.replace("tan", "Math.tan");
+        z = z.split("time").join(time);
+        z = z.split("frame").join(frames);
+        z = z.split("sin").join("Math.sin");
+        z = z.split("cos").join("Math.cos");
+        z = z.split("tan").join("Math.tan");
+
 
 
         try {
+            console.log(eval(x));
             scene.getObjectByName(k[0]).position.set(eval(x), eval(y), eval(z));
             if (eval(x) == undefined || isNaN(eval(x))) {
                 scene.getObjectByName(k[0]).position.set(0, 0, 0);
@@ -215,6 +239,7 @@ function render() {
                 scene.getObjectByName(k[0]).position.set(0, 0, 0);
             }
         } catch (e) {
+            console.log(e);
             scene.getObjectByName(k[0]).position.set(0, 0, 0);
         }
     })
@@ -226,23 +251,23 @@ function render() {
 
 
         x = k[1][0];
-        x.replace("time", time);
-        x = x.replace("frame", frames);
-        x = x.replace("sin", "Math.sin");
-        x = x.replace("cos", "Math.cos");
-        x = x.replace("tan", "Math.tan");
+        x = x.split("time").join(time);
+        x = x.split("frame").join(frames);
+        x = x.split("sin").join("Math.sin");
+        x = x.split("cos").join("Math.cos");
+        x = x.split("tan").join("Math.tan");
         y = k[1][1];
-        y = y.replace("frame", frames);
-        y.replace("time", time);
-        y = y.replace("sin", "Math.sin");
-        y = y.replace("cos", "Math.cos");
-        y = y.replace("tan", "Math.tan");
+        y = y.split("time").join(time);
+        y = y.split("frame").join(frames);
+        y = y.split("sin").join("Math.sin");
+        y = y.split("cos").join("Math.cos");
+        y = y.split("tan").join("Math.tan");
         z = k[1][2];
-        z = z.replace("frame", frames);
-        z.replace("time", time);
-        z = z.replace("sin", "Math.sin");
-        z = z.replace("cos", "Math.cos");
-        z = z.replace("tan", "Math.tan");
+        z = z.split("time").join(time);
+        z = z.split("frame").join(frames);
+        z = z.split("sin").join("Math.sin");
+        z = z.split("cos").join("Math.cos");
+        z = z.split("tan").join("Math.tan");
 
         try {
             scene.getObjectByName(k[0]).rotation.set(eval(x), eval(y), eval(z));
