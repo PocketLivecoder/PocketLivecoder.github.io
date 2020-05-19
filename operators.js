@@ -96,6 +96,7 @@ Blockly.JavaScript['SinCos'] = function (block) {
     // TODO: Assemble JavaScript into code variable.
     var code = '';
     // TODO: Change ORDER_NONE to the correct strength.
+    // console.log(value_name);
     return [dropdown_opt + "(" + value_name + ")", Blockly.JavaScript.ORDER_NONE];
 };
 

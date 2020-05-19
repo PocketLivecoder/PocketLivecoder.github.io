@@ -71,6 +71,11 @@ var blokyNaScene = [];
 var moveInDirection = [];
 var rotateInDirection = [];
 
+var forArr = [];
+var noteArr = [];
+playBlocksCount = 0;
+
+
 var clock = new THREE.Clock();
 
 
@@ -125,7 +130,7 @@ function modifyStringToValidForm(str) {
 
     var vector = [];
 
-    console.log(str);
+    // console.log(str);
 
     str.forEach(x => {
 
@@ -136,11 +141,11 @@ function modifyStringToValidForm(str) {
         // x = x.split("tan").join("Math.tan");
 
         try {
-            console.log(x = eval(x));
+            // console.log(x = eval(x));
             if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
                 x = 0;
             }
-            vector.push(x);
+            vector.push(eval(x));
         } catch (e) {
             vector.push(0);
         }
@@ -153,7 +158,6 @@ function modifyStringToValidForm(str) {
 
 function rotate(object, n, vector) {
 
-    console.log(vector);
 
     if (!vector) {
         vector = [0, 0, 0];
@@ -177,6 +181,8 @@ function move(object, n, radiusNumber, vector) {
     } else {
         vector = modifyStringToValidForm(vector);
     }
+
+    // console.log(vector);
 
     radius = radiusNumber;
     var number = 0
@@ -212,6 +218,13 @@ var i;
 var x, y, z;
 
 function render() {
+
+    // playMusic()
+
+    // var playBlocksID = workspace.getBlocksByType('play-block',true);
+
+    // console.log(noteArr);
+    // console.log(noteArr.length);
 
     frames++;
     time = clock.getElapsedTime();
@@ -266,6 +279,8 @@ function render() {
 
         try {
             // console.log(eval(x));
+            // console.log(eval(y));
+            // console.log(eval(z));
             scene.getObjectByName(k[0]).position.set(eval(x), eval(y), eval(z));
             if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
                 scene.getObjectByName(k[0]).position.set(0, 0, 0);
@@ -277,7 +292,7 @@ function render() {
                 scene.getObjectByName(k[0]).position.set(0, 0, 0);
             }
         } catch (e) {
-            console.log(e);
+            // console.log(e);
             scene.getObjectByName(k[0]).position.set(0, 0, 0);
         }
     })
@@ -287,7 +302,6 @@ function render() {
     //rotate in dir
     rotateInDirection.forEach(k => {
 
-        console.log(rotateInDirection);
 
 
         x = k[1][0];
@@ -368,6 +382,27 @@ function render() {
 
     }
 
+    // if (noteArr) {
+    //     maxDuration = 1;
+    //     max = 1;
+    //     // console.log(noteArr);
+    //     noteArr.forEach(x => {
+    //         // console.log(x);
+    //         x.forEach(y => {
+    //             // console.log(y[1]);
+    //             if (eval(y[1]) == 1) maxDuration += 1;
+    //             if (eval(y[1]) == 2) maxDuration += 0.5;
+    //             if (eval(y[1]) == 4) maxDuration += 0.25;
+    //             if (eval(y[1]) == 8) maxDuration += 0.125;
+    //             if (eval(y[1]) == 16) maxDuration += 0.0625;
+
+
+    //             // maxDuration += +eval(y[1]);
+    //         })
+    //         if (maxDuration > max) max = maxDuration;
+    //         maxDuration = 0.2;
+    //     })
+    // }
 
 
     controls.update();
@@ -403,8 +438,59 @@ onresize();
 Blockly.svgResize(workspace);
 
 var objektyNaScene;
+// var call = false;
+var id_var;
+var timeout_id; // var array = ["A","B"];
+var maxDuration = 0.2;
+duration = 0;
+var max = 1;
+var sound;
+var timeoutArr = [];
+
+
+function playMusic() {
+    noteArr.forEach(x => {
+        duration = 0;
+
+        x.forEach(note => {
+            if (eval(note[1]) == 1) duration += 1;
+            if (eval(note[1]) == 2) duration += 0.5;
+            if (eval(note[1]) == 4) duration += 0.25;
+            if (eval(note[1]) == 8) duration += 0.125;
+            if (eval(note[1]) == 16) duration += 0.0625;
+            timeout_id = setTimeout(function () {
+                var source = "sounds/piano/" + note[0].slice(1, note[0].length - 1) + ".mp3";
+                if (note[0] != "'rest'") {
+                    sound = new Howl({
+                        src: source,
+                        html5: true,
+                        rate: eval(note[1]),
+                        volume: 1,
+                    })
+
+                    sound.play();
+                }
+
+            }, eval(duration * 1000));
+            timeoutArr.push(timeout_id);
+        })
+
+    })
+}
 
 function runCode(event) {
+
+    if (timeoutArr) {
+        timeoutArr.forEach(x => {
+            clearTimeout(x);
+        })
+    }
+
+    var timeout_id = setTimeout(playMusic, 1);
+    timeoutArr.push(timeout_id);
+
+    clearInterval(id_var);
+    id_var = setInterval(playMusic, max * 1000);
 
     objektyNaScene = scene.children;
 
@@ -427,6 +513,9 @@ function runCode(event) {
 
     if (event) {
         if (event.type == Blockly.Events.BLOCK_DELETE) {
+
+            clearInterval(id_var);
+            clearTimeout(timeout_id);
 
             arr = [];
             arr = event.ids;
@@ -454,14 +543,14 @@ function runCode(event) {
     }
 
     //zastav 2x pustene zvuky
-    Object.keys(jumpObject).forEach(key => {
-        jumpObject[key].volume(0.5);
-        jumpObject[key].rate(1);
-        localStorage = 1;
-        if (!blokyNaScene.includes(key)) {
-            jumpObject[key].pause();
-        }
-    });
+    // Object.keys(jumpObject).forEach(key => {
+    //     jumpObject[key].volume(0.5);
+    //     jumpObject[key].rate(1);
+    //     localStorage = 1;
+    //     if (!blokyNaScene.includes(key)) {
+    //         jumpObject[key].pause();
+    //     }
+    // });
 
     if (event) {
 
@@ -475,6 +564,11 @@ function runCode(event) {
             arrScale = [];
             moveInDirection = [];
             rotateInDirection = [];
+            noteArr = [];
+            playBlocksCount = 0;
+            max = 1;
+            duration = 0;
+
 
             for (i = 0; i < scene.children.length; i++) {
                 var obj = scene.getObjectByName(scene.children[i].name);
@@ -497,6 +591,13 @@ function runCode(event) {
 
 }
 workspace.addChangeListener(runCode);
+
+
+
+
+
+
+
 
 
 
