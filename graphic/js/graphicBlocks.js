@@ -938,13 +938,17 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                 }
                 if (type == "scale") {
 
+                    if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
+                        x_num = x_num + "+" + number_x;
+                        z_num = z_num + "+" + number_z;
+                        y_num = y_num + "+" + number_y;
+                    }
                     arrScale.forEach(k => {
                         if (k[0] == x.name) {
-                            k[2] = new THREE.Vector3(x_num, y_num, z_num);
+                            k[2] = [x_num, y_num, z_num];
                         }
                     })
-
-                    scene.getObjectByName(x.name).scale.set(number_x, number_y, number_z);
+                    scaleInDirection.push([x.name, [x_num, y_num, z_num]]);
                 }
                 if (type == "randomScale") {
                     arrScale.push([x.name, number]);
@@ -1066,11 +1070,12 @@ function recursiveScale(ID, num_x, num_y, num_z) {
 
             arrScale.forEach(k => {
                 if (k[0] == x.name) {
-                    k[2] = new THREE.Vector3(num_x, num_y, num_z);
+                    k[2] = [num_x, num_y, num_z];
                 }
             })
 
-            scene.getObjectByName(x.name).scale.set(num_x, num_y, num_z);
+            scaleInDirection.push([x.name,[num_x,num_y,num_z]]);
+            // scene.getObjectByName(x.name).scale.set(num_x, num_y, num_z);
         }
     })
 }
