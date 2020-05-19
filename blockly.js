@@ -248,19 +248,21 @@ function render() {
         z = z.split("time").join(time);
         z = z.split("frames").join(frames);
 
-        try {
-            scene.getObjectByName(k[0]).scale.set(eval(x), eval(y), eval(z));
-            if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
+        if (scene.getObjectByName(k[0])) {
+            try {
+                scene.getObjectByName(k[0]).scale.set(eval(x), eval(y), eval(z));
+                if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
+                    scene.getObjectByName(k[0]).scale.set(1, 1, 1);
+                }
+                if (eval(y) == undefined || isNaN(eval(y)) || eval(y) == Infinity) {
+                    scene.getObjectByName(k[0]).scale.set(1, 1, 1);
+                }
+                if (eval(z) == undefined || isNaN(eval(z)) || eval(z) == Infinity) {
+                    scene.getObjectByName(k[0]).scale.set(1, 1, 1);
+                }
+            } catch (e) {
                 scene.getObjectByName(k[0]).scale.set(1, 1, 1);
             }
-            if (eval(y) == undefined || isNaN(eval(y)) || eval(y) == Infinity) {
-                scene.getObjectByName(k[0]).scale.set(1, 1, 1);
-            }
-            if (eval(z) == undefined || isNaN(eval(z)) || eval(z) == Infinity) {
-                scene.getObjectByName(k[0]).scale.set(1, 1, 1);
-            }
-        } catch (e) {
-            scene.getObjectByName(k[0]).scale.set(1, 1, 1);
         }
     })
 
