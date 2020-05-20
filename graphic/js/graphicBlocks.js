@@ -9,8 +9,8 @@ Blockly.Blocks['box'] = {
             // .setAlign(Blockly.ALIGN_RIGHT)
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["shape", "repeat", "movement"]);
-        this.setNextStatement(true, ["shape", "repeat", "movement"]);
+        this.setPreviousStatement(true, ["shape", "repeat"]);
+        this.setNextStatement(true, ["shape", "repeat"]);
         // this.setPreviousStatement(true, ["cone","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         // this.setNextStatement(true, ["cone","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(230);
@@ -27,13 +27,12 @@ Blockly.Blocks['cone'] = {
             .appendField("Cone")
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["shape", "repeat", "movement"]);
-        this.setNextStatement(true, ["shape", "repeat", "movement"]);
+        this.setPreviousStatement(true, ["shape", "repeat"]);
+        this.setNextStatement(true, ["shape", "repeat"]);
         // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(230);
         this.setTooltip("");
         this.setHelpUrl("");
-        console.log(this);
     }
 };
 
@@ -45,8 +44,8 @@ Blockly.Blocks['circle'] = {
             .appendField("Circle")
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["shape", "repeat", "movement"]);
-        this.setNextStatement(true, ["shape", "repeat", "movement"]);
+        this.setPreviousStatement(true, ["shape", "repeat"]);
+        this.setNextStatement(true, ["shape", "repeat"]);
         this.setColour(230);
         this.setTooltip("");
         this.setHelpUrl("");
@@ -61,8 +60,8 @@ Blockly.Blocks['ball'] = {
             .appendField("Ball")
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["shape", "repeat", "movement"]);
-        this.setNextStatement(true, ["shape", "repeat", "movement"]);
+        this.setPreviousStatement(true, ["shape", "repeat"]);
+        this.setNextStatement(true, ["shape", "repeat"]);
         // this.setPreviousStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(230);
@@ -78,8 +77,8 @@ Blockly.Blocks['square'] = {
             .appendField("Square")
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["shape", "repeat", "movement"]);
-        this.setNextStatement(true, ["shape", "repeat", "movement"]);
+        this.setPreviousStatement(true, ["shape", "repeat"]);
+        this.setNextStatement(true, ["shape", "repeat"]);
         this.setColour(230);
         this.setTooltip("");
         this.setHelpUrl("");
@@ -93,8 +92,8 @@ Blockly.Blocks['ring'] = {
             .appendField("Ring")
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["shape", "repeat", "movement"]);
-        this.setNextStatement(true, ["shape", "repeat", "movement"]);
+        this.setPreviousStatement(true, ["shape", "repeat"]);
+        this.setNextStatement(true, ["shape", "repeat"]);
         this.setColour(230);
         this.setTooltip("");
         this.setHelpUrl("");
