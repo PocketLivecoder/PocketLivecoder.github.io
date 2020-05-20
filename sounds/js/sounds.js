@@ -292,7 +292,26 @@ Blockly.JavaScript['tone'] = function (block) {
   // // jumpObject[this.id].play();
 
 
-  max += 1/Number(duration);
+  // var parent = this;
+  // var repeat_n = 1;
+
+  // while (parent.getSurroundParent()) {
+
+  //   // console.log(parent.getSurroundParent().type);
+  //   if(parent.getSurroundParent().type == "repeat"){
+  //     repeat_n *= parent.getSurroundParent().inputList[0].fieldRow[1].value_;
+  //     console.log(parent.getSurroundParent());
+  //   }
+  //   if(parent.getSurroundParent().type == "play-block"){
+  //     max += ((1/Number(duration)) * repeat_n);
+  //   }
+
+  //   parent = parent.getSurroundParent();
+  // }
+
+
+  // max += 1/Number(duration);
+
   var code = "'" + note + "','" + duration + "';";
   // ["A3", "sounds/piano/A3.mp3", duration],
   // ]
@@ -311,37 +330,35 @@ Blockly.JavaScript['play-block'] = function (block) {
   var statements_name = Blockly.JavaScript.statementToCode(block, 'string');
   statements_name = statements_name.slice(2);
 
-  // var statement = statements_name.slice(-23,-1);
-  // var statements_name = statements_name.slice(0,25);
-  // console.log("s"+statement);
-  // console.log(statements_name);
-
-  // console.log(statements_name);
-
-  // var playBlocksCount;
   playBlocksCount++
 
-  // workspace.highlightBlock(this.id);
-
-  // console.log(playBlocksCount)
   code = '';
 
-  // console.log(statements_name);
+  var arr = statements_name.split(";").map(function(x){return x.split(",")});
+
+
+  var max_dur = 1;
+  arr.forEach(a => {
+    if(a[1]){
+      // console.log(eval(a[1]))
+      max += 1/eval(a[1]);
+      // console.log(max_dur);
+    }
+  })
+
   if(statements_name){
   code += 'noteArr['+playBlocksCount+'] = "' + statements_name+ '".split(";").map(function(x) {return x.split(",")});'
           +'noteArr['+playBlocksCount+'].splice(-1,1);'
+          // +'noteArr.push(["duration",'+max+']);'
+          // + 'max='+max_dur+';';
   }
 
+  // clearInterval(id_var);
+  //   id_var = setInterval(playMusic, max * 1000);
 
-  // if (statements_name) {
-  //   noteArr[playBlocksCount] = statements_name.split(";").map(function (x) { return x.split(",") });
-  //   noteArr[playBlocksCount].splice(-1, 1)
-  //   // noteArr[playBlocksCount][0].push(statement);
-  // }
+  // play_code = "max="+max_dur+";";
 
-  // console.log(code);
-
-  // var code = '';
+  // noteArr.push(["duration",max]);
 
   return code;
 };
@@ -353,7 +370,7 @@ Blockly.JavaScript['music-rest'] = function (block) {
 
   // console.log(rest);
 
-  max += 1/Number(rest);
+  // max += 1/Number(rest);
 
   var code = "'rest'" + ",'" + rest + "';";
 

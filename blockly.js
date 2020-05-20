@@ -62,6 +62,8 @@ var arrScale = [];
 var controls;
 var light;
 
+var play_code;
+
 var requestId;
 
 var volume;
@@ -472,9 +474,20 @@ function playMusic() {
         })
 
     })
+
+    // noteArr.forEach(a => {
+    //     if(a[1]){
+    //       console.log(a[1][1]);
+    //       max += 1/eval(a[1][1]);
+    //     //   console.log(max_dur);
+    //     }
+    //   })
 }
 
 function runCode(event) {
+
+    console.log(noteArr);
+    console.log(max);
 
     if (timeoutArr) {
         timeoutArr.forEach(x => {
@@ -485,8 +498,8 @@ function runCode(event) {
     var timeout_id = setTimeout(playMusic, 1);
     timeoutArr.push(timeout_id);
 
-    clearInterval(id_var);
-    id_var = setInterval(playMusic, max * 1000);
+    
+
 
     objektyNaScene = scene.children;
 
@@ -581,8 +594,12 @@ function runCode(event) {
             } catch (e) {
                 alert(e);
             }
+
         }
     }
+
+    clearInterval(id_var);
+    id_var = setInterval(playMusic, max * 1000);
 
 
 }

@@ -9,8 +9,8 @@ Blockly.Blocks['box'] = {
             // .setAlign(Blockly.ALIGN_RIGHT)
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true,["box","RotateValueInput"]);
-        this.setNextStatement(true,"box");
+        this.setPreviousStatement(true, ["box", "RotateValueInput"]);
+        this.setNextStatement(true, "box");
         // this.setPreviousStatement(true, ["cone","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         // this.setNextStatement(true, ["cone","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(230);
@@ -27,8 +27,8 @@ Blockly.Blocks['cone'] = {
             .appendField("Cone")
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["cone","box"]);
-        this.setNextStatement(true,["cone","box"]);
+        this.setPreviousStatement(true, ["cone", "box"]);
+        this.setNextStatement(true, ["cone", "box"]);
         // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(230);
         this.setTooltip("");
@@ -44,8 +44,8 @@ Blockly.Blocks['circle'] = {
             .appendField("Circle")
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["cone","box"]);
-        this.setNextStatement(true,["cone","box"]);
+        this.setPreviousStatement(true, ["cone", "box"]);
+        this.setNextStatement(true, ["cone", "box"]);
         this.setColour(230);
         this.setTooltip("");
         this.setHelpUrl("");
@@ -60,7 +60,7 @@ Blockly.Blocks['ball'] = {
             .appendField("Ball")
             .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
         this.setInputsInline(true);
-        this.setPreviousStatement(true,"box");
+        this.setPreviousStatement(true, "box");
         this.setNextStatement(true, "box");
         // this.setPreviousStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
@@ -208,16 +208,20 @@ Blockly.JavaScript['repeat'] = function (block) {
 
     code = '';
     // console.log(statements_name);
-    if(statements_name[0] == ''){
-    statements_name = statements_name.slice(2);
-    // code = '';
+    // if (statements_name[0] == '') {
+        statements_name = statements_name.slice(2);
+        // code = '';
 
-    for(i=0;i<number;i++){
-        code += statements_name;
-    }
-}
+        for (i = 0; i < number; i++) {
+            code += statements_name;
+        }
+    // }
+// 
+    console.log(code);
 
+    console.log(play_code);
     eval(movecode);
+    eval(play_code);
     // var code = movecode;
     // var code = '';
 
@@ -241,12 +245,12 @@ Blockly.JavaScript['box'] = function (block) {
 
     if (parent = this.getSurroundParent()) {
         while (parent.type == "repeat" || parent.type == "for") {
-            if(parent.type == "repeat"){
+            if (parent.type == "repeat") {
                 repeat_number *= parent.inputList[0].fieldRow[1].value_;
                 // repeat_name += parent.id;
             }
-            if(parent.type == "for"){
-                repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1;
+            if (parent.type == "for") {
+                repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
 
                 // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
@@ -1074,7 +1078,7 @@ function recursiveScale(ID, num_x, num_y, num_z) {
                 }
             })
 
-            scaleInDirection.push([x.name,[num_x,num_y,num_z]]);
+            scaleInDirection.push([x.name, [num_x, num_y, num_z]]);
             // scene.getObjectByName(x.name).scale.set(num_x, num_y, num_z);
         }
     })
@@ -1350,7 +1354,16 @@ Blockly.JavaScript['paintOver'] = function (block) {
 // };
 
 
+function toLetters(num) {
 
+    //inkrementuj cislo kym existuje v poli s premennymi tak volaj funkciu s novym cislim a premennu nastav na dalsie pismeno.
+
+    // "use strict";
+    var mod = num % 26,
+        pow = num / 26 | 0,
+        out = mod ? String.fromCharCode(64 + mod) : (--pow, 'Z');
+    return pow ? toLetters(pow) + out : out;
+}
 
 
 
@@ -1359,7 +1372,7 @@ Blockly.Blocks['for'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("For")
-            .appendField(new Blockly.FieldVariable("i"), "index")
+            .appendField(new Blockly.FieldVariable("a"), "index") //sem dam premennu a budem ju inkrementovat iba;
             .appendField("from")
             .appendField(new Blockly.FieldNumber(1, 1, 9, 1), "from")
             .appendField("to")
@@ -1376,17 +1389,26 @@ Blockly.Blocks['for'] = {
 };
 
 Blockly.JavaScript['for'] = function (block) {
-    var variable_index = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE);
-    var number_from = block.getFieldValue('from');
-    var number_to = block.getFieldValue('to');
-    var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+    // if (!variable.includes(Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE))) {
+        variable.push(Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE));
+    // }else{
+        //while nemoze tak index++ potom setfieldvalue
+        // block.setFieldValue('b','index');
+        // console.log(Blockly.Variables);
+    // }
 
-    console.log(Blockly.JavaScript.variableDB_);
+    // var vari = block.getField('index').getVariable();
+    // Blockly.Variables.renameVariable(workspace,block.getField('index').getVariable(),"b");
+    // // console.log(vari.renameVariable("b"));
 
-    // Blockly.Events.VarCreate(Blockly.VariableModel(workspace, "i"));
+    // var number_from = block.getFieldValue('from');
+    // var number_to = block.getFieldValue('to');
+    // var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+
+
     // Blockly.Variables.createVariable(Blockly.VariableModel(workspace, "x"))
 
     // TODO: Assemble JavaScript into code variable.
     var code = '';
-    return code;
+    return movecode;
 };
