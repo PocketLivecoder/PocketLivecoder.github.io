@@ -93,7 +93,7 @@ var element = document.getElementById("scene");
 
 function init() {
 
-    renderer = new THREE.WebGLRenderer({ alpha: true, preserveDrawingBuffer: true });
+    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, preserveDrawingBuffer: true });
     renderer.setClearColor(0x000000, 0);;
     renderer.setSize(window.innerWidth, window.innerHeight);
     element.appendChild(renderer.domElement);
@@ -504,8 +504,15 @@ function runCode(event) {
     if (event) {
         if (event.type == Blockly.Events.BLOCK_DELETE) {
 
-            clearInterval(id_var);
-            clearTimeout(timeout_id);
+            // clearInterval(id_var);
+            if (timeoutArr) {
+                timeoutArr.forEach(x => {
+                    clearTimeout(x);
+                })
+            }
+        
+            var timeout_id = setTimeout(playMusic, 1);
+            timeoutArr.push(timeout_id);
 
             arr = [];
             arr = event.ids;
