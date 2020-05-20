@@ -342,9 +342,21 @@ Blockly.JavaScript['ring'] = function (block) {
 
 
     if (parent = this.getSurroundParent()) {
-        while (parent.type == "repeat") {
-            repeat_number *= parent.inputList[0].fieldRow[1].value_;
-            repeat_name += parent.id;
+        while (parent.type == "repeat" || parent.type == "for") {
+            if (parent.type == "repeat") {
+                repeat_number *= parent.inputList[0].fieldRow[1].value_;
+                // repeat_name += parent.id;
+            }
+            if (parent.type == "for") {
+                repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
+                forArr.push(
+                    [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
+                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    this.id//object id
+                ])
+                // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
+            }
 
             if (parent.getSurroundParent()) {
                 parent = parent.getSurroundParent();
@@ -356,7 +368,7 @@ Blockly.JavaScript['ring'] = function (block) {
 
         parent = this.getSurroundParent();
 
-        while (parent.type == "repeat") {
+        while (parent.type == "repeat" || parent.type == "for") {
 
             for (var i = scene.children.length - 1; i >= 0; i--) {
 
@@ -431,9 +443,21 @@ Blockly.JavaScript['square'] = function (block) {
 
 
     if (parent = this.getSurroundParent()) {
-        while (parent.type == "repeat") {
-            repeat_number *= parent.inputList[0].fieldRow[1].value_;
-            repeat_name += parent.id;
+        while (parent.type == "repeat" || parent.type == "for") {
+            if (parent.type == "repeat") {
+                repeat_number *= parent.inputList[0].fieldRow[1].value_;
+                // repeat_name += parent.id;
+            }
+            if (parent.type == "for") {
+                repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
+                forArr.push(
+                    [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
+                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    this.id//object id
+                ])
+                // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
+            }
 
             if (parent.getSurroundParent()) {
                 parent = parent.getSurroundParent();
@@ -445,7 +469,7 @@ Blockly.JavaScript['square'] = function (block) {
 
         parent = this.getSurroundParent();
 
-        while (parent.type == "repeat") {
+        while (parent.type == "repeat" || parent.type == "for") {
 
             for (var i = scene.children.length - 1; i >= 0; i--) {
 
@@ -520,9 +544,21 @@ Blockly.JavaScript['ball'] = function (block) {
     var repeat_name = '';
 
     if (parent = this.getSurroundParent()) {
-        while (parent.type == "repeat") {
-            repeat_number *= parent.inputList[0].fieldRow[1].value_;
-            repeat_name += parent.id;
+        while (parent.type == "repeat" || parent.type == "for") {
+            if (parent.type == "repeat") {
+                repeat_number *= parent.inputList[0].fieldRow[1].value_;
+                // repeat_name += parent.id;
+            }
+            if (parent.type == "for") {
+                repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
+                forArr.push(
+                    [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
+                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    this.id//object id
+                ])
+                // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
+            }
 
             if (parent.getSurroundParent()) {
                 parent = parent.getSurroundParent();
@@ -534,9 +570,10 @@ Blockly.JavaScript['ball'] = function (block) {
 
         parent = this.getSurroundParent();
 
-        while (parent.type == "repeat") {
+        while (parent.type == "repeat" || parent.type == "for") {
 
             for (var i = scene.children.length - 1; i >= 0; i--) {
+
                 if (scene.children[i].name.includes(name) && parseInt(scene.children[i].name.slice(20)) > repeat_number - 1 && scene.children[i].name.slice(20) != NaN) {
                     scene.remove(scene.getObjectByName(scene.children[i].name))
                 }
@@ -644,9 +681,21 @@ Blockly.JavaScript['cone'] = function (block) {
     var repeat_name = '';
 
     if (parent = this.getSurroundParent()) {
-        while (parent.type == "repeat") {
-            repeat_number *= parent.inputList[0].fieldRow[1].value_;
-            repeat_name += parent.id;
+        while (parent.type == "repeat" || parent.type == "for") {
+            if (parent.type == "repeat") {
+                repeat_number *= parent.inputList[0].fieldRow[1].value_;
+                // repeat_name += parent.id;
+            }
+            if (parent.type == "for") {
+                repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
+                forArr.push(
+                    [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
+                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    this.id//object id
+                ])
+                // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
+            }
 
             if (parent.getSurroundParent()) {
                 parent = parent.getSurroundParent();
@@ -658,7 +707,7 @@ Blockly.JavaScript['cone'] = function (block) {
 
         parent = this.getSurroundParent();
 
-        while (parent.type == "repeat") {
+        while (parent.type == "repeat" || parent.type == "for") {
 
             for (var i = scene.children.length - 1; i >= 0; i--) {
 
@@ -730,9 +779,21 @@ Blockly.JavaScript['circle'] = function (block) {
     var repeat_name = '';
 
     if (parent = this.getSurroundParent()) {
-        while (parent.type == "repeat") {
-            repeat_number *= parent.inputList[0].fieldRow[1].value_;
-            repeat_name += parent.id;
+        while (parent.type == "repeat" || parent.type == "for") {
+            if (parent.type == "repeat") {
+                repeat_number *= parent.inputList[0].fieldRow[1].value_;
+                // repeat_name += parent.id;
+            }
+            if (parent.type == "for") {
+                repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
+                forArr.push(
+                    [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
+                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    this.id//object id
+                ])
+                // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
+            }
 
             if (parent.getSurroundParent()) {
                 parent = parent.getSurroundParent();
@@ -744,7 +805,7 @@ Blockly.JavaScript['circle'] = function (block) {
 
         parent = this.getSurroundParent();
 
-        while (parent.type == "repeat") {
+        while (parent.type == "repeat" || parent.type == "for") {
 
             for (var i = scene.children.length - 1; i >= 0; i--) {
 

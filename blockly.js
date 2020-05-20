@@ -532,7 +532,6 @@ function runCode(event) {
 
     create_variable(workspace);
 
-    console.log(forArr);
 
     // console.log(variableArr);
 
