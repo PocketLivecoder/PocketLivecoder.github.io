@@ -495,22 +495,29 @@ function playMusic() {
         duration = 0;
 
         x.forEach(note => {
-            if (eval(note[1]) == 1) duration += 1;
-            if (eval(note[1]) == 2) duration += 0.5;
-            if (eval(note[1]) == 4) duration += 0.25;
-            if (eval(note[1]) == 8) duration += 0.125;
-            if (eval(note[1]) == 16) duration += 0.0625;
+            // if (eval(note[1]) == 1) duration += 1;
+            // if (eval(note[1]) == 2) duration += 0.5;
+            // if (eval(note[1]) == 4) duration += 0.25;
+            // if (eval(note[1]) == 8) duration += 0.125;
+            // if (eval(note[1]) == 16) duration += 0.0625;
+
+            duration += 1/eval(note[1]);
             timeout_id = setTimeout(function () {
-                var source = "sounds/piano/" + note[0].slice(1, note[0].length - 1) + ".mp3";
+                var source = "sounds/"+note[2].slice(1,-1)+"/" + note[0].slice(1, note[0].length - 1) + ".mp3";
                 if (note[0] != "'rest'") {
                     sound = new Howl({
                         src: source,
                         html5: true,
                         rate: eval(note[1]),
                         volume: 1,
+                        // seek: Math.abs(1-duration)
                     })
 
+
+                    // console.log(sound)
+
                     sound.play();
+                    console.log(sound.duration());
                 }
 
             }, eval(duration * 1000));

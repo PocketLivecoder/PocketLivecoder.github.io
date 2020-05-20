@@ -209,14 +209,14 @@ Blockly.JavaScript['repeat'] = function (block) {
     code = '';
     // console.log(statements_name);
     // if (statements_name[0] == '') {
-        statements_name = statements_name.slice(2);
-        // code = '';
+    statements_name = statements_name.slice(2);
+    // code = '';
 
-        for (i = 0; i < number; i++) {
-            code += statements_name;
-        }
+    for (i = 0; i < number; i++) {
+        code += statements_name;
+    }
     // }
-// 
+    // 
     eval(movecode);
     // eval(play_code);
     // var code = movecode;
@@ -250,10 +250,10 @@ Blockly.JavaScript['box'] = function (block) {
                 repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
                 forArr.push(
                     [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
-                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
-                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    Math.min(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable end
                     this.id//object id
-                ])
+                    ])
                 // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
@@ -351,10 +351,10 @@ Blockly.JavaScript['ring'] = function (block) {
                 repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
                 forArr.push(
                     [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
-                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
-                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    Math.min(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable end
                     this.id//object id
-                ])
+                    ])
                 // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
@@ -452,10 +452,10 @@ Blockly.JavaScript['square'] = function (block) {
                 repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
                 forArr.push(
                     [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
-                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
-                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    Math.min(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable end
                     this.id//object id
-                ])
+                    ])
                 // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
@@ -553,10 +553,10 @@ Blockly.JavaScript['ball'] = function (block) {
                 repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
                 forArr.push(
                     [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
-                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
-                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    Math.min(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable end
                     this.id//object id
-                ])
+                    ])
                 // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
@@ -690,10 +690,10 @@ Blockly.JavaScript['cone'] = function (block) {
                 repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
                 forArr.push(
                     [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
-                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
-                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    Math.min(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable end
                     this.id//object id
-                ])
+                    ])
                 // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
@@ -788,10 +788,10 @@ Blockly.JavaScript['circle'] = function (block) {
                 repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
                 forArr.push(
                     [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
-                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
-                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    Math.min(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_, parent.inputList[0].fieldRow[5].value_),//variable end
                     this.id//object id
-                ])
+                    ])
                 // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
@@ -1447,33 +1447,29 @@ Blockly.JavaScript['for'] = function (block) {
     var from = block.getFieldValue("from");
     var to = block.getFieldValue("to");
 
+    code = '';
+
     if (!variable.includes(Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE))) {
         variable.push(Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE));
 
-        workspace.getAllVariables().forEach(x=>{
-            if(x.name == Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE)){
-                variableArr.push([this.id,x.id_]);
+        workspace.getAllVariables().forEach(x => {
+            if (x.name == Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE)) {
+                variableArr.push([this.id, x.id_]);
             }
         })
 
     }
 
-    // console.log(variableArr)
+    var number = Math.abs(from - to);
 
-    // console.log(Blockly.Variables.allUsedVariables());
+    statements_name = statements_name.slice(2);
+    console.log(statements_name);
 
-    // var vari = block.getField('index').getVariable();
-    // Blockly.Variables.renameVariable(workspace,block.getField('index').getVariable(),"b");
-    // // console.log(vari.renameVariable("b"));
+    for (i = 0; i < number+1; i++) {
+        code += statements_name;
+    }
 
-    // var number_from = block.getFieldValue('from');
-    // var number_to = block.getFieldValue('to');
-
-
-    // Blockly.Variables.createVariable(Blockly.VariableModel(workspace, "x"))
-
-    // TODO: Assemble JavaScript into code variable.
     eval(movecode);
-    var code = '';
+    // var code = '';
     return code;
 };
