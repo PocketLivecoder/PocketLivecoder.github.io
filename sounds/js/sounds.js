@@ -98,7 +98,7 @@ Blockly.Blocks['play-block'] = {
     // .appendField(new Blockly.FieldNumber(1, 1, 100, 1), "number")
     // .appendField(new Blockly.FieldLabelSerializable("times"), "times");
     this.appendStatementInput("string")
-      .setCheck("tone");
+      .setCheck("sound");
     // .appendField("do");
     // this.setPreviousStatement(true, null);
     // this.setNextStatement(true, null);
