@@ -217,11 +217,8 @@ Blockly.JavaScript['repeat'] = function (block) {
         }
     // }
 // 
-    console.log(code);
-
-    console.log(play_code);
     eval(movecode);
-    eval(play_code);
+    // eval(play_code);
     // var code = movecode;
     // var code = '';
 
@@ -251,7 +248,12 @@ Blockly.JavaScript['box'] = function (block) {
             }
             if (parent.type == "for") {
                 repeat_number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
-
+                forArr.push(
+                    [parent.inputList[0].fieldRow[1].defaultVariableName, //variable name
+                    Math.min(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable start
+                    Math.max(parent.inputList[0].fieldRow[3].value_,parent.inputList[0].fieldRow[5].value_),//variable end
+                    this.id//object id
+                ])
                 // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
@@ -926,9 +928,9 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
             if (x.name.includes(block.id)) {
                 if (type == "move") {
                     if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
-                        x_num = x_num + "+" + number_x;
-                        z_num = z_num + "+" + number_z;
-                        y_num = y_num + "+" + number_y;
+                        x_num = x_num + " + " + number_x;
+                        z_num = z_num + " + " + number_z;
+                        y_num = y_num + " + " + number_y;
                     }
                     arrMove.forEach(k => {
                         if (k[0] == x.name) {
@@ -943,9 +945,9 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                 if (type == "scale") {
 
                     if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
-                        x_num = x_num + "+" + number_x;
-                        z_num = z_num + "+" + number_z;
-                        y_num = y_num + "+" + number_y;
+                        x_num = x_num + " + " + number_x;
+                        z_num = z_num + " + " + number_z;
+                        y_num = y_num + " + " + number_y;
                     }
                     arrScale.forEach(k => {
                         if (k[0] == x.name) {
@@ -962,9 +964,9 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                 }
                 if (type == "rotate") {
                     if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
-                        x_num = x_num + "+" + number_x;
-                        z_num = z_num + "+" + number_z;
-                        y_num = y_num + "+" + number_y;
+                        x_num = x_num + " + " + number_x;
+                        z_num = z_num + " + " + number_z;
+                        y_num = y_num + " + " + number_y;
                     }
                     arrRotate.forEach(f => {
                         if (f[0] == x.name) {
@@ -1354,17 +1356,6 @@ Blockly.JavaScript['paintOver'] = function (block) {
 // };
 
 
-function toLetters(num) {
-
-    //inkrementuj cislo kym existuje v poli s premennymi tak volaj funkciu s novym cislim a premennu nastav na dalsie pismeno.
-
-    // "use strict";
-    var mod = num % 26,
-        pow = num / 26 | 0,
-        out = mod ? String.fromCharCode(64 + mod) : (--pow, 'Z');
-    return pow ? toLetters(pow) + out : out;
-}
-
 
 
 //for pokus
@@ -1372,7 +1363,7 @@ Blockly.Blocks['for'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("For")
-            .appendField(new Blockly.FieldVariable("a"), "index") //sem dam premennu a budem ju inkrementovat iba;
+            .appendField(new Blockly.FieldVariable(Blockly.Variables.generateUniqueName(workspace)), "index") //sem dam premennu a budem ju inkrementovat iba;
             .appendField("from")
             .appendField(new Blockly.FieldNumber(1, 1, 9, 1), "from")
             .appendField("to")
@@ -1389,13 +1380,26 @@ Blockly.Blocks['for'] = {
 };
 
 Blockly.JavaScript['for'] = function (block) {
-    // if (!variable.includes(Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE))) {
+
+    var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+
+    var from = block.getFieldValue("from");
+    var to = block.getFieldValue("to");
+
+    if (!variable.includes(Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE))) {
         variable.push(Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE));
-    // }else{
-        //while nemoze tak index++ potom setfieldvalue
-        // block.setFieldValue('b','index');
-        // console.log(Blockly.Variables);
-    // }
+
+        workspace.getAllVariables().forEach(x=>{
+            if(x.name == Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE)){
+                variableArr.push([this.id,x.id_]);
+            }
+        })
+
+    }
+
+    // console.log(variableArr)
+
+    // console.log(Blockly.Variables.allUsedVariables());
 
     // var vari = block.getField('index').getVariable();
     // Blockly.Variables.renameVariable(workspace,block.getField('index').getVariable(),"b");
@@ -1403,12 +1407,12 @@ Blockly.JavaScript['for'] = function (block) {
 
     // var number_from = block.getFieldValue('from');
     // var number_to = block.getFieldValue('to');
-    // var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
 
 
     // Blockly.Variables.createVariable(Blockly.VariableModel(workspace, "x"))
 
     // TODO: Assemble JavaScript into code variable.
+    eval(movecode);
     var code = '';
-    return movecode;
+    return code;
 };

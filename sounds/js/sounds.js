@@ -324,6 +324,8 @@ Blockly.JavaScript['tone'] = function (block) {
   return code;
 };
 
+var playBlocksCount = 0;// hodil som ho sem z bockly.js
+
 
 Blockly.JavaScript['play-block'] = function (block) {
   // var number = block.getFieldValue('number');

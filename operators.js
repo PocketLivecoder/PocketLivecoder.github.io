@@ -73,7 +73,7 @@ Blockly.JavaScript['Operation'] = function (block) {
     // console.log(operation);
     var operation = '';
     if(value_left && value_right){
-        operation = value_left + dropdown_opt + value_right;
+        operation = " "+value_left +" "+ dropdown_opt +" "+ value_right +" ";
     }
     // console.log(operation);
     // TODO: Change ORDER_NONE to the correct strength.
@@ -97,7 +97,7 @@ Blockly.JavaScript['SinCos'] = function (block) {
     var code = '';
     // TODO: Change ORDER_NONE to the correct strength.
     // console.log(value_name);
-    return [dropdown_opt + "(" + value_name + ")", Blockly.JavaScript.ORDER_NONE];
+    return [dropdown_opt + "( " + value_name + " )", Blockly.JavaScript.ORDER_NONE];
 };
 
 Blockly.JavaScript['Random'] = function (block) {

@@ -1,4 +1,5 @@
 
+
 // TODO:
 // - Logic by som premenoval napr. na Movement. //DONE
 
@@ -48,6 +49,9 @@ var workspace = Blockly.inject(blocklyDiv,
         }
     });
 
+workspace.registerToolboxCategoryCallback(
+    'VAR', create_variable);
+
 //-----------------------------------------------------------------------------------------------------//
 //initialize scene, create camera and canvas
 var scene;
@@ -76,7 +80,8 @@ var scaleInDirection = [];
 
 var forArr = [];
 var noteArr = [];
-playBlocksCount = 0;
+// playBlocksCount = 0;
+var variableArr = [];
 
 
 var clock = new THREE.Clock();
@@ -129,7 +134,7 @@ var frames = 0;
 var time = 0;
 var radius = 1.5;
 
-function modifyStringToValidForm(str) {
+function modifyStringToValidForm(str,id) {
 
     var vector = [];
 
@@ -139,9 +144,15 @@ function modifyStringToValidForm(str) {
 
         x = x.split("time").join(time);
         x = x.split("frames").join(frames);
-        // x = x.split("sin").join("Math.sin");
-        // x = x.split("cos").join("Math.cos");
-        // x = x.split("tan").join("Math.tan");
+
+        forArr.forEach(j => {
+            if (id.includes(j[3])) {
+                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
+                x = x.split(" " + j[0] + " ").join(v);
+                y = y.split(" " + j[0] + " ").join(v);
+                z = z.split(" " + j[0] + " ").join(v);
+            }
+        })
 
         try {
             // console.log(x = eval(x));
@@ -161,11 +172,12 @@ function modifyStringToValidForm(str) {
 
 function rotate(object, n, vector) {
 
+    // console.log(object.name);
 
     if (!vector) {
         vector = [0, 0, 0];
     } else {
-        vector = modifyStringToValidForm(vector);
+        vector = modifyStringToValidForm(vector,object.name);
     }
 
     if (!n) n = 0;
@@ -182,7 +194,7 @@ function move(object, n, radiusNumber, vector) {
     if (!vector) {
         vector = [0, 0, 0];
     } else {
-        vector = modifyStringToValidForm(vector);
+        vector = modifyStringToValidForm(vector,object.name);
     }
 
     // console.log(vector);
@@ -207,7 +219,7 @@ function scale(object, vector) {
     if (!vector) {
         vector = [1, 1, 1];
     } else {
-        vector = modifyStringToValidForm(vector);
+        vector = modifyStringToValidForm(vector,object.name);
     }
 
     if (object) {
@@ -221,6 +233,7 @@ function scale(object, vector) {
 
 var i;
 var x, y, z;
+var v;
 
 function render() {
 
@@ -240,15 +253,25 @@ function render() {
     //scale in dir
     scaleInDirection.forEach(k => {
 
-        x = k[1][0];
+        x = " " + k[1][0] + " ";
         x = x.split("time").join(time);
         x = x.split("frames").join(frames);
-        y = k[1][1];
+        y = " " + k[1][1] + " ";
         y = y.split("time").join(time);
         y = y.split("frames").join(frames);
-        z = k[1][2];
+        z = " " + k[1][2] + " ";
         z = z.split("time").join(time);
         z = z.split("frames").join(frames);
+
+
+        forArr.forEach(j => {
+            if (k[0].includes(j[3])) {
+                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
+                x = x.split(" " + j[0] + " ").join(v);
+                y = y.split(" " + j[0] + " ").join(v);
+                z = z.split(" " + j[0] + " ").join(v);
+            }
+        })
 
         if (scene.getObjectByName(k[0])) {
             try {
@@ -263,7 +286,9 @@ function render() {
                     scene.getObjectByName(k[0]).scale.set(1, 1, 1);
                 }
             } catch (e) {
-                scene.getObjectByName(k[0]).scale.set(1, 1, 1);
+                if (scene.getObjectByName(k[0])) {
+                    scene.getObjectByName(k[0]).scale.set(1, 1, 1);
+                }
             }
         }
     })
@@ -271,15 +296,29 @@ function render() {
     //move in dir
     moveInDirection.forEach(k => {
 
-        x = k[1][0];
+        x = " " + k[1][0] + " ";
         x = x.split("time").join(time);
         x = x.split("frames").join(frames);
-        y = k[1][1];
+        y = " " + k[1][1] + " ";
         y = y.split("time").join(time);
         y = y.split("frames").join(frames);
-        z = k[1][2];
+        z = " " + k[1][2] + " ";
         z = z.split("time").join(time);
         z = z.split("frames").join(frames);
+
+
+        forArr.forEach(j => {
+            if (k[0].includes(j[3])) {
+                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
+                x = x.split(" " + j[0] + " ").join(v);
+                y = y.split(" " + j[0] + " ").join(v);
+                z = z.split(" " + j[0] + " ").join(v);
+            }
+        })
+
+        // console.log(x = x.split(" i "));
+
+        // console.log(x);
 
         try {
             scene.getObjectByName(k[0]).position.set(eval(x), eval(y), eval(z));
@@ -293,7 +332,9 @@ function render() {
                 scene.getObjectByName(k[0]).position.set(0, 0, 0);
             }
         } catch (e) {
-            scene.getObjectByName(k[0]).position.set(0, 0, 0);
+            if (scene.getObjectByName(k[0])) {
+                scene.getObjectByName(k[0]).position.set(0, 0, 0);
+            }
         }
     })
 
@@ -302,24 +343,25 @@ function render() {
 
 
 
-        x = k[1][0];
+        x = " " + k[1][0] + " ";
         x = x.split("time").join(time);
         x = x.split("frames").join(frames);
-        // x = x.split("sin").join("Math.sin");
-        // x = x.split("cos").join("Math.cos");
-        // x = x.split("tan").join("Math.tan");
-        y = k[1][1];
+        y = " " + k[1][1] + " ";
         y = y.split("time").join(time);
         y = y.split("frames").join(frames);
-        // y = y.split("sin").join("Math.sin");
-        // y = y.split("cos").join("Math.cos");
-        // y = y.split("tan").join("Math.tan");
-        z = k[1][2];
+        z = " " + k[1][2] + " ";
         z = z.split("time").join(time);
         z = z.split("frames").join(frames);
-        // z = z.split("sin").join("Math.sin");
-        // z = z.split("cos").join("Math.cos");
-        // z = z.split("tan").join("Math.tan");
+
+
+        forArr.forEach(j => {
+            if (k[0].includes(j[3])) {
+                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
+                x = x.split(" " + j[0] + " ").join(v);
+                y = y.split(" " + j[0] + " ").join(v);
+                z = z.split(" " + j[0] + " ").join(v);
+            }
+        })
 
         try {
             scene.getObjectByName(k[0]).rotation.set(eval(x), eval(y), eval(z));
@@ -333,7 +375,9 @@ function render() {
                 scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
             }
         } catch (e) {
-            scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
+            if (scene.getObjectByName(k[0])) {
+                scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
+            }
         }
 
     })
@@ -486,8 +530,11 @@ function playMusic() {
 
 function runCode(event) {
 
-    console.log(noteArr);
-    console.log(max);
+    create_variable(workspace);
+
+    console.log(forArr);
+
+    // console.log(variableArr);
 
     if (timeoutArr) {
         timeoutArr.forEach(x => {
@@ -497,9 +544,6 @@ function runCode(event) {
 
     var timeout_id = setTimeout(playMusic, 1);
     timeoutArr.push(timeout_id);
-
-    
-
 
     objektyNaScene = scene.children;
 
@@ -542,24 +586,17 @@ function runCode(event) {
                 if (arrMove.includes(e)) {
                     arrMove = arrMove.filter(x => x != e);
                 }
+
             })
 
             for (i = 0; i < arr.length; i++) {
                 scene.remove(scene.getObjectByName(arr[i]));
             }
 
+
+
         };
     }
-
-    //zastav 2x pustene zvuky
-    // Object.keys(jumpObject).forEach(key => {
-    //     jumpObject[key].volume(0.5);
-    //     jumpObject[key].rate(1);
-    //     localStorage = 1;
-    //     if (!blokyNaScene.includes(key)) {
-    //         jumpObject[key].pause();
-    //     }
-    // });
 
     if (event) {
 
@@ -577,6 +614,9 @@ function runCode(event) {
             playBlocksCount = 0;
             max = 1;
             duration = 0;
+            variable = [];
+            forArr = [];
+            variableArr = [];
 
 
             for (i = 0; i < scene.children.length; i++) {
@@ -602,10 +642,90 @@ function runCode(event) {
     id_var = setInterval(playMusic, max * 1000);
 
 
+    if (event) {
+        if (event.type == Blockly.Events.BLOCK_DELETE) {
+
+
+            arr.every(e => {
+
+                variableArr.forEach(x => {
+                    // console.log(x[0])
+                    if (e == x[0]) {
+                        workspace.deleteVariableById(x[1]);
+                        // console.log(workspace.getAllVariables());
+                    }
+                })
+                variableArr = [];
+            })
+
+
+        };
+    }
+
 }
 workspace.addChangeListener(runCode);
 
 
+
+var variable = [];
+
+/**
+ * Construct the blocks required by the flyout for the colours category.
+ * @param {!Blockly.Workspace} workspace The workspace this flyout is for.
+ * @return {!Array.<!Element>} Array of XML block elements.
+ */
+function create_variable(workspace) {
+    // Returns an array of hex colours, e.g. ['#4286f4', '#ef0447']
+    // var colourList = myApplication.getPalette();
+
+
+    var xmlList = [];
+    var blockText;
+    var block;
+    blockText = '<block type="NumberInput">' +
+        '<field name="VAR">' + 0 + '</field>' +
+        '</block>';
+    block = Blockly.Xml.textToDom(blockText);
+    xmlList.push(block);
+
+    blockText = '<block type="Operation">' +
+        '<field name="VAR"></field>' +
+        '</block>';
+    block = Blockly.Xml.textToDom(blockText);
+    xmlList.push(block);
+
+    blockText = '<block type="TimeOrFrame">' +
+        '<field name="VAR"></field>' +
+        '</block>';
+    block = Blockly.Xml.textToDom(blockText);
+    xmlList.push(block);
+
+    blockText = '<block type="SinCos">' +
+        '<field name="VAR"></field>' +
+        '</block>';
+    block = Blockly.Xml.textToDom(blockText);
+    xmlList.push(block);
+
+    blockText = '<block type="Random">' +
+        '<field name="VAR"></field>' +
+        '</block>';
+    block = Blockly.Xml.textToDom(blockText);
+    xmlList.push(block);
+
+    if (Blockly.Blocks['variables_get']) {
+        // for (var i = 0; i < variable.length; i++) {
+        if (variable.length > 0) {
+            //   console.log(variable[i]);
+            blockText = '<block type="variables_get">' +
+                '<field name="VAR">' + variable[0] + '</field>' +
+                '</block>';
+            block = Blockly.Xml.textToDom(blockText);
+            xmlList.push(block);
+        }
+        //   console.log(xmlList)
+    }
+    return xmlList;
+};
 
 
 
