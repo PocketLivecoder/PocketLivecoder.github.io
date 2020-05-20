@@ -9,8 +9,8 @@ Blockly.Blocks['MoveValueInput'] = {
         this.appendValueInput("z")
             .setCheck(null);
         this.setInputsInline(true);
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
+        this.setPreviousStatement(true, ["movement","shape","repeat"]);
+        this.setNextStatement(true, ["movement","shape","repeat"]);
         // this.setPreviousStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(30);
@@ -30,13 +30,14 @@ Blockly.Blocks['ScaleValueInput'] = {
         this.appendValueInput("z")
             .setCheck(null);
         this.setInputsInline(true);
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
+        this.setPreviousStatement(true, ["movement","shape","repeat"]);
+        this.setNextStatement(true, ["movement","shape","repeat"]);
         // this.setPreviousStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(30);
         this.setTooltip("");
         this.setHelpUrl("");
+
     }
 };
 
@@ -51,8 +52,8 @@ Blockly.Blocks['RotateValueInput'] = {
         this.appendValueInput("z")
             .setCheck(null);
         this.setInputsInline(true);
-        this.setNextStatement(true,null);
-        this.setPreviousStatement(true,null);
+        this.setNextStatement(true, ["movement","shape","repeat"]);
+        this.setPreviousStatement(true, ["movement","shape","repeat"]);
         // this.setPreviousStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(40);

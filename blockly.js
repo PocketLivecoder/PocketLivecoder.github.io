@@ -22,7 +22,7 @@
 // - Do Logic by som pridal aspoň nejaký "For" cyklus, ktorý by automaticky
 // vytvoril nejakú premennú (napr. i, j, k, ...), ktorú by bolo možné
 // využiť vnútri cyklu - bol by to blok v sekcii Math, kde by sa z
-// drop-downu vybrala daná premenná.
+// drop-downu vybrala daná premenná. //DONE
 
 
 // - Popremýšľal by som nad nejakou formou podmienky "If", momentálne mi
@@ -30,7 +30,7 @@
 
 
 // - Pri zvukoch by sa mala dať vytvoriť nejaká melódia, teda klasicky z
-// tónov nástrojov (klavír a pod.).
+// tónov nástrojov (klavír a pod.).//DONE
 
 
 localStorage.clear();
@@ -80,7 +80,6 @@ var scaleInDirection = [];
 
 var forArr = [];
 var noteArr = [];
-// playBlocksCount = 0;
 var variableArr = [];
 
 
@@ -138,8 +137,6 @@ function modifyStringToValidForm(str,id) {
 
     var vector = [];
 
-    // console.log(str);
-
     str.forEach(x => {
 
         x = x.split("time").join(time);
@@ -155,7 +152,6 @@ function modifyStringToValidForm(str,id) {
         })
 
         try {
-            // console.log(x = eval(x));
             if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
                 x = 0;
             }
@@ -171,8 +167,6 @@ function modifyStringToValidForm(str,id) {
 
 
 function rotate(object, n, vector) {
-
-    // console.log(object.name);
 
     if (!vector) {
         vector = [0, 0, 0];
@@ -196,8 +190,6 @@ function move(object, n, radiusNumber, vector) {
     } else {
         vector = modifyStringToValidForm(vector,object.name);
     }
-
-    // console.log(vector);
 
     radius = radiusNumber;
     var number = 0
@@ -237,18 +229,8 @@ var v;
 
 function render() {
 
-    // playMusic()
-
-    // var playBlocksID = workspace.getBlocksByType('play-block',true);
-
-    // console.log(noteArr);
-    // console.log(noteArr.length);
-
     frames++;
     time = clock.getElapsedTime();
-
-    // console.log(moveInDirection);
-
 
     //scale in dir
     scaleInDirection.forEach(k => {
@@ -316,10 +298,6 @@ function render() {
             }
         })
 
-        // console.log(x = x.split(" i "));
-
-        // console.log(x);
-
         try {
             scene.getObjectByName(k[0]).position.set(eval(x), eval(y), eval(z));
             if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
@@ -340,8 +318,6 @@ function render() {
 
     //rotate in dir
     rotateInDirection.forEach(k => {
-
-
 
         x = " " + k[1][0] + " ";
         x = x.split("time").join(time);
@@ -424,29 +400,6 @@ function render() {
 
     }
 
-    // if (noteArr) {
-    //     maxDuration = 1;
-    //     max = 1;
-    //     // console.log(noteArr);
-    //     noteArr.forEach(x => {
-    //         // console.log(x);
-    //         x.forEach(y => {
-    //             // console.log(y[1]);
-    //             if (eval(y[1]) == 1) maxDuration += 1;
-    //             if (eval(y[1]) == 2) maxDuration += 0.5;
-    //             if (eval(y[1]) == 4) maxDuration += 0.25;
-    //             if (eval(y[1]) == 8) maxDuration += 0.125;
-    //             if (eval(y[1]) == 16) maxDuration += 0.0625;
-
-
-    //             // maxDuration += +eval(y[1]);
-    //         })
-    //         if (maxDuration > max) max = maxDuration;
-    //         maxDuration = 0.2;
-    //     })
-    // }
-
-
     controls.update();
 
     renderer.render(scene, camera);
@@ -480,7 +433,6 @@ onresize();
 Blockly.svgResize(workspace);
 
 var objektyNaScene;
-// var call = false;
 var id_var;
 var timeout_id; // var array = ["A","B"];
 var maxDuration = 0.2;
@@ -495,29 +447,18 @@ function playMusic() {
         duration = 0;
 
         x.forEach(note => {
-            // if (eval(note[1]) == 1) duration += 1;
-            // if (eval(note[1]) == 2) duration += 0.5;
-            // if (eval(note[1]) == 4) duration += 0.25;
-            // if (eval(note[1]) == 8) duration += 0.125;
-            // if (eval(note[1]) == 16) duration += 0.0625;
-
             duration += 1/eval(note[1]);
             timeout_id = setTimeout(function () {
-                var source = "sounds/"+note[2].slice(1,-1)+"/" + note[0].slice(1, note[0].length - 1) + ".mp3";
                 if (note[0] != "'rest'") {
+                var source = "sounds/"+note[2].slice(1,-1)+"/" + note[0].slice(1, note[0].length - 1) + ".mp3";
                     sound = new Howl({
                         src: source,
                         html5: true,
                         rate: eval(note[1]),
                         volume: 1,
-                        // seek: Math.abs(1-duration)
                     })
 
-
-                    // console.log(sound)
-
                     sound.play();
-                    console.log(sound.duration());
                 }
 
             }, eval(duration * 1000));
@@ -526,21 +467,11 @@ function playMusic() {
 
     })
 
-    // noteArr.forEach(a => {
-    //     if(a[1]){
-    //       console.log(a[1][1]);
-    //       max += 1/eval(a[1][1]);
-    //     //   console.log(max_dur);
-    //     }
-    //   })
 }
 
 function runCode(event) {
 
     create_variable(workspace);
-
-
-    // console.log(variableArr);
 
     if (timeoutArr) {
         timeoutArr.forEach(x => {
@@ -655,10 +586,8 @@ function runCode(event) {
             arr.every(e => {
 
                 variableArr.forEach(x => {
-                    // console.log(x[0])
                     if (e == x[0]) {
                         workspace.deleteVariableById(x[1]);
-                        // console.log(workspace.getAllVariables());
                     }
                 })
                 variableArr = [];
@@ -719,16 +648,13 @@ function create_variable(workspace) {
     xmlList.push(block);
 
     if (Blockly.Blocks['variables_get']) {
-        // for (var i = 0; i < variable.length; i++) {
         if (variable.length > 0) {
-            //   console.log(variable[i]);
             blockText = '<block type="variables_get">' +
                 '<field name="VAR">' + variable[0] + '</field>' +
                 '</block>';
             block = Blockly.Xml.textToDom(blockText);
             xmlList.push(block);
         }
-        //   console.log(xmlList)
     }
     return xmlList;
 };

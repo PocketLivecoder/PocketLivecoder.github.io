@@ -44,8 +44,8 @@ Blockly.Blocks['tone'] = {
       // .appendField("Tone")
       .appendField(new Blockly.FieldDropdown(instrument), "INSTRUMENT");
     this.setInputsInline(true);
-    this.setPreviousStatement(true, ['music-rest', 'tone', 'repeat']);
-    this.setNextStatement(true, ['music-rest', 'tone', 'repeat']);
+    this.setPreviousStatement(true, ['sound']);
+    this.setNextStatement(true, ['sound']);
     this.setColour(130);
     this.setTooltip("");
     this.setHelpUrl("");
@@ -81,11 +81,11 @@ Blockly.Blocks['music-rest'] = {
       .appendField("Rest")
       .appendField(new Blockly.FieldDropdown(rest), "REST");
     // .appendField("Tone")
-    this.setPreviousStatement(true, ["tone", "repeat", "play-block"]);
-    this.setNextStatement(true, ["tone", "repeat", "play-block"]);
+    this.setPreviousStatement(true, ["sound"]);
+    this.setNextStatement(true, ["sound"]);
     // this.setPreviousStatement(true, ['music-rest','tone','repeat']);
     // this.setNextStatement(true, ['music-rest','tone','repeat']);
-    this.setColour(280);
+    this.setColour(130);
     this.setTooltip("");
     this.setHelpUrl("");
   }
@@ -102,7 +102,7 @@ Blockly.Blocks['play-block'] = {
     // .appendField("do");
     // this.setPreviousStatement(true, null);
     // this.setNextStatement(true, null);
-    this.setColour(280);
+    this.setColour(130);
     this.setTooltip("");
     this.setHelpUrl("");
   }
