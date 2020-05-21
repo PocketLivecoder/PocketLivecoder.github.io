@@ -7,6 +7,7 @@
   <link rel='stylesheet' type='text/css' media='screen' href='blockly.css'>
   <link rel='stylesheet' type='text/css' media='screen' href='sounds/js/pitch.css'>
   <link rel='stylesheet' type='text/css' media='screen' href='lib/nunpad/numpad.css'>
+  <link rel='stylesheet' type='text/css' media='screen' href='lib/pitchSlider/slider.css'>
 
 
 
@@ -59,7 +60,20 @@
   </xml>
 
 
+	<div id="wrap">
+    <div id="display"></div>
+            <div id="container">
+                <br><br>
+                <input id="slider" class="range vertical-heighest-first round" type="range" min="0" max="12" step="1" value="7">
+                <br><br><br>
+            </div>
+        <input type="button" id="button" value="&#10004;">
+    </div>
+
+
+
   <script src="lib/nunpad/numpad.js"></script>
+  <script src="lib/pitchSlider/slider.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.js"></script>
   <script src="lib/blockly_compressed.js"></script>
