@@ -179,14 +179,17 @@ Blockly.JavaScript['play-block'] = function (block) {
   var arr = statements_name.split(";").map(function(x){return x.split(",")});
 
 
-  var max_dur = 1;
+  var max_dur = 0;
   arr.forEach(a => {
     if(a[1]){
       // console.log(eval(a[1]))
-      max += 1/eval(a[1]);
+      max_dur += 1/eval(a[1]);
       // console.log(max_dur);
     }
+    if (max_dur > max) max = max_dur;
   })
+
+  console.log(arr);
 
   if(statements_name){
   code += 'noteArr['+playBlocksCount+'] = "' + statements_name+ '".split(";").map(function(x) {return x.split(",")});'

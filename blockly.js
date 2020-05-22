@@ -55,23 +55,19 @@ workspace.registerToolboxCategoryCallback(
 //-----------------------------------------------------------------------------------------------------//
 //initialize scene, create camera and canvas
 var scene;
-var objects;
+// var objects;
 var camera;
 var renderer;
-var stopRendering;
-var cube;
+// var stopRendering;
+// var cube;
 var arrRotate = [];
 var arrMove = [];
 var arrScale = [];
 var controls;
 var light;
 
-var play_code;
+// var play_code;
 
-var requestId;
-
-var volume;
-var jumpObject = new Object;
 var blokyNaScene = [];
 
 var moveInDirection = [];
@@ -81,15 +77,11 @@ var scaleInDirection = [];
 var forArr = [];
 var noteArr = [];
 var variableArr = [];
-
+var meshArr = [];
 
 var clock = new THREE.Clock();
 
-
-
 var element = document.getElementById("scene");
-
-
 
 function init() {
 
@@ -106,7 +98,7 @@ function init() {
 
     light = new THREE.DirectionalLight(0xffffff, 5);
 
-
+    renderer.sortObjects = false;
 
     camera.position.z = 5;
     camera.lookAt(scene.position);
@@ -124,6 +116,14 @@ function init() {
         camera.updateProjectionMatrix();
     });
 
+    // for(i = 0; i<200; i++){
+    //     var geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+    //     var material = new THREE.MeshNormalMaterial();
+    //     var ring = new THREE.Mesh(geometry, material);
+    //     ring.name = name;
+    //     scene.add(ring);
+    // }
+
     render();
 }
 
@@ -132,8 +132,10 @@ init();
 var frames = 0;
 var time = 0;
 var radius = 1.5;
+var evalx, evaly, evalz;
+var vector;
 
-function modifyStringToValidForm(str,id) {
+function modifyStringToValidForm(str, id) {
 
     var vector = [];
 
@@ -144,6 +146,7 @@ function modifyStringToValidForm(str,id) {
 
         forArr.forEach(j => {
             if (id.includes(j[3])) {
+                console.log(j[0]);
                 v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
                 x = x.split(" " + j[0] + " ").join(v);
                 y = y.split(" " + j[0] + " ").join(v);
@@ -151,14 +154,9 @@ function modifyStringToValidForm(str,id) {
             }
         })
 
-        try {
-            if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
-                x = 0;
-            }
-            vector.push(eval(x));
-        } catch (e) {
-            vector.push(0);
-        }
+        evalx = eval(x) || 0;
+
+        vector.push(evalx);
 
     })
 
@@ -168,11 +166,14 @@ function modifyStringToValidForm(str,id) {
 
 function rotate(object, n, vector) {
 
-    if (!vector) {
-        vector = [0, 0, 0];
-    } else {
-        vector = modifyStringToValidForm(vector,object.name);
-    }
+    // if (!vector) {
+    //     vector = [0, 0, 0];
+    // } else {
+    //     vector = modifyStringToValidForm(vector,object.name);
+    // }
+
+    vector = [0, 0, 0];
+
 
     if (!n) n = 0;
 
@@ -188,7 +189,20 @@ function move(object, n, radiusNumber, vector) {
     if (!vector) {
         vector = [0, 0, 0];
     } else {
-        vector = modifyStringToValidForm(vector,object.name);
+        vector.forEach(x => {
+            x = x.split("time").join(time);
+            x = x.split("frames").join(frames);
+            forArr.forEach(j => {
+                if (id.includes(j[3])) {
+                    v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
+                    x = x.split(" " + j[0] + " ").join(v);
+                    y = y.split(" " + j[0] + " ").join(v);
+                    z = z.split(" " + j[0] + " ").join(v);
+                }
+            })
+            evalx = eval(x) || 0;
+            vector.push(evalx);
+        })
     }
 
     radius = radiusNumber;
@@ -211,7 +225,7 @@ function scale(object, vector) {
     if (!vector) {
         vector = [1, 1, 1];
     } else {
-        vector = modifyStringToValidForm(vector,object.name);
+        vector = modifyStringToValidForm(vector, object.name);
     }
 
     if (object) {
@@ -226,141 +240,74 @@ function scale(object, vector) {
 var i;
 var x, y, z;
 var v;
+var paintOver;
 
 function render() {
 
-    frames++;
+    paintOver = true;
     time = clock.getElapsedTime();
-
-    //scale in dir
-    scaleInDirection.forEach(k => {
-
-        x = " " + k[1][0] + " ";
-        x = x.split("time").join(time);
-        x = x.split("frames").join(frames);
-        y = " " + k[1][1] + " ";
-        y = y.split("time").join(time);
-        y = y.split("frames").join(frames);
-        z = " " + k[1][2] + " ";
-        z = z.split("time").join(time);
-        z = z.split("frames").join(frames);
+    frames++;
 
 
-        forArr.forEach(j => {
-            if (k[0].includes(j[3])) {
-                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
-                x = x.split(" " + j[0] + " ").join(v);
-                y = y.split(" " + j[0] + " ").join(v);
-                z = z.split(" " + j[0] + " ").join(v);
-            }
-        })
-
-        if (scene.getObjectByName(k[0])) {
-            try {
-                scene.getObjectByName(k[0]).scale.set(eval(x), eval(y), eval(z));
-                if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
-                    scene.getObjectByName(k[0]).scale.set(1, 1, 1);
-                }
-                if (eval(y) == undefined || isNaN(eval(y)) || eval(y) == Infinity) {
-                    scene.getObjectByName(k[0]).scale.set(1, 1, 1);
-                }
-                if (eval(z) == undefined || isNaN(eval(z)) || eval(z) == Infinity) {
-                    scene.getObjectByName(k[0]).scale.set(1, 1, 1);
-                }
-            } catch (e) {
-                if (scene.getObjectByName(k[0])) {
-                    scene.getObjectByName(k[0]).scale.set(1, 1, 1);
-                }
-            }
-        }
-    })
-
-    //move in dir
     moveInDirection.forEach(k => {
 
-        x = " " + k[1][0] + " ";
-        x = x.split("time").join(time);
-        x = x.split("frames").join(frames);
-        y = " " + k[1][1] + " ";
-        y = y.split("time").join(time);
-        y = y.split("frames").join(frames);
-        z = " " + k[1][2] + " ";
-        z = z.split("time").join(time);
-        z = z.split("frames").join(frames);
-
-
         forArr.forEach(j => {
             if (k[0].includes(j[3])) {
                 v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
-                x = x.split(" " + j[0] + " ").join(v);
-                y = y.split(" " + j[0] + " ").join(v);
-                z = z.split(" " + j[0] + " ").join(v);
+                k[1][0] = k[1][0].split(" " + j[0] + " ").join(v);
+                k[1][1] = k[1][1].split(" " + j[0] + " ").join(v);
+                k[1][2] = k[1][2].split(" " + j[0] + " ").join(v);
             }
         })
 
-        try {
-            scene.getObjectByName(k[0]).position.set(eval(x), eval(y), eval(z));
-            if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
-                scene.getObjectByName(k[0]).position.set(0, 0, 0);
-            }
-            if (eval(y) == undefined || isNaN(eval(y)) || eval(y) == Infinity) {
-                scene.getObjectByName(k[0]).position.set(0, 0, 0);
-            }
-            if (eval(z) == undefined || isNaN(eval(z)) || eval(z) == Infinity) {
-                scene.getObjectByName(k[0]).position.set(0, 0, 0);
-            }
-        } catch (e) {
-            if (scene.getObjectByName(k[0])) {
-                scene.getObjectByName(k[0]).position.set(0, 0, 0);
-            }
+        evalx = "vector = [" + k[1][0] + "," + k[1][1] + "," + k[1][2] + "];";
+        eval(evalx);
+        if (scene.getObjectByName(k[0])) {
+            scene.getObjectByName(k[0]).scale.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
         }
     })
 
-    //rotate in dir
     rotateInDirection.forEach(k => {
 
-        x = " " + k[1][0] + " ";
-        x = x.split("time").join(time);
-        x = x.split("frames").join(frames);
-        y = " " + k[1][1] + " ";
-        y = y.split("time").join(time);
-        y = y.split("frames").join(frames);
-        z = " " + k[1][2] + " ";
-        z = z.split("time").join(time);
-        z = z.split("frames").join(frames);
-
-
         forArr.forEach(j => {
             if (k[0].includes(j[3])) {
                 v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
-                x = x.split(" " + j[0] + " ").join(v);
-                y = y.split(" " + j[0] + " ").join(v);
-                z = z.split(" " + j[0] + " ").join(v);
+                k[1][0] = k[1][0].split(" " + j[0] + " ").join(v);
+                k[1][1] = k[1][1].split(" " + j[0] + " ").join(v);
+                k[1][2] = k[1][2].split(" " + j[0] + " ").join(v);
             }
         })
 
-        try {
-            scene.getObjectByName(k[0]).rotation.set(eval(x), eval(y), eval(z));
-            if (eval(x) == undefined || isNaN(eval(x)) || eval(x) == Infinity) {
-                scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
-            }
-            if (eval(y) == undefined || isNaN(eval(y)) || eval(y) == Infinity) {
-                scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
-            }
-            if (eval(z) == undefined || isNaN(eval(z)) || eval(z) == Infinity) {
-                scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
-            }
-        } catch (e) {
-            if (scene.getObjectByName(k[0])) {
-                scene.getObjectByName(k[0]).rotation.set(0, 0, 0);
-            }
+        evalx = "vector = [" + k[1][0] + "," + k[1][1] + "," + k[1][2] + "];";
+        eval(evalx);
+        if (scene.getObjectByName(k[0])) {
+            scene.getObjectByName(k[0]).scale.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
         }
-
     })
 
-    light.position.copy(camera.position);
 
-    var paintOver = true;
+    scaleInDirection.forEach(k => {
+        forArr.forEach(j => {
+            if (k[0].includes(j[3])) {
+                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
+                k[1][0] = k[1][0].split(" " + j[0] + " ").join(v);
+                k[1][1] = k[1][1].split(" " + j[0] + " ").join(v);
+                k[1][2] = k[1][2].split(" " + j[0] + " ").join(v);
+            }
+        })
+
+        evalx = "vector = [" + k[1][0] + "," + k[1][1] + "," + k[1][2] + "];";
+        eval(evalx);
+        if (vector[0] == 0) vector[0] = 0.001;
+        if (vector[1] == 0) vector[1] = 0.001;
+        if (vector[2] == 0) vector[2] = 0.001;
+        if (scene.getObjectByName(k[0])) {
+            scene.getObjectByName(k[0]).scale.set(vector[0] || 1, vector[1] || 1, vector[2] || 1);
+        }
+    })
+
+
+    light.position.copy(camera.position);
 
     workspace.getAllBlocks().forEach((x) => {
         if (x.type == "paintOver") {
@@ -372,38 +319,105 @@ function render() {
         renderer.autoClearColor = true;
     }
 
-    if (arrRotate.length > 0) {
-        arrRotate.forEach(m => {
-            objektyNaScene.forEach((x) => {
-                rotate(scene.getObjectByName(m[0]), m[0].slice(20), m[2]);
+
+    arrRotate.forEach(m => {
+        object = scene.getObjectByName(m[0]);
+
+        if (!m[2]) {
+            vector = [0, 0, 0];
+        } else {
+            m[2].forEach(x => {
+                // x = x.split("time").join(time);
+                // x = x.split("frames").join(frames);
+                forArr.forEach(j => {
+                    if (id.includes(j[3])) {
+                        v = j[1] + (m[0].slice(20) % (j[2] - j[1] + 1));
+                        x = x.split(" " + j[0] + " ").join(v);
+                        y = y.split(" " + j[0] + " ").join(v);
+                        z = z.split(" " + j[0] + " ").join(v);
+                    }
+                })
+                evalx = eval(x) || 0;
+                vector.push(evalx);
             })
-        })
-    }
+        }
 
-    if (arrMove.length > 0) {
+        object.rotation.set(
+            vector[0] + Math.cos(time * Math.PI * 0.5),
+            vector[1] + Math.cos(time * Math.PI * 0.5),
+            vector[2] + Math.cos(time * Math.PI * 0.5)
+        )
+    })
 
-        arrMove.forEach(m => {
-            objektyNaScene.forEach((x) => {
-                move(scene.getObjectByName(m[0]), m[0].slice(20), m[1], m[2]);
+
+    arrMove.forEach(m => {
+
+        object = scene.getObjectByName(m[0]);
+        if (!m[2]) {
+            vector = [0, 0, 0];
+        } else {
+            m[2].forEach(x => {
+                // x = x.split("time").join(time);
+                // x = x.split("frames").join(frames);
+                forArr.forEach(j => {
+                    if (id.includes(j[3])) {
+                        v = j[1] + (m[0].slice(20) % (j[2] - j[1] + 1));
+                        x = x.split(" " + j[0] + " ").join(v);
+                        y = y.split(" " + j[0] + " ").join(v);
+                        z = z.split(" " + j[0] + " ").join(v);
+                    }
+                })
+                evalx = eval(x) || 0;
+                vector.push(evalx);
             })
-        })
+        }
 
-    }
+        // console.log(vector);
 
-    if (arrScale.length > 0) {
+        radius = m[1];
+        var number = 0
+        if (m[0].slice(20)) number = m[0].slice(20);
 
-        arrScale.forEach(m => {
-            objektyNaScene.forEach((x) => {
-                scale(scene.getObjectByName(m[0]), m[2])
+        object.position.set(
+            vector[0] + Math.cos(Number(number) * 0.8 + time + Math.PI * 0.5) * radius,
+            vector[1] + Math.sin(Number(number) * 0.8 + time + Math.PI * 0.5) * radius,
+            vector[2] + Math.cos(Number(number) * 0.8 + time + Math.PI * 0.5) * radius
+        )
+
+    })
+
+
+    arrScale.forEach(m => {
+        object = scene.getObjectByName(m[0]);
+        if (!m[2]) {
+            vector = [1, 1, 1];
+        } else {
+            m[2].forEach(x => {
+                // x = x.split("time").join(time);
+                // x = x.split("frames").join(frames);
+                forArr.forEach(j => {
+                    if (id.includes(j[3])) {
+                        v = j[1] + (m[0].slice(20) % (j[2] - j[1] + 1));
+                        x = x.split(" " + j[0] + " ").join(v);
+                        y = y.split(" " + j[0] + " ").join(v);
+                        z = z.split(" " + j[0] + " ").join(v);
+                    }
+                })
+                evalx = eval(x) || 0;
+                vector.push(evalx);
             })
-        })
+        }
 
-    }
+        object.scale.set(
+            vector[0] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
+            vector[1] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
+            vector[2] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius)
+        )
+    })
+
 
     controls.update();
-
     renderer.render(scene, camera);
-
     requestAnimationFrame(render);
 
 }
@@ -440,6 +454,8 @@ duration = 0;
 var max = 1;
 var sound;
 var timeoutArr = [];
+var playNotes = false;
+
 
 
 function playMusic() {
@@ -447,10 +463,10 @@ function playMusic() {
         duration = 0;
 
         x.forEach(note => {
-            duration += 1/eval(note[1]);
+            duration += 1 / eval(note[1]);
             timeout_id = setTimeout(function () {
                 if (note[0] != "'rest'") {
-                var source = "sounds/"+note[2].slice(1,-1)+"/" + note[0].slice(1, note[0].length - 1) + ".mp3";
+                    var source = "sounds/" + note[2].slice(1, -1) + "/" + note[0].slice(1, note[0].length - 1) + ".mp3";
                     sound = new Howl({
                         src: source,
                         html5: true,
@@ -473,14 +489,36 @@ function runCode(event) {
 
     create_variable(workspace);
 
-    if (timeoutArr) {
-        timeoutArr.forEach(x => {
-            clearTimeout(x);
-        })
+    playNotes = false;
+    blockFromEvent = workspace.getBlockById(event.blockId);
+    if(blockFromEvent) blockFromEvent = blockFromEvent.getSurroundParent();
+    // console.log(blockFromEvent.getSurroundParent());
+    while (blockFromEvent) {
+
+        typeOfBlock = blockFromEvent.type;
+        console.log(typeOfBlock);
+
+        if (typeOfBlock == "play-block") {
+
+            playNotes = true;
+
+        }
+
+        blockFromEvent = blockFromEvent.getSurroundParent();
     }
 
-    var timeout_id = setTimeout(playMusic, 1);
-    timeoutArr.push(timeout_id);
+
+    if (playNotes) {
+
+        if (timeoutArr) {
+            timeoutArr.forEach(x => {
+                clearTimeout(x);
+            })
+        }
+
+        var timeout_id = setTimeout(playMusic, 0);
+        timeoutArr.push(timeout_id);
+    }
 
     objektyNaScene = scene.children;
 
@@ -505,14 +543,15 @@ function runCode(event) {
         if (event.type == Blockly.Events.BLOCK_DELETE) {
 
             // clearInterval(id_var);
-            if (timeoutArr) {
-                timeoutArr.forEach(x => {
-                    clearTimeout(x);
-                })
-            }
-        
-            var timeout_id = setTimeout(playMusic, 1);
-            timeoutArr.push(timeout_id);
+            // if (timeoutArr) {
+            //     timeoutArr.forEach(x => {
+            //         clearTimeout(x);
+            //     })
+            // }
+
+
+            // var timeout_id = setTimeout(playMusic, 1);
+            // timeoutArr.push(timeout_id);
 
             arr = [];
             arr = event.ids;
@@ -582,9 +621,22 @@ function runCode(event) {
         }
     }
 
-    clearInterval(id_var);
-    id_var = setInterval(playMusic, max * 1000);
+    // if (playNotes) {
 
+    //     if (timeoutArr) {
+    //         timeoutArr.forEach(x => {
+    //             clearTimeout(x);
+    //         })
+    //     }
+
+    //     var timeout_id = setTimeout(playMusic, 0);
+    //     timeoutArr.push(timeout_id);
+    // }
+
+    if (playNotes) {
+        clearInterval(id_var);
+        id_var = setInterval(playMusic, max * 1000);
+    }
 
     if (event) {
         if (event.type == Blockly.Events.BLOCK_DELETE) {

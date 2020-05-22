@@ -69,6 +69,8 @@ Blockly.JavaScript['MoveValueInput'] = function (block) {
     var number_y = Blockly.JavaScript.valueToCode(block, 'y', Blockly.JavaScript.ORDER_NONE);
     var number_z = Blockly.JavaScript.valueToCode(block, 'z', Blockly.JavaScript.ORDER_NONE);
 
+    // console.log(eval(number_x));
+
     var number = 1;
     var code = '';
 
@@ -274,3 +276,31 @@ Blockly.JavaScript['ScaleValueInput'] = function (block) {
     return code;
 
 };
+
+
+
+
+
+
+// while (blockFromEvent) {
+
+//     // console.log(blockFromEvent.type);
+//     typeOfBlock = blockFromEvent.type;
+
+//    console.log(event);
+
+//     if (typeOfBlock == "tone" || typeOfBlock == "repeat"
+//         || typeOfBlock == "for" || typeOfBlock == "rest" || typeOfBlock == "play") {
+
+//         playMusic = true;
+//         // var timeout_id = setTimeout(playMusic, 0.1);
+//         // timeoutArr.push(timeout_id);
+
+//         // // if ( ! document.webkitHidden ){
+//         // clearInterval(id_var);
+//         // id_var = setInterval(playMusic, max * 1000);
+
+//     }
+
+//     blockFromEvent = blockFromEvent.getSurroundParent();
+// }
