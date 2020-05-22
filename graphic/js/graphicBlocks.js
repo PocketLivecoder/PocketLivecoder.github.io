@@ -104,7 +104,7 @@ Blockly.Blocks['repeat'] = {
     init: function () {
         this.appendDummyInput()
             .appendField(new Blockly.FieldLabelSerializable("repeat"), "repeat")
-            .appendField(new Blockly.FieldNumber(1, 1, 100, 1), "number")
+            .appendField(new Blockly.FieldNumber(1, 1, 10, 1), "number")
             .appendField(new Blockly.FieldLabelSerializable("times"), "times");
         this.appendStatementInput("NAME")
             .setCheck(null)

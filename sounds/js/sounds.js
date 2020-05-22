@@ -189,7 +189,10 @@ Blockly.JavaScript['play-block'] = function (block) {
     if (max_dur > max) max = max_dur;
   })
 
-  console.log(arr);
+  // console.log(max);
+  // console.log(arr);
+  console.log("sound")
+
 
   if(statements_name){
   code += 'noteArr['+playBlocksCount+'] = "' + statements_name+ '".split(";").map(function(x) {return x.split(",")});'

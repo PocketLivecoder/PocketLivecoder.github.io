@@ -491,12 +491,22 @@ function runCode(event) {
 
     playNotes = false;
     blockFromEvent = workspace.getBlockById(event.blockId);
-    if(blockFromEvent) blockFromEvent = blockFromEvent.getSurroundParent();
-    // console.log(blockFromEvent.getSurroundParent());
+    if (blockFromEvent) {
+        if (blockFromEvent.type == "play-block") {
+            blockFromEvent = blockFromEvent.getSurroundParent();
+        }
+    }
+
+    if (event.type == "move") {
+        if (event.oldParentId) {
+            blockFromEvent = workspace.getBlockById(event.oldParentId);
+        }
+    }
+
+
     while (blockFromEvent) {
 
         typeOfBlock = blockFromEvent.type;
-        console.log(typeOfBlock);
 
         if (typeOfBlock == "play-block") {
 
@@ -515,9 +525,10 @@ function runCode(event) {
                 clearTimeout(x);
             })
         }
-
         var timeout_id = setTimeout(playMusic, 0);
         timeoutArr.push(timeout_id);
+
+        
     }
 
     objektyNaScene = scene.children;
@@ -595,7 +606,7 @@ function runCode(event) {
             rotateInDirection = [];
             noteArr = [];
             playBlocksCount = 0;
-            max = 1;
+            max = 0;
             duration = 0;
             variable = [];
             forArr = [];
@@ -634,6 +645,7 @@ function runCode(event) {
     // }
 
     if (playNotes) {
+        console.log("runcode")
         clearInterval(id_var);
         id_var = setInterval(playMusic, max * 1000);
     }
