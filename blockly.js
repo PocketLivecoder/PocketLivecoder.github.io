@@ -86,7 +86,7 @@ var element = document.getElementById("scene");
 function init() {
 
     renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, preserveDrawingBuffer: true });
-    renderer.setClearColor(0x000000, 0);;
+    renderer.setClearColor(0xffffff, 1);;
     renderer.setSize(window.innerWidth, window.innerHeight);
     element.appendChild(renderer.domElement);
     element.childNodes[0].style.background = 'transparent'
@@ -99,6 +99,7 @@ function init() {
     light = new THREE.DirectionalLight(0xffffff, 5);
 
     renderer.sortObjects = false;
+
 
     camera.position.z = 5;
     camera.lookAt(scene.position);
@@ -263,7 +264,7 @@ function render() {
         evalx = "vector = [" + k[1][0] + "," + k[1][1] + "," + k[1][2] + "];";
         eval(evalx);
         if (scene.getObjectByName(k[0])) {
-            scene.getObjectByName(k[0]).scale.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
+            scene.getObjectByName(k[0]).position.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
         }
     })
 
@@ -280,8 +281,9 @@ function render() {
 
         evalx = "vector = [" + k[1][0] + "," + k[1][1] + "," + k[1][2] + "];";
         eval(evalx);
+        console.log(vector[0]);
         if (scene.getObjectByName(k[0])) {
-            scene.getObjectByName(k[0]).scale.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
+            scene.getObjectByName(k[0]).rotation.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
         }
     })
 
