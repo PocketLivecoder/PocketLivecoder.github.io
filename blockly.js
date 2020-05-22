@@ -147,7 +147,6 @@ function modifyStringToValidForm(str, id) {
 
         forArr.forEach(j => {
             if (id.includes(j[3])) {
-                console.log(j[0]);
                 v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
                 x = x.split(" " + j[0] + " ").join(v);
                 y = y.split(" " + j[0] + " ").join(v);
@@ -281,7 +280,6 @@ function render() {
 
         evalx = "vector = [" + k[1][0] + "," + k[1][1] + "," + k[1][2] + "];";
         eval(evalx);
-        console.log(vector[0]);
         if (scene.getObjectByName(k[0])) {
             scene.getObjectByName(k[0]).rotation.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
         }
@@ -648,7 +646,6 @@ function runCode(event) {
     // }
 
     if (playNotes) {
-        console.log("runcode")
         clearInterval(id_var);
         id_var = setInterval(playMusic, max * 1000);
     }
