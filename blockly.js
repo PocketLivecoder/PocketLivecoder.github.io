@@ -604,6 +604,7 @@ function runCode(event) {
             arrScale = [];
             moveInDirection = [];
             rotateInDirection = [];
+            scaleInDirection = [];
             noteArr = [];
             playBlocksCount = 0;
             max = 0;
