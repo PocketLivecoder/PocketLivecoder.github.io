@@ -11,8 +11,6 @@ Blockly.Blocks['MoveValueInput'] = {
         this.setInputsInline(true);
         this.setPreviousStatement(true, ["movement","shape","repeat"]);
         this.setNextStatement(true, ["movement","shape","repeat"]);
-        // this.setPreviousStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
-        // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(30);
         this.setTooltip("");
         this.setHelpUrl("");
@@ -32,8 +30,6 @@ Blockly.Blocks['ScaleValueInput'] = {
         this.setInputsInline(true);
         this.setPreviousStatement(true, ["movement","shape","repeat"]);
         this.setNextStatement(true, ["movement","shape","repeat"]);
-        // this.setPreviousStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
-        // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(30);
         this.setTooltip("");
         this.setHelpUrl("");
@@ -54,8 +50,6 @@ Blockly.Blocks['RotateValueInput'] = {
         this.setInputsInline(true);
         this.setNextStatement(true, ["movement","shape","repeat"]);
         this.setPreviousStatement(true, ["movement","shape","repeat"]);
-        // this.setPreviousStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
-        // this.setNextStatement(true, ["cone","box","square","ring","ball","circle","repeat","moveValueInput","rotateValueInput","scale"]);
         this.setColour(40);
         this.setTooltip("");
         this.setHelpUrl("");
@@ -69,8 +63,6 @@ Blockly.JavaScript['MoveValueInput'] = function (block) {
     var number_y = Blockly.JavaScript.valueToCode(block, 'y', Blockly.JavaScript.ORDER_NONE);
     var number_z = Blockly.JavaScript.valueToCode(block, 'z', Blockly.JavaScript.ORDER_NONE);
 
-    // console.log(eval(number_x));
-
     var number = 1;
     var code = '';
 
@@ -79,11 +71,9 @@ Blockly.JavaScript['MoveValueInput'] = function (block) {
         while (parent.type == "repeat" || parent.type == "for") {
             if(parent.type == "repeat"){
                 number *= parent.inputList[0].fieldRow[1].value_;
-                // repeat_name += parent.id;
             }
             if(parent.type == "for"){
                 number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1;
-                // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
             if (parent.getSurroundParent()) {
@@ -100,14 +90,10 @@ Blockly.JavaScript['MoveValueInput'] = function (block) {
 
 
         if (this.getSurroundParent() != null && this.getSurroundParent().type != "repeat") {
-
             movecode += "scene.children.forEach((x) => {\nif(x.name.includes('" + this.getSurroundParent().id + "') ){\narrMove.push([x.name, " + number + "]);\n }\n});"
-
         }
         if (this.getChildren()[0]) {
-
             movecode += "recursion('" + this.id + "',0,0,0," + number + ",'randomMove');";
-
         }
 
         return code;
@@ -119,14 +105,10 @@ Blockly.JavaScript['MoveValueInput'] = function (block) {
         if (!number_z) number_z = 0;
 
         if (this.getSurroundParent() != null && (this.getSurroundParent().type != "repeat" && this.getSurroundParent().type != "for")) {
-
             movecode += "recursiveMove('" + this.getSurroundParent().id + "','" + number_x + "','" + number_y + "','" + number_z + "');";
-
         }
         if (this.getChildren()[0]) {
-
             movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'move');";
-
         }
     }
 
@@ -142,18 +124,15 @@ Blockly.JavaScript['RotateValueInput'] = function (block) {
 
     var number = 1;
     var code = '';
-    var repeat_number = 1;
 
     if (this.getSurroundParent()) {
         var parent = this.getSurroundParent();
         while (parent.type == "repeat" || parent.type == "for") {
             if(parent.type == "repeat"){
                 number *= parent.inputList[0].fieldRow[1].value_;
-                // repeat_name += parent.id;
             }
             if(parent.type == "for"){
                 number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1;
-                // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
             if (parent.getSurroundParent()) {
@@ -168,17 +147,10 @@ Blockly.JavaScript['RotateValueInput'] = function (block) {
 
     if (!number_x && !number_y && !number_z) {
 
-
         if (this.getSurroundParent() != null && (this.getSurroundParent().type != "repeat" && this.getSurroundParent().type != "for")) {
-
             movecode += "scene.children.forEach((x) => {if(x.name.includes('" + this.getSurroundParent().id + "')){movecode +=arrRotate.push([x.name, " + number + "]); }});"
-
-            // if (!arrRotate.includes(this.getSurroundParent().id))
-            //     arrRotate.push([this.getSurroundParent().id, number]);
         }
         if (this.getChildren()[0]) {
-
-
             movecode += "recursion('" + this.id + "',null,null,null," + number + ",'randomRotate');";
         }
 
@@ -191,12 +163,9 @@ Blockly.JavaScript['RotateValueInput'] = function (block) {
         if (!number_z) number_z = 0;
 
         if (this.getSurroundParent() != null && (this.getSurroundParent().type != "repeat" && this.getSurroundParent().type != "for")) {
-
             movecode += "recursiveRotate('" + this.getSurroundParent().id + "','" + number_x + "','" + number_y + "','" + number_z + "');";
-
         }
         if (this.getChildren()[0]) {
-
             movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'rotate');";
 
         }
@@ -213,18 +182,15 @@ Blockly.JavaScript['ScaleValueInput'] = function (block) {
 
     var number = 1;
     var code = '';
-    var repeat_number = 1;
 
     if (this.getSurroundParent()) {
         var parent = this.getSurroundParent();
         while (parent.type == "repeat" || parent.type == "for") {
             if(parent.type == "repeat"){
                 number *= parent.inputList[0].fieldRow[1].value_;
-                // repeat_name += parent.id;
             }
             if(parent.type == "for"){
                 number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1;
-                // console.log(Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1);
             }
 
             if (parent.getSurroundParent()) {
@@ -236,20 +202,12 @@ Blockly.JavaScript['ScaleValueInput'] = function (block) {
         }
     }
 
-
     if (!number_x && !number_y && !number_z) {
 
-
         if (this.getSurroundParent() != null && (this.getSurroundParent().type != "repeat" && this.getSurroundParent().type != "for")) {
-
             movecode += "scene.children.forEach((x) => {if(x.name.includes('" + this.getSurroundParent().id + "')){movecode +=arrScale.push([x.name, " + number + "]); }});"
-
-            // if (!arrRotate.includes(this.getSurroundParent().id))
-            //     arrRotate.push([this.getSurroundParent().id, number]);
         }
         if (this.getChildren()[0]) {
-
-
             movecode += "recursion('" + this.id + "',null,null,null," + number + ",'randomScale');";
         }
 
@@ -262,14 +220,10 @@ Blockly.JavaScript['ScaleValueInput'] = function (block) {
         if (!number_z) number_z = 1;
 
         if (this.getSurroundParent() != null && (this.getSurroundParent().type != "repeat" && this.getSurroundParent().type != "for")) {
-
             movecode += "recursiveScale('" + this.getSurroundParent().id + "','" + number_x + "','" + number_y + "','" + number_z + "');";
-
         }
         if (this.getChildren()[0]) {
-
             movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'scale');";
-
         }
     }
 
@@ -279,28 +233,200 @@ Blockly.JavaScript['ScaleValueInput'] = function (block) {
 
 
 
+function recursion(blok, number_x, number_y, number_z, number, type) {
+
+    var block = workspace.getBlockById(blok);
+
+    var nx = 0;
+    var counter = 0;
+    var x_num =" " + number_x;
+    var y_num =" " + number_y;
+    var z_num =" " + number_z;
+    var actionType = type;
+    var contains = false;
+
+    while (block) {
+        scene.children.forEach(y => {
+            if (y.name.includes(block.id)) {
+                nx += 1;
+            }
+        });
 
 
+        scene.children.forEach((x) => {
+            if (x.name.includes(block.id)) {
+                counter += 1;
 
-// while (blockFromEvent) {
+                if (type == "move") {
+                    if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
+                        x_num = x_num + " + " + number_x;
+                        z_num = z_num + " + " + number_z;
+                        y_num = y_num + " + " + number_y;
+                    }
+                    arrMove.forEach(k => {
+                        if (k[0] == x.name) {
+                            k[2] = [x_num  + " ", y_num  + " ", z_num  + " "];
+                        }
+                    })
+                    moveInDirection.forEach(y=>{
+                        if(y[0] == x.name){
+                            contains = true;
+                        }
+                    })
+                    if(!contains) moveInDirection.push([x.name, [x_num + " ", y_num + " ", z_num + " "]]);
+                }
+                if (type == "randomMove") {
+                    arrMove.forEach(y=>{
+                        if(y[0] == x.name){
+                            contains = true;
+                        }
+                    })
+                    if(!contains) arrMove.push([x.name, number]);
+                }
+                if (type == "scale") {
 
-//     // console.log(blockFromEvent.type);
-//     typeOfBlock = blockFromEvent.type;
+                    if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
+                        x_num = x_num + " + " + number_x;
+                        z_num = z_num + " + " + number_z;
+                        y_num = y_num + " + " + number_y;
+                    }
+                    arrScale.forEach(k => {
+                        if (k[0] == x.name) {
+                            k[2] = [x_num, y_num, z_num];
+                        }
+                    })
+                    scaleInDirection.forEach(y=>{
+                        if(y[0] == x.name){
+                            contains = true;
+                        }
+                    })
+                    if(!contains) scaleInDirection.push([x.name, [x_num, y_num, z_num]]);
 
-//    console.log(event);
+                }
+                if (type == "randomScale") {
+                    arrScale.forEach(y=>{
+                        if(y[0] == x.name){
+                            contains = true;
+                        }
+                    })
+                    if(!contains) arrScale.push([x.name, number]);
+                }
+                if (type == "randomRotate") {
+                    arrRotate.forEach(y=>{
+                        if(y[0] == x.name){
+                            contains = true;
+                        }
+                    })
+                    if(!contains) arrRotate.push([x.name, number]);
+                }
+                if (type == "rotate") {
+                    if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
+                        x_num = x_num + " + " + number_x;
+                        z_num = z_num + " + " + number_z;
+                        y_num = y_num + " + " + number_y;
+                    }
+                    // arrRotate.forEach(y=>{
+                    //     if(y[0] == x.name){
+                    //         containsRandom = true;
+                    //     }
+                    // })
+                    arrRotate.forEach(f => {
+                        if (f[0] == x.name) {
+                            f[2] = [x_num, y_num, z_num]
+                        }
+                    })
+                    rotateInDirection.forEach(y=>{
+                        if(y[0] == x.name){
+                            contains = true;
+                        }
+                    })
+                    if(!contains) rotateInDirection.push([x.name, [x_num, y_num, z_num]]);
+                }
+            }
+        })
 
-//     if (typeOfBlock == "tone" || typeOfBlock == "repeat"
-//         || typeOfBlock == "for" || typeOfBlock == "rest" || typeOfBlock == "play") {
+        if (block.type == "repeat" || block.type == "for") {
+            block.childBlocks_.forEach(x => {
+                if (x.parentBlock_.type == "repeat" || block.type == "for") {
+                    recursion(x.id, number_x, number_y, number_z, number, actionType);
+                }
+            })
+        }
 
-//         playMusic = true;
-//         // var timeout_id = setTimeout(playMusic, 0.1);
-//         // timeoutArr.push(timeout_id);
+        if (block.nextConnection.targetConnection) {
+            block = block.nextConnection.targetConnection.sourceBlock_;
+            x_num = number_x;
+            y_num = number_y;
+            z_num = number_z;
+            nx = 0;
+        } else {
+            break;
+        }
+    }
 
-//         // // if ( ! document.webkitHidden ){
-//         // clearInterval(id_var);
-//         // id_var = setInterval(playMusic, max * 1000);
+}
 
-//     }
+function recursiveScale(ID, num_x, num_y, num_z) {
+    var contains = false;
+    scaleInDirection = [];
+    scene.children.forEach((x) => {
+        if (x.name.includes(ID)) {
 
-//     blockFromEvent = blockFromEvent.getSurroundParent();
-// }
+            arrScale.forEach(k => {
+                if (k[0] == x.name) {
+                    k[2] = [num_x, num_y, num_z];
+                }
+            })
+
+            scaleInDirection.forEach(y=>{
+                if(y[0] == x.name){
+                    contains = true;
+                }
+            })
+            if(!contains) scaleInDirection.push([x.name, [x_num, y_num, z_num]]);
+        }
+    })
+}
+
+function recursiveMove(ID, num_x, num_y, num_z) {
+    var contains = false;
+    scene.children.forEach((x) => {
+        if (x.name.includes(ID)) {
+
+            arrMove.forEach(k => {
+                if (k[0] == x.name) {
+                    k[2] = [num_x, num_y, num_z];
+                }
+            })
+            moveInDirection.forEach(y=>{
+                if(y[0] == x.name){
+                    contains = true;
+                }
+            })
+            if(!contains) moveInDirection.push([x.name, [num_x, num_y, num_z]]);
+        }
+    })
+}
+
+function recursiveRotate(ID, num_x, num_y, num_z) {
+    var contains = false;
+    rotateInDirection = [];
+    scene.children.forEach((x) => {
+        if (x.name.includes(ID)) {
+
+            arrRotate.forEach(f => {
+                if (f[0] == x.name) {
+                    f[2] = [num_x, num_y, num_z];
+                }
+            })
+
+            rotateInDirection.forEach(y=>{
+                if(y[0] == x.name){
+                    contains = true;
+                }
+            })
+            if(!contains) rotateInDirection.push([x.name, [x_num, y_num, z_num]]);
+
+        }
+    })
+}

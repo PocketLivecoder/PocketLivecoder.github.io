@@ -135,108 +135,6 @@ var time = 0;
 var radius = 1.5;
 var evalx, evaly, evalz;
 var vector;
-
-function modifyStringToValidForm(str, id) {
-
-    var vector = [];
-
-    str.forEach(x => {
-
-        x = x.split("time").join(time);
-        x = x.split("frames").join(frames);
-
-        forArr.forEach(j => {
-            if (id.includes(j[3])) {
-                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
-                x = x.split(" " + j[0] + " ").join(v);
-                y = y.split(" " + j[0] + " ").join(v);
-                z = z.split(" " + j[0] + " ").join(v);
-            }
-        })
-
-        evalx = eval(x) || 0;
-
-        vector.push(evalx);
-
-    })
-
-    return vector;
-}
-
-
-function rotate(object, n, vector) {
-
-    // if (!vector) {
-    //     vector = [0, 0, 0];
-    // } else {
-    //     vector = modifyStringToValidForm(vector,object.name);
-    // }
-
-    vector = [0, 0, 0];
-
-
-    if (!n) n = 0;
-
-    object.rotation.set(
-        vector[0] + Math.cos(time * Math.PI * 0.5),
-        vector[1] + Math.cos(time * Math.PI * 0.5),
-        vector[2] + Math.cos(time * Math.PI * 0.5)
-    )
-}
-
-function move(object, n, radiusNumber, vector) {
-
-    if (!vector) {
-        vector = [0, 0, 0];
-    } else {
-        vector.forEach(x => {
-            x = x.split("time").join(time);
-            x = x.split("frames").join(frames);
-            forArr.forEach(j => {
-                if (id.includes(j[3])) {
-                    v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
-                    x = x.split(" " + j[0] + " ").join(v);
-                    y = y.split(" " + j[0] + " ").join(v);
-                    z = z.split(" " + j[0] + " ").join(v);
-                }
-            })
-            evalx = eval(x) || 0;
-            vector.push(evalx);
-        })
-    }
-
-    radius = radiusNumber;
-    var number = 0
-    if (n) number = n;
-
-    time = clock.getElapsedTime() * 0.5 * Math.PI;
-    if (object) {
-        object.position.set(
-            vector[0] + Math.cos(number * 0.8 + time + Math.PI * 0.5) * radius,
-            vector[1] + Math.sin(number * 0.8 + time + Math.PI * 0.5) * radius,
-            vector[2] + Math.cos(number * 0.8 + time + Math.PI * 0.5) * radius
-        )
-    }
-}
-
-function scale(object, vector) {
-    time = clock.getElapsedTime() * 0.5 * Math.PI;
-
-    if (!vector) {
-        vector = [1, 1, 1];
-    } else {
-        vector = modifyStringToValidForm(vector, object.name);
-    }
-
-    if (object) {
-        object.scale.set(
-            vector[0] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
-            vector[1] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
-            vector[2] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius)
-        )
-    }
-}
-
 var i;
 var x, y, z;
 var v;
@@ -248,62 +146,101 @@ function render() {
     time = clock.getElapsedTime();
     frames++;
 
-
     moveInDirection.forEach(k => {
+
+        x = " " + k[1][0]
+        y = " " + k[1][2]
+        z = " " + k[1][3]
+
+        vector = [];
 
         forArr.forEach(j => {
             if (k[0].includes(j[3])) {
-                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
-                k[1][0] = k[1][0].split(" " + j[0] + " ").join(v);
-                k[1][1] = k[1][1].split(" " + j[0] + " ").join(v);
-                k[1][2] = k[1][2].split(" " + j[0] + " ").join(v);
-            }
-        })
 
-        evalx = "vector = [" + k[1][0] + "," + k[1][1] + "," + k[1][2] + "];";
-        eval(evalx);
-        if (scene.getObjectByName(k[0])) {
-            scene.getObjectByName(k[0]).position.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
-        }
+                p = k[0].slice(20) || '0';
+                v = j[1] + (Number(p) % (j[2] - j[1] + 1));
+                x = x.split(" " + j[0] + " ").join(v);
+                y = y.split(" " + j[0] + " ").join(v);
+                z = z.split(" " + j[0] + " ").join(v);
+
+                evalx = "vector = [" + x + "," + y + "," + z + "];";
+                try {
+                    eval(evalx);
+                } catch (error) {
+                }
+                if (scene.getObjectByName(k[0])) {
+                    scene.getObjectByName(k[0]).position.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
+                }
+            }
+
+
+
+        })
     })
 
     rotateInDirection.forEach(k => {
 
+        x = " " + k[1][0]
+        y = " " + k[1][2]
+        z = " " + k[1][3]
+
+        vector = [];
+
         forArr.forEach(j => {
             if (k[0].includes(j[3])) {
-                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
-                k[1][0] = k[1][0].split(" " + j[0] + " ").join(v);
-                k[1][1] = k[1][1].split(" " + j[0] + " ").join(v);
-                k[1][2] = k[1][2].split(" " + j[0] + " ").join(v);
-            }
-        })
 
-        evalx = "vector = [" + k[1][0] + "," + k[1][1] + "," + k[1][2] + "];";
-        eval(evalx);
-        if (scene.getObjectByName(k[0])) {
-            scene.getObjectByName(k[0]).rotation.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
-        }
+                p = k[0].slice(20) || '0';
+                v = j[1] + (Number(p) % (j[2] - j[1] + 1));
+                x = x.split(" " + j[0] + " ").join(v);
+                y = y.split(" " + j[0] + " ").join(v);
+                z = z.split(" " + j[0] + " ").join(v);
+
+                evalx = "vector = [" + x + "," + y + "," + z + "];";
+                try {
+                    eval(evalx);
+                } catch (error) {
+                }
+                if (scene.getObjectByName(k[0])) {
+                    scene.getObjectByName(k[0]).rotation.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
+                }
+            }
+
+
+
+        })
     })
 
 
     scaleInDirection.forEach(k => {
+
+        x = " " + k[1][0]
+        y = " " + k[1][2]
+        z = " " + k[1][3]
+
+        vector = [];
+
         forArr.forEach(j => {
             if (k[0].includes(j[3])) {
-                v = j[1] + (k[0].slice(20) % (j[2] - j[1] + 1));
-                k[1][0] = k[1][0].split(" " + j[0] + " ").join(v);
-                k[1][1] = k[1][1].split(" " + j[0] + " ").join(v);
-                k[1][2] = k[1][2].split(" " + j[0] + " ").join(v);
-            }
-        })
 
-        evalx = "vector = [" + k[1][0] + "," + k[1][1] + "," + k[1][2] + "];";
-        eval(evalx);
-        if (vector[0] == 0) vector[0] = 0.001;
-        if (vector[1] == 0) vector[1] = 0.001;
-        if (vector[2] == 0) vector[2] = 0.001;
-        if (scene.getObjectByName(k[0])) {
-            scene.getObjectByName(k[0]).scale.set(vector[0] || 1, vector[1] || 1, vector[2] || 1);
-        }
+                p = k[0].slice(20) || '0';
+                v = j[1] + (Number(p) % (j[2] - j[1] + 1));
+                x = x.split(" " + j[0] + " ").join(v);
+                y = y.split(" " + j[0] + " ").join(v);
+                z = z.split(" " + j[0] + " ").join(v);
+
+                evalx = "vector = [" + x + "," + y + "," + z + "];";
+                try {
+                    eval(evalx);
+                } catch (error) {
+                }
+                if (scene.getObjectByName(k[0])) {
+                    scene.getObjectByName(k[0]).scale.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
+                }
+            }
+
+
+
+        })
     })
 
 
@@ -322,19 +259,17 @@ function render() {
 
     arrRotate.forEach(m => {
         object = scene.getObjectByName(m[0]);
+        vector = [];
 
         if (!m[2]) {
             vector = [0, 0, 0];
         } else {
-            m[2].forEach(x => {
-                // x = x.split("time").join(time);
-                // x = x.split("frames").join(frames);
+            m[2].forEach(k => {
+                x = k;
                 forArr.forEach(j => {
-                    if (id.includes(j[3])) {
+                    if (object.name.includes(j[3])) {
                         v = j[1] + (m[0].slice(20) % (j[2] - j[1] + 1));
                         x = x.split(" " + j[0] + " ").join(v);
-                        y = y.split(" " + j[0] + " ").join(v);
-                        z = z.split(" " + j[0] + " ").join(v);
                     }
                 })
                 evalx = eval(x) || 0;
@@ -342,65 +277,64 @@ function render() {
             })
         }
 
-        object.rotation.set(
-            vector[0] + Math.cos(time * Math.PI * 0.5),
-            vector[1] + Math.cos(time * Math.PI * 0.5),
-            vector[2] + Math.cos(time * Math.PI * 0.5)
-        )
+        if (object) {
+            object.rotation.set(
+                vector[0] + Math.cos(time * Math.PI * 0.5),
+                vector[1] + Math.cos(time * Math.PI * 0.5),
+                vector[2] + Math.cos(time * Math.PI * 0.5)
+            )
+        }
     })
 
 
     arrMove.forEach(m => {
-
         object = scene.getObjectByName(m[0]);
+        vector = [];
+
         if (!m[2]) {
             vector = [0, 0, 0];
         } else {
-            m[2].forEach(x => {
-                // x = x.split("time").join(time);
-                // x = x.split("frames").join(frames);
+            m[2].forEach(k => {
+                x = k;
                 forArr.forEach(j => {
-                    if (id.includes(j[3])) {
+                    if (object.name.includes(j[3])) {
                         v = j[1] + (m[0].slice(20) % (j[2] - j[1] + 1));
                         x = x.split(" " + j[0] + " ").join(v);
-                        y = y.split(" " + j[0] + " ").join(v);
-                        z = z.split(" " + j[0] + " ").join(v);
                     }
                 })
                 evalx = eval(x) || 0;
                 vector.push(evalx);
             })
         }
-
-        // console.log(vector);
 
         radius = m[1];
         var number = 0
         if (m[0].slice(20)) number = m[0].slice(20);
 
-        object.position.set(
-            vector[0] + Math.cos(Number(number) * 0.8 + time + Math.PI * 0.5) * radius,
-            vector[1] + Math.sin(Number(number) * 0.8 + time + Math.PI * 0.5) * radius,
-            vector[2] + Math.cos(Number(number) * 0.8 + time + Math.PI * 0.5) * radius
-        )
+        if (object) {
+            object.position.set(
+                vector[0] + Math.cos(Number(number) * 0.8 + time + Math.PI * 0.5) * radius,
+                vector[1] + Math.sin(Number(number) * 0.8 + time + Math.PI * 0.5) * radius,
+                vector[2] + Math.cos(Number(number) * 0.8 + time + Math.PI * 0.5) * radius
+            )
+        }
 
     })
 
 
     arrScale.forEach(m => {
         object = scene.getObjectByName(m[0]);
+        vector = [];
+
         if (!m[2]) {
             vector = [1, 1, 1];
         } else {
-            m[2].forEach(x => {
-                // x = x.split("time").join(time);
-                // x = x.split("frames").join(frames);
+            m[2].forEach(k => {
+                x = k;
                 forArr.forEach(j => {
-                    if (id.includes(j[3])) {
+                    if (object.name.includes(j[3])) {
                         v = j[1] + (m[0].slice(20) % (j[2] - j[1] + 1));
                         x = x.split(" " + j[0] + " ").join(v);
-                        y = y.split(" " + j[0] + " ").join(v);
-                        z = z.split(" " + j[0] + " ").join(v);
                     }
                 })
                 evalx = eval(x) || 0;
@@ -408,11 +342,13 @@ function render() {
             })
         }
 
-        object.scale.set(
-            vector[0] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
-            vector[1] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
-            vector[2] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius)
-        )
+        if (object) {
+            object.scale.set(
+                vector[0] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
+                vector[1] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius),
+                vector[2] + Math.abs(Math.sin(time + Math.PI * 0.5) * radius)
+            )
+        }
     })
 
 
@@ -466,7 +402,7 @@ function playMusic() {
             duration += 1 / eval(note[1]);
             timeout_id = setTimeout(function () {
                 if (note[0] != "'rest'") {
-                    var source = "sounds/" + note[2].slice(1, -1) + "/" + note[0].slice(1, note[0].length - 1) + ".mp3";
+                    var source = "media/samples/" + note[2].slice(1, -1) + "/" + note[0].slice(1, note[0].length - 1) + ".mp3";
                     sound = new Howl({
                         src: source,
                         html5: true,
@@ -528,7 +464,7 @@ function runCode(event) {
         var timeout_id = setTimeout(playMusic, 0);
         timeoutArr.push(timeout_id);
 
-        
+
     }
 
     objektyNaScene = scene.children;
@@ -552,17 +488,6 @@ function runCode(event) {
 
     if (event) {
         if (event.type == Blockly.Events.BLOCK_DELETE) {
-
-            // clearInterval(id_var);
-            // if (timeoutArr) {
-            //     timeoutArr.forEach(x => {
-            //         clearTimeout(x);
-            //     })
-            // }
-
-
-            // var timeout_id = setTimeout(playMusic, 1);
-            // timeoutArr.push(timeout_id);
 
             arr = [];
             arr = event.ids;
@@ -729,13 +654,3 @@ function create_variable(workspace) {
     }
     return xmlList;
 };
-
-
-
-
-
-
-
-
-
-

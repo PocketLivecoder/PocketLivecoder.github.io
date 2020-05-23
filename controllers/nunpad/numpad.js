@@ -1,3 +1,4 @@
+//numpad in
 var numpad = {
     init: function () {
         // CREATE THE NUMPAD
@@ -28,80 +29,48 @@ var numpad = {
                 buttons.appendChild(button);
             };
         buttons.id = "numpad-btns";
-
-        append("C", numpad.reset, "ng");
-        append("&#10502;", numpad.delete, "ng");
-        // append("&#10006;", numpad.hide, "ng");
-        append("+", numpad.digit, "ng");
-        append("-", numpad.digit, "ng");
-
         // First row - 7 to 9, delete.
         for (var i = 7; i <= 9; i++) {
             append(i, numpad.digit);
         }
-        append("&#42;", numpad.digit, "ng");
+        append("&#10502;", numpad.delete, "ng");
         // Second row - 4 to 6, clear.
         for (var i = 4; i <= 6; i++) {
             append(i, numpad.digit);
         }
-        // append("C", numpad.reset, "ng");
-        append("/", numpad.digit, "ng")
+        append("C", numpad.reset, "ng");
         // Third row - 1 to 3, cancel.
         for (var i = 1; i <= 3; i++) {
             append(i, numpad.digit);
         }
-        append(".", numpad.dot, "ng");
-
-        // Last row - 0, dot, ok
-
-        append("0", numpad.digit);
-
-        append("(", numpad.digit);
-        append(")", numpad.digit);
         append("&#10006;", numpad.hide, "ok");
-
-
-        
+        // Last row - 0, dot, ok
+        append(0, numpad.digit, "zero");
         numpad.zero = button;
+        append(".", numpad.dot);
         numpad.dot = button;
-        append("cos", numpad.digit, "ng")
-        append("sin", numpad.digit, "ng")
-        append("tan", numpad.digit, "ng")
-
         append("&#10004;", numpad.select, "ok");
         // Add all buttons to wrapper
-
-        append("time", numpad.digit, "zero")
-        append("frame", numpad.digit, "zero")
-
         wrap.appendChild(buttons);
         document.body.appendChild(numpad.selector);
 
-
-
-        // console.log(document.getElementById("numpad-back"));
-        // document.getElementById("numpad-back").onClick = function () {
-        //     numpad.hide();
-        // }
+        document.getElementById("numpad-back").onClick = function () {
+            console.log("now")
+            numpad.hide();
+        }
     },
-
-    // div: function(){
-
-    // },
 
     attach: function (opt) {
         target = opt;
-        // var numpadElement = document.getElementById("numpad-back");
         this.show();
 
     },
 
     target: null, // contains the current selected field
     dec: true, // allow decimals?
-    max: 17, // max allowed characters
+    max: 10, // max allowed characters
     show: function (evt) {
-        // show() : show the number pad
-
+        
         // Show numpad
         var numpadElement = document.getElementById("numpad-back");
         numpadElement.style.visibility = "visible";
@@ -125,17 +94,7 @@ var numpad = {
 
         var length = numpad.display.value.length;
         if (length > 0) {
-
-            if(numpad.display.value[length-1] == "e"){
-                if(numpad.display.value.slice(length-4) == "time"){
-                    numpad.display.value = numpad.display.value.substring(0, length - 4);
-                }else{
-                    numpad.display.value = numpad.display.value.substring(0, length - 5);
-                }
-                console.log(numpad.display.value.slice(length-4))
-            }else{
-                numpad.display.value = numpad.display.value.substring(0, length - 1);
-            }
+            numpad.display.value = numpad.display.value.substring(0, length - 1);
         }
     },
 
@@ -148,7 +107,7 @@ var numpad = {
     digit: function (evt) {
         // digit() : append a digit
 
-        var current = numpad.display.value;
+        var current = numpad.display.value,
             append = evt.target.innerHTML;
 
         if (current.length < numpad.max) {
@@ -176,6 +135,7 @@ var numpad = {
         // select() : select the current number
 
         var value = numpad.display.value;
+        // console.log(value);
 
         // No decimals allowed - strip decimal
         if (!numpad.dec && value % 1 != 0) {
@@ -184,7 +144,6 @@ var numpad = {
 
         // Put selected value to target field + close numpad
         // target.value = value;
-        if(value == '') value = 0;
         target.setValue(value);
 
         // numpad.hide();

@@ -4,10 +4,11 @@
   <meta charset='utf-8'>
   <title>Blockly</title>
   <meta name='viewport' content='width=device-width, initial-scale=0.8, maximum-scale=0.8, user-scalable=0' />
-  <link rel='stylesheet' type='text/css' media='screen' href='blockly.css'>
-  <link rel='stylesheet' type='text/css' media='screen' href='sounds/js/pitch.css'>
-  <link rel='stylesheet' type='text/css' media='screen' href='lib/nunpad/numpad.css'>
-  <link rel='stylesheet' type='text/css' media='screen' href='lib/pitchSlider/slider.css'>
+  <link rel='stylesheet' type='text/css' media='screen' href='core.css'>
+  <link rel='stylesheet' type='text/css' media='screen' href='lib/pitch.css'>
+  <link rel='stylesheet' type='text/css' media='screen' href='controllers/nunpad/numpad.css'>
+  <link rel='stylesheet' type='text/css' media='screen' href='controllers/pitchSlider/slider.css'>
+  <link rel='stylesheet' type='text/css' media='screen' href='lib/pitch.css'>
 
 
 
@@ -42,10 +43,10 @@
       <block type="RotateValueInput"></block>
       <block type="MoveValueInput"></block>
       <block type="ScaleValueInput"></block>
-      <block type ="paintOver"></block>
+      <block type="paintOver"></block>
     </category>
 
-    <category name ="Math" custom="VAR" colour ="330"></category>
+    <category name="Math" custom="VAR" colour="330"></category>
 
     <category name="Sounds" colour="130">
       <block type="play-block"></block>
@@ -53,27 +54,30 @@
       <block type="tone"></block>
     </category>
 
-      <category name="Logic" colour="280">
-        <block type="repeat"></block>
-        <block type="for"></block>
-      </category>
+    <category name="Logic" colour="280">
+      <block type="repeat"></block>
+      <block type="for"></block>
+    </category>
   </xml>
 
 
-	<div id="wrap">
+  <div id="wrap">
     <div id="display"></div>
-            <div id="container">
-                <br><br>
-                <input id="slider" class="range vertical-heighest-first round" type="range" min="0" max="12" step="1" value="7">
-                <br><br><br>
-            </div>
-        <input type="button" id="button" value="&#10004;">
+    <div id="container">
+      <br><br>
+      <input id="slider" class="range vertical-heighest-first round" type="range" min="0" max="12" step="1" value="7">
+      <br><br><br>
     </div>
+    <input type="button" id="button" value="&#10004;">
+  </div>
 
 
 
-  <script src="lib/nunpad/numpad.js"></script>
-  <script src="lib/pitchSlider/slider.js"></script>
+  <!-- controllers -->
+  <script src="controllers/nunpad/numpad.js"></script>
+  <script src="controllers/pitchSlider/slider.js"></script>
+
+  <!-- lib -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.js"></script>
   <script src="lib/blockly_compressed.js"></script>
@@ -81,21 +85,18 @@
   <script src="lib/javascript_compressed.js"></script>
   <script src="lib/en.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5.1/dat.gui.min.js"></script>
+  <script src="lib/field_pitch.js"></script>
+  <script src="lib/OrbitControls.js"></script>
 
-  <script src="graphic/js/OrbitControls.js"></script>
+  <!-- core -->
+  <script src="core.js"></script>
 
-  <script src="operators.js"></script>
-  <script src="blockly.js"></script>
-  <script src="graphic/js/graphicBlocks.js"></script>
-  <script src="graphic/js/movement.js"></script>
-  <script src="sounds/js/field_pitch.js"></script>
-
-  <script src="sounds/js/soundBlocks.js"></script>
-  <script src="sounds/js/sounds.js"></script>
-
-
-
-
+  <!-- blocks -->
+  <script src="blocks/shapes.js"></script>
+  <script src="blocks/operators.js"></script>
+  <script src="blocks/movement.js"></script>
+  <script src="blocks/logic.js"></script>
+  <script src="blocks/sounds.js"></script>
 
 </body>
 
