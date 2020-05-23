@@ -140,8 +140,6 @@ function render() {
         vector = [];
 
         if (forArr.length) {
-            console.log("normal");
-
             forArr.forEach(fa => {
                 if (moveV[0].includes(fa[3])) {
 
@@ -620,7 +618,6 @@ document.addEventListener("visibilitychange", function(){
         clearInterval(id_var);
         id_var = setInterval(playMusic, max * 1000);
     }
-    console.log(visibility);
 });
 
 
