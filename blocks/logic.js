@@ -74,13 +74,17 @@ Blockly.JavaScript['for'] = function (block) {
     var to = block.getFieldValue("to");
 
     code = '';
+    var contains = false;
 
     if (!variable.includes(Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE))) {
         variable.push(Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE));
 
         workspace.getAllVariables().forEach(x => {
             if (x.name == Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE)) {
-                variableArr.push([this.id, x.id_]);
+                variableArr.forEach(y=>{
+                    if(y[0] == block.id) contains = true;
+                })
+                if(!contains) variableArr.push([block.id, x.id_]);
             }
         })
 

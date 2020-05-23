@@ -405,6 +405,7 @@ var maxDuration = 0.2;
 duration = 0;
 var max = 1;
 var timeoutArr = [];
+var visibility;
 
 function playMusic() {
     noteArr.forEach(x => {
@@ -470,7 +471,7 @@ function runCode(event) {
     }
 
 
-    if (playNotes) {
+    if (playNotes && visibility) {
 
         if (timeoutArr) {
             timeoutArr.forEach(x => {
@@ -522,7 +523,16 @@ function runCode(event) {
                     arrMove = arrMove.filter(x => x != e);
                 }
 
+
+                variableArr.forEach(x => {
+                    if (e == x[0]) {
+                        workspace.deleteVariableById(x[1]);
+                    }
+                })
+                variableArr = [];
+
             })
+
 
             for (i = 0; i < arr.length; i++) {
                 scene.remove(scene.getObjectByName(arr[i]));
@@ -552,7 +562,6 @@ function runCode(event) {
             duration = 0;
             variable = [];
             forArr = [];
-            variableArr = [];
 
 
             for (i = 0; i < scene.children.length; i++) {
@@ -586,31 +595,33 @@ function runCode(event) {
     //     timeoutArr.push(timeout_id);
     // }
 
-    if (playNotes) {
+    if (playNotes && visibility) {
         clearInterval(id_var);
         id_var = setInterval(playMusic, max * 1000);
     }
 
-    if (event) {
-        if (event.type == Blockly.Events.BLOCK_DELETE) {
-
-
-            arr.every(e => {
-
-                variableArr.forEach(x => {
-                    if (e == x[0]) {
-                        workspace.deleteVariableById(x[1]);
-                    }
-                })
-                variableArr = [];
-            })
-
-
-        };
-    }
-
 }
 workspace.addChangeListener(runCode);
+
+
+document.addEventListener("visibilitychange", function(){
+    if (document.hidden) {
+        visibility = false;
+        if (timeoutArr) {
+            timeoutArr.forEach(x => {
+                clearTimeout(x);
+            })
+        }
+        clearInterval(id_var);
+    } else {
+        visibility = true;
+        var timeout_id = setTimeout(playMusic, 0);
+        timeoutArr.push(timeout_id);
+        clearInterval(id_var);
+        id_var = setInterval(playMusic, max * 1000);
+    }
+    console.log(visibility);
+});
 
 
 
