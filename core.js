@@ -33,8 +33,6 @@
 // tónov nástrojov (klavír a pod.).//DONE
 
 
-localStorage.clear();
-
 var blocklyArea = document.getElementById('blocklyArea');
 var blocklyDiv = document.getElementById('blocklyDiv');
 var workspace = Blockly.inject(blocklyDiv,
@@ -55,18 +53,13 @@ workspace.registerToolboxCategoryCallback(
 //-----------------------------------------------------------------------------------------------------//
 //initialize scene, create camera and canvas
 var scene;
-// var objects;
 var camera;
 var renderer;
-// var stopRendering;
-// var cube;
 var arrRotate = [];
 var arrMove = [];
 var arrScale = [];
 var controls;
 var light;
-
-// var play_code;
 
 var blokyNaScene = [];
 
@@ -77,7 +70,6 @@ var scaleInDirection = [];
 var forArr = [];
 var noteArr = [];
 var variableArr = [];
-var meshArr = [];
 
 var clock = new THREE.Clock();
 
@@ -117,137 +109,160 @@ function init() {
         camera.updateProjectionMatrix();
     });
 
-    // for(i = 0; i<200; i++){
-    //     var geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-    //     var material = new THREE.MeshNormalMaterial();
-    //     var ring = new THREE.Mesh(geometry, material);
-    //     ring.name = name;
-    //     scene.add(ring);
-    // }
-
     render();
 }
 
 init();
 
+var radius = 1.5;
 var frames = 0;
 var time = 0;
-var radius = 1.5;
-var evalx, evaly, evalz;
-var vector;
-var i;
-var x, y, z;
-var v;
 var paintOver;
 
 function render() {
+
+    var value_x, value_y, value_z;
+    var vector;
+    var value;
 
     paintOver = true;
     time = clock.getElapsedTime();
     frames++;
 
-    moveInDirection.forEach(k => {
 
-        x = " " + k[1][0]
-        y = " " + k[1][2]
-        z = " " + k[1][3]
+    moveInDirection.forEach(moveV => {
+
+        value_x = " " + moveV[1][0];
+        value_y = " " + moveV[1][1];
+        value_z = " " + moveV[1][2];
 
         vector = [];
 
-        forArr.forEach(j => {
-            if (k[0].includes(j[3])) {
+        if (forArr.length) {
+            console.log("normal");
 
-                p = k[0].slice(20) || '0';
-                v = j[1] + (Number(p) % (j[2] - j[1] + 1));
-                x = x.split(" " + j[0] + " ").join(v);
-                y = y.split(" " + j[0] + " ").join(v);
-                z = z.split(" " + j[0] + " ").join(v);
+            forArr.forEach(fa => {
+                if (moveV[0].includes(fa[3])) {
 
-                evalx = "vector = [" + x + "," + y + "," + z + "];";
+                    moveValue = moveV[0].slice(20) || '0';
+                    value = fa[1] + (Number(moveValue) % (fa[2] - fa[1] + 1));
+                    value_x = value_x.split(" " + fa[0] + " ").join(value);
+                    value_y = value_y.split(" " + fa[0] + " ").join(value);
+                    value_z = value_z.split(" " + fa[0] + " ").join(value);
+
+                    if (scene.getObjectByName(moveV[0])) {
+                        evalx = "vector = [" + value_x + "," + value_y + "," + value_z + "];";
+                        try {
+                            eval(evalx);
+                        } catch (error) {
+                        }
+                        scene.getObjectByName(moveV[0]).position.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
+                    }
+                }
+
+            })
+        } else {
+
+            if (scene.getObjectByName(moveV[0])) {
+                evalx = "vector = [" + value_x + "," + value_y + "," + value_z + "];";
                 try {
                     eval(evalx);
                 } catch (error) {
                 }
-                if (scene.getObjectByName(k[0])) {
-                    scene.getObjectByName(k[0]).position.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
-                }
+                scene.getObjectByName(moveV[0]).position.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
             }
-
-
-
-        })
+        }
     })
 
-    rotateInDirection.forEach(k => {
+    rotateInDirection.forEach(rotate => {
 
-        x = " " + k[1][0]
-        y = " " + k[1][2]
-        z = " " + k[1][3]
+        value_x = " " + rotate[1][0]
+        value_y = " " + rotate[1][1]
+        value_z = " " + rotate[1][2]
 
         vector = [];
 
-        forArr.forEach(j => {
-            if (k[0].includes(j[3])) {
+        if (forArr.length = 0) {
+            forArr.forEach(fa => {
+                if (rotate[0].includes(fa[3])) {
 
-                p = k[0].slice(20) || '0';
-                v = j[1] + (Number(p) % (j[2] - j[1] + 1));
-                x = x.split(" " + j[0] + " ").join(v);
-                y = y.split(" " + j[0] + " ").join(v);
-                z = z.split(" " + j[0] + " ").join(v);
+                    rotateValue = rotate[0].slice(20) || '0';
+                    value = fa[1] + (Number(rotateValue) % (fa[2] - fa[1] + 1));
+                    value_x = value_x.split(" " + fa[0] + " ").join(value);
+                    value_y = value_y.split(" " + fa[0] + " ").join(value);
+                    value_z = value_z.split(" " + fa[0] + " ").join(value);
 
-                evalx = "vector = [" + x + "," + y + "," + z + "];";
+                    if (scene.getObjectByName(rotate[0])) {
+                        evalx = "vector = [" + value_x + "," + value_y + "," + value_z + "];";
+                        try {
+                            eval(evalx);
+                        } catch (error) {
+                        }
+                        scene.getObjectByName(rotate[0]).rotation.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
+                    }
+                }
+
+
+
+            })
+        } else {
+            if (scene.getObjectByName(rotate[0])) {
+                evalx = "vector = [" + value_x + "," + value_y + "," + value_z + "];";
                 try {
                     eval(evalx);
                 } catch (error) {
                 }
-                if (scene.getObjectByName(k[0])) {
-                    scene.getObjectByName(k[0]).rotation.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
-                }
+                scene.getObjectByName(rotate[0]).rotation.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
             }
-
-
-
-        })
+        }
     })
 
 
-    scaleInDirection.forEach(k => {
+    scaleInDirection.forEach(scale => {
 
-        x = " " + k[1][0]
-        y = " " + k[1][2]
-        z = " " + k[1][3]
+        value_x = " " + scale[1][0]
+        value_y = " " + scale[1][1]
+        value_z = " " + scale[1][2]
 
         vector = [];
 
-        forArr.forEach(j => {
-            if (k[0].includes(j[3])) {
+        if (forArr.length) {
+            forArr.forEach(fa => {
+                if (scale[0].includes(fa[3])) {
 
-                p = k[0].slice(20) || '0';
-                v = j[1] + (Number(p) % (j[2] - j[1] + 1));
-                x = x.split(" " + j[0] + " ").join(v);
-                y = y.split(" " + j[0] + " ").join(v);
-                z = z.split(" " + j[0] + " ").join(v);
+                    sliceValue = scale[0].slice(20) || '0';
+                    value = fa[1] + (Number(sliceValue) % (fa[2] - fa[1] + 1));
+                    value_x = value_x.split(" " + fa[0] + " ").join(value);
+                    value_y = value_y.split(" " + fa[0] + " ").join(value);
+                    value_z = value_z.split(" " + fa[0] + " ").join(value);
 
-                evalx = "vector = [" + x + "," + y + "," + z + "];";
+                    if (scene.getObjectByName(scale[0])) {
+                        evalx = "vector = [" + value_x + "," + value_y + "," + value_z + "];";
+                        try {
+                            eval(evalx);
+                        } catch (error) {
+                        }
+                        scene.getObjectByName(scale[0]).scale.set(vector[0] || 1, vector[1] || 1, vector[2] || 1);
+                    }
+                }
+            })
+        } else {
+            if (scene.getObjectByName(scale[0])) {
+                evalx = "vector = [" + value_x + "," + value_y + "," + value_z + "];";
                 try {
                     eval(evalx);
                 } catch (error) {
                 }
-                if (scene.getObjectByName(k[0])) {
-                    scene.getObjectByName(k[0]).scale.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
-                }
+                scene.getObjectByName(scale[0]).scale.set(vector[0] || 1, vector[1] || 1, vector[2] || 1);
             }
-
-
-
-        })
+        }
     })
 
 
     light.position.copy(camera.position);
 
-    workspace.getAllBlocks().forEach((x) => {
-        if (x.type == "paintOver") {
+    workspace.getAllBlocks().forEach((blocks) => {
+        if (blocks.type == "paintOver") {
             paintOver = false;
         }
     })
@@ -257,22 +272,22 @@ function render() {
     }
 
 
-    arrRotate.forEach(m => {
-        object = scene.getObjectByName(m[0]);
+    arrRotate.forEach(rotate => {
+        object = scene.getObjectByName(rotate[0]);
         vector = [];
 
-        if (!m[2]) {
+        if (!rotate[2]) {
             vector = [0, 0, 0];
         } else {
-            m[2].forEach(k => {
-                x = k;
+            rotate[2].forEach(coords => {
+                value_x = coords;
                 forArr.forEach(j => {
                     if (object.name.includes(j[3])) {
-                        v = j[1] + (m[0].slice(20) % (j[2] - j[1] + 1));
-                        x = x.split(" " + j[0] + " ").join(v);
+                        value = j[1] + (rotate[0].slice(20) % (j[2] - j[1] + 1));
+                        value_x = value_x.split(" " + j[0] + " ").join(value);
                     }
                 })
-                evalx = eval(x) || 0;
+                evalx = eval(value_x) || 0;
                 vector.push(evalx);
             })
         }
@@ -287,29 +302,29 @@ function render() {
     })
 
 
-    arrMove.forEach(m => {
-        object = scene.getObjectByName(m[0]);
+    arrMove.forEach(move => {
+        object = scene.getObjectByName(move[0]);
         vector = [];
 
-        if (!m[2]) {
+        if (!move[2]) {
             vector = [0, 0, 0];
         } else {
-            m[2].forEach(k => {
-                x = k;
+            move[2].forEach(coords => {
+                value_x = coords;
                 forArr.forEach(j => {
                     if (object.name.includes(j[3])) {
-                        v = j[1] + (m[0].slice(20) % (j[2] - j[1] + 1));
-                        x = x.split(" " + j[0] + " ").join(v);
+                        value = j[1] + (move[0].slice(20) % (j[2] - j[1] + 1));
+                        value_x = value_x.split(" " + j[0] + " ").join(value);
                     }
                 })
-                evalx = eval(x) || 0;
+                evalx = eval(value_x) || 0;
                 vector.push(evalx);
             })
         }
 
-        radius = m[1];
+        radius = move[1];
         var number = 0
-        if (m[0].slice(20)) number = m[0].slice(20);
+        if (move[0].slice(20)) number = move[0].slice(20);
 
         if (object) {
             object.position.set(
@@ -322,22 +337,22 @@ function render() {
     })
 
 
-    arrScale.forEach(m => {
-        object = scene.getObjectByName(m[0]);
+    arrScale.forEach(scale => {
+        object = scene.getObjectByName(scale[0]);
         vector = [];
 
-        if (!m[2]) {
+        if (!scale[2]) {
             vector = [1, 1, 1];
         } else {
-            m[2].forEach(k => {
-                x = k;
+            scale[2].forEach(coords => {
+                value_x = coords;
                 forArr.forEach(j => {
                     if (object.name.includes(j[3])) {
-                        v = j[1] + (m[0].slice(20) % (j[2] - j[1] + 1));
-                        x = x.split(" " + j[0] + " ").join(v);
+                        value = j[1] + (scale[0].slice(20) % (j[2] - j[1] + 1));
+                        value_x = value_x.split(" " + j[0] + " ").join(value);
                     }
                 })
-                evalx = eval(x) || 0;
+                evalx = eval(value_x) || 0;
                 vector.push(evalx);
             })
         }
@@ -388,11 +403,7 @@ var timeout_id; // var array = ["A","B"];
 var maxDuration = 0.2;
 duration = 0;
 var max = 1;
-var sound;
 var timeoutArr = [];
-var playNotes = false;
-
-
 
 function playMusic() {
     noteArr.forEach(x => {
@@ -422,6 +433,10 @@ function playMusic() {
 }
 
 function runCode(event) {
+
+    var playNotes = false;
+    var sound;
+
 
     create_variable(workspace);
 
