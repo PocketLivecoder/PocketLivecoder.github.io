@@ -101,6 +101,7 @@ function init() {
 
     controls.update();
 
+    Howler.autoUnlock = false;
 
     window.addEventListener('resize', () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
