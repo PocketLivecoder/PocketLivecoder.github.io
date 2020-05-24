@@ -2,7 +2,7 @@ Blockly.Blocks['repeat'] = {
     init: function () {
         this.appendDummyInput()
             .appendField(new Blockly.FieldLabelSerializable("repeat"), "repeat")
-            .appendField(new Blockly.FieldNumber(1, 1, 100, 1), "number")
+            .appendField(new Blockly.FieldNumber(1, 1, 500, 1), "number")
             .appendField(new Blockly.FieldLabelSerializable("times"), "times");
         this.appendStatementInput("NAME")
             .setCheck(null)
@@ -21,9 +21,9 @@ Blockly.Blocks['for'] = {
             .appendField("For")
             .appendField(new Blockly.FieldVariable(Blockly.Variables.generateUniqueName(workspace)), "index") //sem dam premennu a budem ju inkrementovat iba;
             .appendField("from")
-            .appendField(new Blockly.FieldNumber(1, 1, 9, 1), "from")
+            .appendField(new Blockly.FieldNumber(1, 1, 500, 1), "from")
             .appendField("to")
-            .appendField(new Blockly.FieldNumber(1, 1, 9, 1), "to");
+            .appendField(new Blockly.FieldNumber(1, 1, 500, 1), "to");
         this.appendStatementInput("NAME")
             .setCheck(null)
             .appendField("do");

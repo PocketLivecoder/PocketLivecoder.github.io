@@ -149,6 +149,8 @@ function render() {
                     value_y = value_y.split(" " + fa[0] + " ").join(value);
                     value_z = value_z.split(" " + fa[0] + " ").join(value);
 
+                    console.log(eval(value_x) + " " + eval(value_y));
+
                     if (scene.getObjectByName(moveV[0])) {
                         evalx = "vector = [" + value_x + "," + value_y + "," + value_z + "];";
                         try {
