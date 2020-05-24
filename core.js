@@ -130,7 +130,6 @@ function render() {
     time = clock.getElapsedTime();
     frames++;
 
-
     moveInDirection.forEach(moveV => {
 
         value_x = " " + moveV[1][0];
@@ -441,7 +440,6 @@ function runCode(event) {
 
     create_variable(workspace);
 
-    playNotes = false;
     blockFromEvent = workspace.getBlockById(event.blockId);
     if (blockFromEvent) {
         if (blockFromEvent.type == "play-block") {
@@ -477,9 +475,6 @@ function runCode(event) {
                 clearTimeout(x);
             })
         }
-        var timeout_id = setTimeout(playMusic, 0);
-        timeoutArr.push(timeout_id);
-
 
     }
 
@@ -572,6 +567,14 @@ function runCode(event) {
 
             var code = Blockly.JavaScript.workspaceToCode(workspace);
             Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+
+            if (playNotes && visibility) {
+                code += "var timeout_id = setTimeout(playMusic, 0);"
+                    + "timeoutArr.push(timeout_id);"
+                    + "clearInterval(id_var);"
+                    + "id_var = setInterval(playMusic, max * 1000);"
+            }
+
             try {
                 eval(code);
                 movecode = '';
@@ -580,11 +583,6 @@ function runCode(event) {
             }
 
         }
-    }
-
-    if (playNotes && visibility) {
-        clearInterval(id_var);
-        id_var = setInterval(playMusic, max * 1000);
     }
 
 }
