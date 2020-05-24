@@ -402,12 +402,13 @@ var objektyNaScene;
 var id_var;
 var timeout_id; // var array = ["A","B"];
 var maxDuration = 0.2;
-duration = 0;
+var duration = 0;
 var max = 1;
 var timeoutArr = [];
-var visibility;
+var visibility = true;
 
 function playMusic() {
+    var sound;
     noteArr.forEach(x => {
         duration = 0;
 
@@ -418,9 +419,9 @@ function playMusic() {
                     var source = "media/samples/" + note[2].slice(1, -1) + "/" + note[0].slice(1, note[0].length - 1) + ".mp3";
                     sound = new Howl({
                         src: source,
-                        html5: true,
                         rate: eval(note[1]),
                         volume: 1,
+                        pool: 0
                     })
 
                     sound.play();
@@ -437,8 +438,6 @@ function playMusic() {
 function runCode(event) {
 
     var playNotes = false;
-    var sound;
-
 
     create_variable(workspace);
 
@@ -582,18 +581,6 @@ function runCode(event) {
 
         }
     }
-
-    // if (playNotes) {
-
-    //     if (timeoutArr) {
-    //         timeoutArr.forEach(x => {
-    //             clearTimeout(x);
-    //         })
-    //     }
-
-    //     var timeout_id = setTimeout(playMusic, 0);
-    //     timeoutArr.push(timeout_id);
-    // }
 
     if (playNotes && visibility) {
         clearInterval(id_var);
