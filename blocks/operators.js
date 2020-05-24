@@ -29,7 +29,7 @@ Blockly.Blocks['Operation'] = {
         this.appendValueInput("left")
             .setCheck(null)
         this.appendDummyInput()
-            .appendField(new Blockly.FieldDropdown([["+", "+"], ["-", "-"], ["*", "*"], ["/", "/"]]), "Opts");
+            .appendField(new Blockly.FieldDropdown([["+", "+"], ["-", "-"], ["*", "*"], ["/", "/"], ["%", "%"]]), "Opts");
         this.appendValueInput("right")
             .setCheck(null)
         this.setInputsInline(true);
