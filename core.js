@@ -1,38 +1,3 @@
-
-
-// TODO:
-// - Logic by som premenoval napr. na Movement. //DONE
-
-
-// - Rotate/Move/Scale bez parametrov by som možno odstránil, pričom toto
-// náhodné správanie by nadobudli bloky, ktoré majú všetky sloty prázdne.
-// (Snáď nebudú tie pohyby príliš rušivé ako predvolené.) //DONE
-
-
-// - K sin, cos, tan by som pridal možno nejaké ďalšie funkcie podľa potreby. //DONE
-
-
-// - Loops by som premenoval na Logic. //DONE
-
-
-// - Graphic by som premenoval a Shapes a dat tam rôzne ďalšie útvary.
-// Napr. Circle je tam momentálne jediný 2D útvar. //DONE
-
-
-// - Do Logic by som pridal aspoň nejaký "For" cyklus, ktorý by automaticky
-// vytvoril nejakú premennú (napr. i, j, k, ...), ktorú by bolo možné
-// využiť vnútri cyklu - bol by to blok v sekcii Math, kde by sa z
-// drop-downu vybrala daná premenná. //DONE
-
-
-// - Popremýšľal by som nad nejakou formou podmienky "If", momentálne mi
-// ale nenapadajú detaily.
-
-
-// - Pri zvukoch by sa mala dať vytvoriť nejaká melódia, teda klasicky z
-// tónov nástrojov (klavír a pod.).//DONE
-
-
 var blocklyArea = document.getElementById('blocklyArea');
 var blocklyDiv = document.getElementById('blocklyDiv');
 var workspace = Blockly.inject(blocklyDiv,
@@ -48,7 +13,7 @@ var workspace = Blockly.inject(blocklyDiv,
     });
 
 workspace.registerToolboxCategoryCallback(
-    'VAR', create_variable);
+    'VAR', createVariable);
 
 //-----------------------------------------------------------------------------------------------------//
 //initialize scene, create camera and canvas
@@ -438,7 +403,7 @@ function playMusic() {
 function runCode(event) {
 
     var timeout_id;
-    create_variable(workspace);
+    createVariable(workspace);
 
     if(event.type != "move"){
         playNotes = false;
@@ -600,7 +565,7 @@ var variable = [];
  * @param {!Blockly.Workspace} workspace The workspace this flyout is for.
  * @return {!Array.<!Element>} Array of XML block elements.
  */
-function create_variable(workspace) {
+function createVariable(workspace) {
     // Returns an array of hex colours, e.g. ['#4286f4', '#ef0447']
     // var colourList = myApplication.getPalette();
 

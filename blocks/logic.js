@@ -52,7 +52,7 @@ Blockly.JavaScript['paintOver'] = function (block) {
     return code;
 }
 
-Blockly.JavaScript['repeat'] = function (block) {
+Blockly.JavaScript['repeat'] = function repeatLoop(block) {
     var number = block.getFieldValue('number');
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
 
@@ -66,7 +66,7 @@ Blockly.JavaScript['repeat'] = function (block) {
     return code;
 };
 
-Blockly.JavaScript['for'] = function (block) {
+Blockly.JavaScript['for'] = function forLoop(block) {
 
     var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
 

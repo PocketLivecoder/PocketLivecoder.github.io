@@ -58,7 +58,7 @@ Blockly.Blocks['RotateValueInput'] = {
 
 
 
-Blockly.JavaScript['MoveValueInput'] = function (block) {
+Blockly.JavaScript['MoveValueInput'] = function moveObject(block) {
     var number_x = Blockly.JavaScript.valueToCode(block, 'x', Blockly.JavaScript.ORDER_NONE);
     var number_y = Blockly.JavaScript.valueToCode(block, 'y', Blockly.JavaScript.ORDER_NONE);
     var number_z = Blockly.JavaScript.valueToCode(block, 'z', Blockly.JavaScript.ORDER_NONE);
@@ -117,7 +117,7 @@ Blockly.JavaScript['MoveValueInput'] = function (block) {
 };
 
 
-Blockly.JavaScript['RotateValueInput'] = function (block) {
+Blockly.JavaScript['RotateValueInput'] = function rotateObject(block) {
     var number_x = Blockly.JavaScript.valueToCode(block, 'x', Blockly.JavaScript.ORDER_NONE);
     var number_y = Blockly.JavaScript.valueToCode(block, 'y', Blockly.JavaScript.ORDER_NONE);
     var number_z = Blockly.JavaScript.valueToCode(block, 'z', Blockly.JavaScript.ORDER_NONE);
@@ -175,7 +175,7 @@ Blockly.JavaScript['RotateValueInput'] = function (block) {
 
 };
 
-Blockly.JavaScript['ScaleValueInput'] = function (block) {
+Blockly.JavaScript['ScaleValueInput'] = function scaleObject(block) {
     var number_x = Blockly.JavaScript.valueToCode(block, 'x', Blockly.JavaScript.ORDER_NONE);
     var number_y = Blockly.JavaScript.valueToCode(block, 'y', Blockly.JavaScript.ORDER_NONE);
     var number_z = Blockly.JavaScript.valueToCode(block, 'z', Blockly.JavaScript.ORDER_NONE);

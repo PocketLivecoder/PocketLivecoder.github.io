@@ -1,5 +1,4 @@
 var movecode = '';
-
 Blockly.Blocks['box'] = {
     init: function () {
         this.appendStatementInput("Box")
@@ -93,37 +92,29 @@ Blockly.Blocks['ring'] = {
     }
 };
 
-var boxGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
-var ringGeometry = new THREE.RingBufferGeometry(0.5, 1, 32);
-var planeGeometry = new THREE.PlaneBufferGeometry(1, 1, 32);
-var dodecahedronGometry = new THREE.DodecahedronBufferGeometry(1, 2);
-var coneGeometry = new THREE.ConeGeometry(1, 2);
-var circleGeometry = new THREE.CircleBufferGeometry(1, 30);
 
-var material = new THREE.MeshNormalMaterial();
 
 //The generator function takes a reference to the block for processing. It renders the inputs (the VALUE input, above) into code strings, and then concatenates those into a larger expression.
-Blockly.JavaScript['box'] = function (block) {
+Blockly.JavaScript['box'] = function createBox(block) {
 
+    var boxGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
+    var material = new THREE.MeshNormalMaterial();
     var colour_name = block.getFieldValue('COLOUR');
-
     var statements_box = Blockly.JavaScript.statementToCode(block, 'Box');
-
     var name = this.id;
     var repeat_number = 1;
-    var cube;
 
     repeat_number = getRepeatNumber(this);
 
     if (!scene.getObjectByName(name)) {
-        cube = new THREE.Mesh(boxGeometry, material);
+        var cube = new THREE.Mesh(boxGeometry, material);
         cube.name = name;
         scene.add(cube);
     }
 
     for (i = 1; i < repeat_number; i++) {
         if (!scene.getObjectByName(name + i)){
-            cube = new THREE.Mesh(boxGeometry, material);
+            var cube = new THREE.Mesh(boxGeometry, material);
             cube.name = name + i;
             scene.add(cube);
         }
@@ -145,18 +136,14 @@ Blockly.JavaScript['box'] = function (block) {
     return movecode;
 };
 
-Blockly.JavaScript['ring'] = function (block) {
+Blockly.JavaScript['ring'] = function createRing(block) {
 
+    var ringGeometry = new THREE.RingBufferGeometry(0.5, 1, 32);
+    var material = new THREE.MeshNormalMaterial();
     var colour_name = block.getFieldValue('COLOUR');
-
     var statements_box = Blockly.JavaScript.statementToCode(block, 'Ring');
-
-    var code = '';
     var name = this.id;
     var repeat_number = 1;
-    var repeat_name = '';
-    var obj;
-    var index;
 
 
     repeat_number = getRepeatNumber(this);
@@ -192,18 +179,14 @@ Blockly.JavaScript['ring'] = function (block) {
     return movecode;
 };
 
-Blockly.JavaScript['square'] = function (block) {
+Blockly.JavaScript['square'] = function createSquare(block) {
 
+    var planeGeometry = new THREE.PlaneBufferGeometry(1, 1, 32);
+    var material = new THREE.MeshNormalMaterial();
     var colour_name = block.getFieldValue('COLOUR');
-
     var statements_box = Blockly.JavaScript.statementToCode(block, 'Square');
-
-    var code = '';
     var name = this.id;
     var repeat_number = 1;
-    var repeat_name = '';
-    var obj;
-    var index;
 
 
     repeat_number = getRepeatNumber(this);
@@ -240,17 +223,14 @@ Blockly.JavaScript['square'] = function (block) {
     return movecode;
 };
 
-Blockly.JavaScript['ball'] = function (block) {
+Blockly.JavaScript['ball'] = function createBall(block) {
 
+    var dodecahedronGometry = new THREE.DodecahedronBufferGeometry(1, 2);
+    var material = new THREE.MeshNormalMaterial();
     var colour_name = block.getFieldValue('COLOUR');
-
     var statements_box = Blockly.JavaScript.statementToCode(block, 'Ball');
-
-    var code = '';
     var name = this.id;
     var repeat_number = 1;
-    var repeat_name = '';
-    var index;
 
 
     repeat_number = getRepeatNumber(this);
@@ -286,18 +266,14 @@ Blockly.JavaScript['ball'] = function (block) {
 };
 
 
-Blockly.JavaScript['cone'] = function (block) {
+Blockly.JavaScript['cone'] = function createCone(block) {
 
+    var coneGeometry = new THREE.ConeGeometry(1, 2);
+    var material = new THREE.MeshNormalMaterial();
     var colour_name = block.getFieldValue('COLOUR');
-
     var statements_box = Blockly.JavaScript.statementToCode(block, 'Cone');
-
-
-    var code = '';
     var name = this.id;
     var repeat_number = 1;
-    var repeat_name = '';
-    var index;
 
 
     repeat_number = getRepeatNumber(this);
@@ -333,18 +309,14 @@ Blockly.JavaScript['cone'] = function (block) {
 
 };
 
-Blockly.JavaScript['circle'] = function (block) {
+Blockly.JavaScript['circle'] = function createCircle(block) {
 
+    var circleGeometry = new THREE.CircleBufferGeometry(1, 30);
+    var material = new THREE.MeshNormalMaterial();
     var colour_name = block.getFieldValue('COLOUR');
-
     var statements_box = Blockly.JavaScript.statementToCode(block, 'Circle');
-
-    var code = '';
     var name = this.id;
     var repeat_number = 1;
-    var repeat_name = '';
-    var index;
-
 
     repeat_number = getRepeatNumber(this);
 

@@ -94,7 +94,7 @@ Blockly.Blocks['play-block'] = {
 };
 
 
-Blockly.JavaScript['tone'] = function (block) {
+Blockly.JavaScript['tone'] = function toneFunction(block) {
     var duration = block.getFieldValue('DURATION');
     var pitch = block.getFieldValue('PITCH');
     var note = 'C4';
@@ -152,7 +152,7 @@ Blockly.JavaScript['tone'] = function (block) {
 var playBlocksCount = 0;// hodil som ho sem z bockly.js
 
 
-Blockly.JavaScript['play-block'] = function (block) {
+Blockly.JavaScript['play-block'] = function playFunction(block) {
     var statements_name = Blockly.JavaScript.statementToCode(block, 'string');
     statements_name = statements_name.slice(2);
 
@@ -178,7 +178,7 @@ Blockly.JavaScript['play-block'] = function (block) {
     return code;
 };
 
-Blockly.JavaScript['music-rest'] = function (block) {
+Blockly.JavaScript['music-rest'] = function restFunction(block) {
     var rest = block.getFieldValue('REST');
 
     var code = "'rest'" + ",'" + rest + "';";
