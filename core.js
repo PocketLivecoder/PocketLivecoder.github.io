@@ -402,9 +402,10 @@ var id_var;
 var timeout_id; // var array = ["A","B"];
 var maxDuration = 0.2;
 var duration = 0;
-var max = 1;
+var max = 0;
 var timeoutArr = [];
 var visibility = true;
+var playNotes;
 
 function playMusic() {
     var sound;
@@ -436,15 +437,16 @@ function playMusic() {
 
 function runCode(event) {
 
-    var playNotes = false;
-
+    var timeout_id;
     create_variable(workspace);
 
+    if(event.type != "move"){
+        playNotes = false;
+    }
+
     blockFromEvent = workspace.getBlockById(event.blockId);
-    if (blockFromEvent) {
-        if (blockFromEvent.type == "play-block") {
-            blockFromEvent = blockFromEvent.getSurroundParent();
-        }
+    if(blockFromEvent){
+        if(blockFromEvent.type == "play-block") blockFromEvent = null;
     }
 
     if (event.type == "move") {
@@ -453,23 +455,15 @@ function runCode(event) {
         }
     }
 
-
     while (blockFromEvent) {
-
         typeOfBlock = blockFromEvent.type;
-
         if (typeOfBlock == "play-block") {
-
             playNotes = true;
-
         }
-
         blockFromEvent = blockFromEvent.getSurroundParent();
     }
 
-
     if (playNotes && visibility) {
-
         if (timeoutArr) {
             timeoutArr.forEach(x => {
                 clearTimeout(x);
@@ -480,10 +474,7 @@ function runCode(event) {
 
     objektyNaScene = scene.children;
 
-
-
     for (i = 0; i < objektyNaScene.length; i++) {
-
         if (!blokyNaScene.includes(objektyNaScene[i].name) && objektyNaScene[i].name.length == 20) {
             scene.remove(scene.getObjectByName(objektyNaScene[i].name));
         }
@@ -504,9 +495,7 @@ function runCode(event) {
             arr = event.ids;
 
             for (var i = scene.children.length - 1; i >= 0; i--) {
-
                 scene.remove(scene.getObjectByName(scene.children[i].name));
-
             }
 
             arr.every(e => {
@@ -538,58 +527,53 @@ function runCode(event) {
     }
 
     if (event) {
+        window.LoopTrap = 1000;
+        Blockly.JavaScript.INFINITE_LOOP_TRAP =
+            'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+        arrRotate = [];
+        arrMove = [];
+        arrScale = [];
+        moveInDirection = [];
+        rotateInDirection = [];
+        scaleInDirection = [];
+        noteArr = [];
+        playBlocksCount = 0;
+        max = 0;
+        duration = 0;
+        variable = [];
+        forArr = [];
 
-        if ((event.type == "move" && event.oldParentId)) {
-        } else {
-            window.LoopTrap = 1000;
-            Blockly.JavaScript.INFINITE_LOOP_TRAP =
-                'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-            arrRotate = [];
-            arrMove = [];
-            arrScale = [];
-            moveInDirection = [];
-            rotateInDirection = [];
-            scaleInDirection = [];
-            noteArr = [];
-            playBlocksCount = 0;
-            max = 0;
-            duration = 0;
-            variable = [];
-            forArr = [];
-
-
-            for (i = 0; i < scene.children.length; i++) {
-                var obj = scene.getObjectByName(scene.children[i].name);
-                obj.position.set(0, 0, 0);
-                obj.rotation.set(0, 0, 0);
-                obj.scale.set(1, 1, 1);
-            }
-
-            var code = Blockly.JavaScript.workspaceToCode(workspace);
-            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-
-            if (playNotes && visibility) {
-                code += "var timeout_id = setTimeout(playMusic, 0);"
-                    + "timeoutArr.push(timeout_id);"
-                    + "clearInterval(id_var);"
-                    + "id_var = setInterval(playMusic, max * 1000);"
-            }
-
-            try {
-                eval(code);
-                movecode = '';
-            } catch (e) {
-                alert(e);
-            }
-
+        for (i = 0; i < scene.children.length; i++) {
+            var obj = scene.getObjectByName(scene.children[i].name);
+            obj.position.set(0, 0, 0);
+            obj.rotation.set(0, 0, 0);
+            obj.scale.set(1, 1, 1);
         }
+
+        var code = Blockly.JavaScript.workspaceToCode(workspace);
+        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+
+        try {
+            eval(code);
+            movecode = '';
+        } catch (e) {
+            alert(e);
+        }
+
+    }
+
+    if (playNotes && visibility) {
+        timeout_id = setTimeout(playMusic, 0);
+        timeoutArr.push(timeout_id);
+        clearInterval(id_var);
+        id_var = setInterval(playMusic, max * 1000);
     }
 
 }
 workspace.addChangeListener(runCode);
 
-
-document.addEventListener("visibilitychange", function(){
+document.addEventListener("visibilitychange", function () {
+    getMaxDuration();
     if (document.hidden) {
         visibility = false;
         if (timeoutArr) {

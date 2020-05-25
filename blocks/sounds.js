@@ -162,7 +162,6 @@ Blockly.JavaScript['play-block'] = function (block) {
 
     var arr = statements_name.split(";").map(function (x) { return x.split(",") });
 
-
     var max_dur = 0;
     arr.forEach(a => {
         if (a[1]) {
