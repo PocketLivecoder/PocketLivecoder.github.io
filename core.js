@@ -87,13 +87,13 @@ var paintOver;
 
 function render() {
 
-    var value_x, value_y, value_z;
-    var vector;
-    var value;
-
     paintOver = true;
     time = clock.getElapsedTime();
     frames++;
+
+    var value_x, value_y, value_z;
+    var vector;
+    var value;
 
     moveInDirection.forEach(moveV => {
 
@@ -538,7 +538,6 @@ function runCode(event) {
 workspace.addChangeListener(runCode);
 
 document.addEventListener("visibilitychange", function () {
-    getMaxDuration();
     if (document.hidden) {
         visibility = false;
         if (timeoutArr) {
