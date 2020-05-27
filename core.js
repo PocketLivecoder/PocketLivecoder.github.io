@@ -87,9 +87,6 @@ var paintOver;
 
 function render() {
 
-    // var string = "moveInDirection.forEach(x=>{console.log(x)});"
-    // eval(string);
-
     paintOver = true;
     time = clock.getElapsedTime();
     frames++;

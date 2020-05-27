@@ -84,7 +84,7 @@ Blockly.Blocks['music-rest'] = {
 Blockly.Blocks['play-block'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField(new Blockly.FieldLabelSerializable("play"), "Play")
+            .appendField(new Blockly.FieldLabelSerializable("Play"), "Play")
         this.appendStatementInput("string")
             .setCheck("sound");
         this.setColour(130);
@@ -99,8 +99,6 @@ Blockly.JavaScript['tone'] = function toneFunction(block) {
     var pitch = block.getFieldValue('PITCH');
     var note = 'C4';
     var instrument = block.getFieldValue("INSTRUMENT");
-
-
 
     switch (Number(pitch)) {
         case 0:
@@ -153,25 +151,25 @@ var playBlocksCount = 0;// hodil som ho sem z bockly.js
 
 
 Blockly.JavaScript['play-block'] = function playFunction(block) {
-    var statements_name = Blockly.JavaScript.statementToCode(block, 'string');
-    statements_name = statements_name.slice(2);
+    var statements = Blockly.JavaScript.statementToCode(block, 'string');
+    statements = statements.slice(2);
 
     playBlocksCount++
 
     code = '';
 
-    var arr = statements_name.split(";").map(function (x) { return x.split(",") });
+    var arr = statements.split(";").map(function (x) { return x.split(",") });
 
-    var max_dur = 0;
+    var maxDur = 0;
     arr.forEach(a => {
         if (a[1]) {
-            max_dur += 1 / eval(a[1]);
+            maxDur += 1 / eval(a[1]);
         }
-        if (max_dur > max) max = max_dur;
+        if (maxDur > max) max = maxDur;
     })
 
-    if (statements_name) {
-        code += 'noteArr[' + playBlocksCount + '] = "' + statements_name + '".split(";").map(function(x) {return x.split(",")});'
+    if (statements) {
+        code += 'noteArr[' + playBlocksCount + '] = "' + statements + '".split(";").map(function(x) {return x.split(",")});'
             + 'noteArr[' + playBlocksCount + '].splice(-1,1);'
     }
 

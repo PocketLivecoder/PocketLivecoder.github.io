@@ -237,28 +237,28 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
 
     var block = workspace.getBlockById(blok);
 
-    var nx = 0;
-    var counter = 0;
+    var includedBlocks = 0;
     var x_num =" " + number_x;
     var y_num =" " + number_y;
     var z_num =" " + number_z;
     var actionType = type;
     var contains = false;
+    var counter;
 
     while (block) {
         scene.children.forEach(y => {
             if (y.name.includes(block.id)) {
-                nx += 1;
+                includedBlocks += 1;
             }
         });
 
 
         scene.children.forEach((x) => {
             if (x.name.includes(block.id)) {
-                counter += 1;
+                // counter += 1;
 
                 if (type == "move") {
-                    if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
+                    if (x.name.slice(20) % (includedBlocks / number) == 0 && x.name.slice(20) != '' && number != 1) {
                         x_num = x_num + " + " + number_x;
                         z_num = z_num + " + " + number_z;
                         y_num = y_num + " + " + number_y;
@@ -285,7 +285,7 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                 }
                 if (type == "scale") {
 
-                    if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
+                    if (x.name.slice(20) % (includedBlocks / number) == 0 && x.name.slice(20) != '' && number != 1) {
                         x_num = x_num + " + " + number_x;
                         z_num = z_num + " + " + number_z;
                         y_num = y_num + " + " + number_y;
@@ -320,7 +320,7 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                     if(!contains) arrRotate.push([x.name, number]);
                 }
                 if (type == "rotate") {
-                    if (x.name.slice(20) % (nx / number) == 0 && x.name.slice(20) != '' && number != 1) {
+                    if (x.name.slice(20) % (includedBlocks / number) == 0 && x.name.slice(20) != '' && number != 1) {
                         x_num = x_num + " + " + number_x;
                         z_num = z_num + " + " + number_z;
                         y_num = y_num + " + " + number_y;
@@ -358,7 +358,7 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
             x_num = number_x;
             y_num = number_y;
             z_num = number_z;
-            nx = 0;
+            includedBlocks = 0;
         } else {
             break;
         }

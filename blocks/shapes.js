@@ -354,16 +354,16 @@ Blockly.JavaScript['circle'] = function createCircle(block) {
 
 function getRepeatNumber(block) {
 
-    var repeat_number = 1;
+    var repeatNumber = 1;
     var originalBlock = block;
 
     if (block = originalBlock.getSurroundParent()) {
         while (block) {
             if (block.type == "repeat") {
-                repeat_number *= block.inputList[0].fieldRow[1].value_;
+                repeatNumber *= block.inputList[0].fieldRow[1].value_;
             }
             if (block.type == "for") {
-                repeat_number *= Math.abs(block.inputList[0].fieldRow[3].value_ - block.inputList[0].fieldRow[5].value_) + 1;
+                repeatNumber *= Math.abs(block.inputList[0].fieldRow[3].value_ - block.inputList[0].fieldRow[5].value_) + 1;
                 forArr.push(
                     [block.inputList[0].fieldRow[1].variable_.name, //variable name
                     Math.min(block.inputList[0].fieldRow[3].value_, block.inputList[0].fieldRow[5].value_),//variable start
@@ -386,7 +386,7 @@ function getRepeatNumber(block) {
 
             for (var i = scene.children.length - 1; i >= 0; i--) {
 
-                if (scene.children[i].name.includes(originalBlock.id) && parseInt(scene.children[i].name.slice(20)) > repeat_number - 1 && scene.children[i].name.slice(20) != NaN) {
+                if (scene.children[i].name.includes(originalBlock.id) && parseInt(scene.children[i].name.slice(20)) > repeatNumber - 1 && scene.children[i].name.slice(20) != NaN) {
                     scene.remove(scene.getObjectByName(scene.children[i].name))
                 }
             }
@@ -406,5 +406,5 @@ function getRepeatNumber(block) {
         }
     }
 
-    return repeat_number;
+    return repeatNumber;
 }

@@ -46,7 +46,7 @@ Blockly.Blocks['paintOver'] = {
     }
 };
 
-Blockly.JavaScript['paintOver'] = function (block) {
+Blockly.JavaScript['paintOver'] = function paintOverFunction(block) {
     var code = ''
     renderer.autoClearColor = false;
     return code;
@@ -54,13 +54,13 @@ Blockly.JavaScript['paintOver'] = function (block) {
 
 Blockly.JavaScript['repeat'] = function repeatLoop(block) {
     var number = block.getFieldValue('number');
-    var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+    var statements = Blockly.JavaScript.statementToCode(block, 'NAME');
 
     code = '';
-    statements_name = statements_name.slice(2);
+    statements = statements.slice(2);
 
     for (i = 0; i < number; i++) {
-        code += statements_name;
+        code += statements;
     }
     eval(movecode);
     return code;
