@@ -1,5 +1,4 @@
-
-
+PocketLivecoder is a web-based livecoding aplication which uses custom graphic language.
 
 Soundfont Sources:
 
