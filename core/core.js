@@ -381,7 +381,7 @@ function playMusic() {
             duration += 1 / eval(note[1]);
             timeout_id = setTimeout(function () {
                 if (note[0] != "'rest'") {
-                    var source = "media/samples/" + note[2].slice(1, -1) + "/" + note[0].slice(1, note[0].length - 1) + ".mp3";
+                    var source = "../media/samples/" + note[2].slice(1, -1) + "/" + note[0].slice(1, note[0].length - 1) + ".mp3";
                     sound = new Howl({
                         src: source,
                         rate: eval(note[1]),
