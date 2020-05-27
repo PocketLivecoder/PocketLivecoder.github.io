@@ -87,6 +87,9 @@ var paintOver;
 
 function render() {
 
+    // var string = "moveInDirection.forEach(x=>{console.log(x)});"
+    // eval(string);
+
     paintOver = true;
     time = clock.getElapsedTime();
     frames++;
@@ -491,7 +494,13 @@ function runCode(event) {
         };
     }
 
+    // console.log(scene.children);
+
     if (event) {
+
+        if ((event.type == "move" && event.oldParentId)) {
+        } else {
+
         window.LoopTrap = 1000;
         Blockly.JavaScript.INFINITE_LOOP_TRAP =
             'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
@@ -524,6 +533,7 @@ function runCode(event) {
         } catch (e) {
             alert(e);
         }
+    }
 
     }
 
