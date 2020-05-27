@@ -81,6 +81,10 @@ input[type=range].range::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 10px;
     height: 15px;
+    -webkit-transform: rotate(-20deg);
+    -moz-transform: rotate(-20deg);
+    -o-transform: rotate(-20deg);
+    -ms-transform: rotate(-20deg);
     transform: rotate(-20deg);
     background-color: #555;
     /* background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#4ddbff), to(#0cf)); */
