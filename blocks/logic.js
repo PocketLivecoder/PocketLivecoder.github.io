@@ -1,7 +1,18 @@
+/**
+ * @license
+ * Copyright (c) 2020 PocketLivecoder
+ * MIT License
+ */
+
+/**
+ * @fileoverview Blocks for logical operations.
+ * @author Marek Lukac
+ */
+
 Blockly.Blocks['repeat'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField(new Blockly.FieldLabelSerializable("repeat"), "repeat")
+            .appendField(new Blockly.FieldLabelSerializable("Repeat"), "repeat")
             .appendField(new Blockly.FieldNumber(1, 1, 500, 1), "number")
             .appendField(new Blockly.FieldLabelSerializable("times"), "times");
         this.appendStatementInput("NAME")
@@ -38,13 +49,33 @@ Blockly.Blocks['for'] = {
 Blockly.Blocks['paintOver'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("paint over");
+            .appendField("Paint over");
         this.setInputsInline(true);
-        this.setColour(30);
+        this.setColour(280);
         this.setTooltip("");
         this.setHelpUrl("");
     }
 };
+
+Blockly.Blocks['backgroundColor'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Background")
+            .appendField(new Blockly.FieldColour("#ffffff"), "COLOUR");
+        this.setInputsInline(true);
+        this.setColour(280);
+        this.setTooltip("");
+        this.setHelpUrl("");
+    }
+};
+
+Blockly.JavaScript['backgroundColor'] = function paintOverFunction(block) {
+    var color = block.getFieldValue('COLOUR');
+    code = '';
+    scene.background = new THREE.Color(color);
+    return code;
+
+}
 
 Blockly.JavaScript['paintOver'] = function paintOverFunction(block) {
     var code = ''
@@ -72,6 +103,9 @@ Blockly.JavaScript['for'] = function forLoop(block) {
 
     var from = block.getFieldValue("from");
     var to = block.getFieldValue("to");
+    var varName = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE);
+    statements_name = statements_name.slice(2);
+    var statement = statements_name;
 
     code = '';
     var contains = false;
@@ -81,20 +115,17 @@ Blockly.JavaScript['for'] = function forLoop(block) {
 
         workspace.getAllVariables().forEach(x => {
             if (x.name == Blockly.JavaScript.variableDB_.getName(block.getFieldValue('index'), Blockly.Variables.NAME_TYPE)) {
-                variableArr.forEach(y=>{
-                    if(y[0] == block.id) contains = true;
+                variableArr.forEach(y => {
+                    if (y[0] == block.id) contains = true;
                 })
-                if(!contains) variableArr.push([block.id, x.id_]);
+                if (!contains) variableArr.push([block.id, x.id_]);
             }
         })
 
     }
 
-    var number = Math.abs(from - to);
-
-    statements_name = statements_name.slice(2);
-
-    for (i = 0; i < number + 1; i++) {
+    for (i = Math.min(from, to); i < Math.max(from, to) + 1; i++) {
+        statements_name = statement.split(" " + varName + " ").join(i);
         code += statements_name;
     }
 

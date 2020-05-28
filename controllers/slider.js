@@ -1,3 +1,14 @@
+/**
+ * @license
+ * Copyright (c) 2020 PocketLivecoder
+ * MIT License
+ */
+
+/**
+ * @fileoverview Scroll bar script.
+ * @author Marek Lukac
+ */
+
 var button = document.getElementById("button");
         var display = document.getElementById("display");
         var container = document.getElementById("container");

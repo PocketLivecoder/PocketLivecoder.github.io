@@ -17,23 +17,27 @@ table {
 }
 #blocklyArea {
   height: 100%;
-  background: transparent;
+  /* background: transparent; */
 }
 
 #scene {
   opacity : 1;
-  /* pointer-events: ; */
+  /* pointer-events: none; */
 }
+
 
 
 
 #blocklyDiv{
-  background : transparent;
   pointer-events: none;
-  opacity: 0.6;
 }
 
-.blocklyBlockCanvas, .blocklyBlockTrash, .blocklyToolboxDiv, .blocklyFlyoutScrollbar{
-  pointer-events: auto;
-  opacity: 1;
+.blocklySvg{
+  background: transparent;
 }
+
+
+.blocklyBlockCanvas, .blocklyToolboxDiv, .blocklyFlyout{
+  pointer-events: auto;
+}
+

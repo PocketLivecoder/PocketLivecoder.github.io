@@ -1,3 +1,14 @@
+/**
+ * @license
+ * Copyright (c) 2020 PocketLivecoder
+ * MIT License
+ */
+
+/**
+ * @fileoverview Blocks for performing movement.
+ * @author Marek Lukac
+ */
+
 Blockly.Blocks['MoveValueInput'] = {
     init: function () {
         this.appendDummyInput()
@@ -9,8 +20,8 @@ Blockly.Blocks['MoveValueInput'] = {
         this.appendValueInput("z")
             .setCheck(null);
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["movement","shape","repeat"]);
-        this.setNextStatement(true, ["movement","shape","repeat"]);
+        this.setPreviousStatement(true, ["movement", "shape", "repeat"]);
+        this.setNextStatement(true, ["movement", "shape", "repeat"]);
         this.setColour(30);
         this.setTooltip("");
         this.setHelpUrl("");
@@ -28,8 +39,8 @@ Blockly.Blocks['ScaleValueInput'] = {
         this.appendValueInput("z")
             .setCheck(null);
         this.setInputsInline(true);
-        this.setPreviousStatement(true, ["movement","shape","repeat"]);
-        this.setNextStatement(true, ["movement","shape","repeat"]);
+        this.setPreviousStatement(true, ["movement", "shape", "repeat"]);
+        this.setNextStatement(true, ["movement", "shape", "repeat"]);
         this.setColour(30);
         this.setTooltip("");
         this.setHelpUrl("");
@@ -48,8 +59,8 @@ Blockly.Blocks['RotateValueInput'] = {
         this.appendValueInput("z")
             .setCheck(null);
         this.setInputsInline(true);
-        this.setNextStatement(true, ["movement","shape","repeat"]);
-        this.setPreviousStatement(true, ["movement","shape","repeat"]);
+        this.setNextStatement(true, ["movement", "shape", "repeat"]);
+        this.setPreviousStatement(true, ["movement", "shape", "repeat"]);
         this.setColour(40);
         this.setTooltip("");
         this.setHelpUrl("");
@@ -69,11 +80,11 @@ Blockly.JavaScript['MoveValueInput'] = function moveObject(block) {
     if (this.getSurroundParent()) {
         var parent = this.getSurroundParent();
         while (parent.type == "repeat" || parent.type == "for") {
-            if(parent.type == "repeat"){
+            if (parent.type == "repeat") {
                 number *= parent.inputList[0].fieldRow[1].value_;
             }
-            if(parent.type == "for"){
-                number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1;
+            if (parent.type == "for") {
+                number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
             }
 
             if (parent.getSurroundParent()) {
@@ -107,7 +118,7 @@ Blockly.JavaScript['MoveValueInput'] = function moveObject(block) {
         if (this.getSurroundParent() != null && (this.getSurroundParent().type != "repeat" && this.getSurroundParent().type != "for")) {
             movecode += "recursiveMove('" + this.getSurroundParent().id + "','" + number_x + "','" + number_y + "','" + number_z + "');";
         }
-        if (this.getChildren()[0]) {
+        else if (this.getChildren()[0]) {
             movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'move');";
         }
     }
@@ -128,11 +139,11 @@ Blockly.JavaScript['RotateValueInput'] = function rotateObject(block) {
     if (this.getSurroundParent()) {
         var parent = this.getSurroundParent();
         while (parent.type == "repeat" || parent.type == "for") {
-            if(parent.type == "repeat"){
+            if (parent.type == "repeat") {
                 number *= parent.inputList[0].fieldRow[1].value_;
             }
-            if(parent.type == "for"){
-                number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1;
+            if (parent.type == "for") {
+                number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
             }
 
             if (parent.getSurroundParent()) {
@@ -165,7 +176,7 @@ Blockly.JavaScript['RotateValueInput'] = function rotateObject(block) {
         if (this.getSurroundParent() != null && (this.getSurroundParent().type != "repeat" && this.getSurroundParent().type != "for")) {
             movecode += "recursiveRotate('" + this.getSurroundParent().id + "','" + number_x + "','" + number_y + "','" + number_z + "');";
         }
-        if (this.getChildren()[0]) {
+        else if (this.getChildren()[0]) {
             movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'rotate');";
 
         }
@@ -186,11 +197,11 @@ Blockly.JavaScript['ScaleValueInput'] = function scaleObject(block) {
     if (this.getSurroundParent()) {
         var parent = this.getSurroundParent();
         while (parent.type == "repeat" || parent.type == "for") {
-            if(parent.type == "repeat"){
+            if (parent.type == "repeat") {
                 number *= parent.inputList[0].fieldRow[1].value_;
             }
-            if(parent.type == "for"){
-                number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_)+1;
+            if (parent.type == "for") {
+                number *= Math.abs(parent.inputList[0].fieldRow[3].value_ - parent.inputList[0].fieldRow[5].value_) + 1;
             }
 
             if (parent.getSurroundParent()) {
@@ -222,7 +233,7 @@ Blockly.JavaScript['ScaleValueInput'] = function scaleObject(block) {
         if (this.getSurroundParent() != null && (this.getSurroundParent().type != "repeat" && this.getSurroundParent().type != "for")) {
             movecode += "recursiveScale('" + this.getSurroundParent().id + "','" + number_x + "','" + number_y + "','" + number_z + "');";
         }
-        if (this.getChildren()[0]) {
+        else if (this.getChildren()[0]) {
             movecode += "recursion('" + this.id + "','" + number_x + "','" + number_y + "','" + number_z + "'," + number + ",'scale');";
         }
     }
@@ -238,9 +249,9 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
     var block = workspace.getBlockById(blok);
 
     var includedBlocks = 0;
-    var x_num =" " + number_x;
-    var y_num =" " + number_y;
-    var z_num =" " + number_z;
+    var x_num = " " + number_x;
+    var y_num = " " + number_y;
+    var z_num = " " + number_z;
     var actionType = type;
     var contains = false;
     var counter;
@@ -265,23 +276,26 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                     }
                     arrMove.forEach(k => {
                         if (k[0] == x.name) {
-                            k[2] = [x_num  + " ", y_num  + " ", z_num  + " "];
+                            k[2] = [x_num + " ", y_num + " ", z_num + " "];
                         }
                     })
-                    moveInDirection.forEach(y=>{
-                        if(y[0] == x.name){
+                    moveInDirection.forEach(y => {
+                        if (y[0] == x.name) {
                             contains = true;
+                            if (x_num != '0') y[1][0] = x_num;
+                            if (y_num != '0') y[1][1] = y_num;
+                            if (z_num != '0') y[1][2] = z_num;
                         }
                     })
-                    if(!contains) moveInDirection.push([x.name, [x_num + " ", y_num + " ", z_num + " "]]);
+                    if (!contains) moveInDirection.push([x.name, [x_num + " ", y_num + " ", z_num + " "]]);
                 }
                 if (type == "randomMove") {
-                    arrMove.forEach(y=>{
-                        if(y[0] == x.name){
+                    arrMove.forEach(y => {
+                        if (y[0] == x.name) {
                             contains = true;
                         }
                     })
-                    if(!contains) arrMove.push([x.name, number]);
+                    if (!contains) arrMove.push([x.name, number]);
                 }
                 if (type == "scale") {
 
@@ -295,29 +309,32 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                             k[2] = [x_num, y_num, z_num];
                         }
                     })
-                    scaleInDirection.forEach(y=>{
-                        if(y[0] == x.name){
+                    scaleInDirection.forEach(y => {
+                        if (y[0] == x.name) {
                             contains = true;
+                            if (x_num != '0') y[1][0] = x_num;
+                            if (y_num != '0') y[1][1] = y_num;
+                            if (z_num != '0') y[1][2] = z_num;
                         }
                     })
-                    if(!contains) scaleInDirection.push([x.name, [x_num, y_num, z_num]]);
+                    if (!contains) scaleInDirection.push([x.name, [x_num + " ", y_num + " ", z_num + " "]]);
 
                 }
                 if (type == "randomScale") {
-                    arrScale.forEach(y=>{
-                        if(y[0] == x.name){
+                    arrScale.forEach(y => {
+                        if (y[0] == x.name) {
                             contains = true;
                         }
                     })
-                    if(!contains) arrScale.push([x.name, number]);
+                    if (!contains) arrScale.push([x.name, number]);
                 }
                 if (type == "randomRotate") {
-                    arrRotate.forEach(y=>{
-                        if(y[0] == x.name){
+                    arrRotate.forEach(y => {
+                        if (y[0] == x.name) {
                             contains = true;
                         }
                     })
-                    if(!contains) arrRotate.push([x.name, number]);
+                    if (!contains) arrRotate.push([x.name, number]);
                 }
                 if (type == "rotate") {
                     if (x.name.slice(20) % (includedBlocks / number) == 0 && x.name.slice(20) != '' && number != 1) {
@@ -335,12 +352,15 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                             f[2] = [x_num, y_num, z_num]
                         }
                     })
-                    rotateInDirection.forEach(y=>{
-                        if(y[0] == x.name){
+                    rotateInDirection.forEach(y => {
+                        if (y[0] == x.name) {
                             contains = true;
+                            if (x_num != '0') y[1][0] = x_num;
+                            if (y_num != '0') y[1][1] = y_num;
+                            if (z_num != '0') y[1][2] = z_num;
                         }
                     })
-                    if(!contains) rotateInDirection.push([x.name, [x_num, y_num, z_num]]);
+                    if (!contains) rotateInDirection.push([x.name, [x_num + " ", y_num + " ", z_num + " "]]);
                 }
             }
         })
@@ -368,7 +388,6 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
 
 function recursiveScale(ID, num_x, num_y, num_z) {
     var contains = false;
-    scaleInDirection = [];
     scene.children.forEach((x) => {
         if (x.name.includes(ID)) {
 
@@ -378,12 +397,15 @@ function recursiveScale(ID, num_x, num_y, num_z) {
                 }
             })
 
-            scaleInDirection.forEach(y=>{
-                if(y[0] == x.name){
+            scaleInDirection.forEach(y => {
+                if (y[0] == x.name) {
                     contains = true;
+                    if (num_x != '0') y[1][0] = num_x;
+                    if (num_y != '0') y[1][1] = num_y;
+                    if (num_z != '0') y[1][2] = num_z;
                 }
             })
-            if(!contains) scaleInDirection.push([x.name, [x_num, y_num, z_num]]);
+            if (!contains) scaleInDirection.push([x.name, [num_x, num_y, num_z]]);
         }
     })
 }
@@ -398,19 +420,21 @@ function recursiveMove(ID, num_x, num_y, num_z) {
                     k[2] = [num_x, num_y, num_z];
                 }
             })
-            moveInDirection.forEach(y=>{
-                if(y[0] == x.name){
+            moveInDirection.forEach(y => {
+                if (y[0] == x.name) {
                     contains = true;
+                    if (num_x != '0') y[1][0] = num_x;
+                    if (num_y != '0') y[1][1] = num_y;
+                    if (num_z != '0') y[1][2] = num_z;
                 }
             })
-            if(!contains) moveInDirection.push([x.name, [num_x, num_y, num_z]]);
+            if (!contains) moveInDirection.push([x.name, [num_x, num_y, num_z]]);
         }
     })
 }
 
 function recursiveRotate(ID, num_x, num_y, num_z) {
     var contains = false;
-    rotateInDirection = [];
     scene.children.forEach((x) => {
         if (x.name.includes(ID)) {
 
@@ -420,12 +444,15 @@ function recursiveRotate(ID, num_x, num_y, num_z) {
                 }
             })
 
-            rotateInDirection.forEach(y=>{
-                if(y[0] == x.name){
+            rotateInDirection.forEach(y => {
+                if (y[0] == x.name) {
                     contains = true;
+                    if (num_x != '0') y[1][0] = num_x;
+                    if (num_y != '0') y[1][1] = num_y;
+                    if (num_z != '0') y[1][2] = num_z;
                 }
             })
-            if(!contains) rotateInDirection.push([x.name, [x_num, y_num, z_num]]);
+            if (!contains) rotateInDirection.push([x.name, [num_x, num_y, num_z]]);
 
         }
     })

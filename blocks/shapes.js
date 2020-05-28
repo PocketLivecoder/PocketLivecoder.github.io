@@ -1,3 +1,14 @@
+/**
+ * @license
+ * Copyright (c) 2020 PocketLivecoder
+ * MIT License
+ */
+
+/**
+ * @fileoverview Blocks for creating objects.
+ * @author Marek Lukac
+ */
+
 var movecode = '';
 Blockly.Blocks['box'] = {
     init: function () {

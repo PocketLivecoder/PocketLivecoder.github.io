@@ -1,3 +1,15 @@
+/**
+ * @license
+ * Copyright (c) 2020 PocketLivecoder
+ * https://github.com/google/blockly-games
+ * MIT License
+ */
+
+/**
+ * @fileoverview PocketLivecoder core script.
+ * @author Marek Lukac
+ */
+
 var blocklyArea = document.getElementById('blocklyArea');
 var blocklyDiv = document.getElementById('blocklyDiv');
 var workspace = Blockly.inject(blocklyDiv,
@@ -42,11 +54,11 @@ var element = document.getElementById("scene");
 
 function init() {
 
-    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, preserveDrawingBuffer: true });
-    renderer.setClearColor(0xffffff, 1);;
+    renderer = new THREE.WebGLRenderer({ alpha: true, preserveDrawingBuffer: true });
+    // renderer.setClearColor(0xffffff, 1);;
     renderer.setSize(window.innerWidth, window.innerHeight);
     element.appendChild(renderer.domElement);
-    element.childNodes[0].style.background = 'transparent'
+    // element.childNodes[0].style.background = 'transparent'
 
     scene = new THREE.Scene();
 
@@ -374,26 +386,56 @@ var playNotes;
 
 function playMusic() {
     var sound;
+    var tone;
+    var sample;
     noteArr.forEach(x => {
         duration = 0;
 
         x.forEach(note => {
-            duration += 1 / eval(note[1]);
-            timeout_id = setTimeout(function () {
-                if (note[0] != "'rest'") {
-                    var source = "../media/samples/" + note[2].slice(1, -1) + "/" + note[0].slice(1, note[0].length - 1) + ".mp3";
-                    sound = new Howl({
-                        src: source,
-                        rate: eval(note[1]),
-                        volume: 1,
-                        pool: 0
-                    })
+            // if (note[0] != "'  '") {
+                if(note[0] == "'  '") sample = 'C4';
+                duration += 1 / eval(note[1]);
+                timeout_id = setTimeout(function () {
+                    if (note[0] != "'rest'") {
 
-                    sound.play();
-                }
+                        try {
+                            tone = eval(note[0].slice(1,-1));
+                        } catch (error) {
+                            ton = 40;
+                        }
 
-            }, eval(duration * 1000));
-            timeoutArr.push(timeout_id);
+                        if(tone < 28 || tone > 49){
+                            tone = (Math.round(Math.abs(tone)) % 21) + 28;
+                        }
+
+                        if(Math.round(tone) == 28 || Math.round(tone) == 29) sample = 'C3';
+                        if(Math.round(tone) == 30 || Math.round(tone) == 31) sample = 'D3';
+                        if(Math.round(tone) == 32) sample = 'E3';
+                        if(Math.round(tone) == 33 || Math.round(tone) == 34) sample = 'F3';
+                        if(Math.round(tone) == 35 || Math.round(tone) == 36) sample = 'G3';
+                        if(Math.round(tone) == 37 || Math.round(tone) == 38) sample = 'A3';
+                        if(Math.round(tone) == 39) sample = 'B3';
+                        if(Math.round(tone) == 40 || Math.round(tone) == 41) sample = 'C4';
+                        if(Math.round(tone) == 42 || Math.round(tone) == 43) sample = 'D4';
+                        if(Math.round(tone) == 44) sample = 'E4';
+                        if(Math.round(tone) == 45 || Math.round(tone) == 46) sample = 'F4';
+                        if(Math.round(tone) == 47 || Math.round(tone) == 48) sample = 'G4';
+                        if(Math.round(tone) == 49 || Math.round(tone) == 50) sample = 'A4';
+
+                        var source = "../media/samples/" + note[2].slice(1, -1) + "/" + sample + ".mp3";
+                        sound = new Howl({
+                            src: source,
+                            rate: eval(note[1]),
+                            volume: 1,
+                            pool: 0
+                        })
+
+                        sound.play();
+                    }
+
+                }, eval(duration * 1000));
+                timeoutArr.push(timeout_id);
+            // }
         })
 
     })
@@ -405,13 +447,13 @@ function runCode(event) {
     var timeout_id;
     createVariable(workspace);
 
-    if(event.type != "move"){
+    if (event.type != "move") {
         playNotes = false;
     }
 
     blockFromEvent = workspace.getBlockById(event.blockId);
-    if(blockFromEvent){
-        if(blockFromEvent.type == "play-block") blockFromEvent = null;
+    if (blockFromEvent) {
+        if (blockFromEvent.type == "play-block") blockFromEvent = null;
     }
 
     if (event.type == "move") {
@@ -482,6 +524,7 @@ function runCode(event) {
             })
 
 
+
             for (i = 0; i < arr.length; i++) {
                 scene.remove(scene.getObjectByName(arr[i]));
             }
@@ -498,39 +541,41 @@ function runCode(event) {
         if ((event.type == "move" && event.oldParentId)) {
         } else {
 
-        window.LoopTrap = 1000;
-        Blockly.JavaScript.INFINITE_LOOP_TRAP =
-            'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-        arrRotate = [];
-        arrMove = [];
-        arrScale = [];
-        moveInDirection = [];
-        rotateInDirection = [];
-        scaleInDirection = [];
-        noteArr = [];
-        playBlocksCount = 0;
-        max = 0;
-        duration = 0;
-        variable = [];
-        forArr = [];
+            window.LoopTrap = 1000;
+            Blockly.JavaScript.INFINITE_LOOP_TRAP =
+                'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+            arrRotate = [];
+            arrMove = [];
+            arrScale = [];
+            moveInDirection = [];
+            rotateInDirection = [];
+            scaleInDirection = [];
+            noteArr = [];
+            playBlocksCount = 0;
+            max = 0;
+            duration = 0;
+            variable = [];
+            forArr = [];
+            scene.background = new THREE.Color(0xffffff);
 
-        for (i = 0; i < scene.children.length; i++) {
-            var obj = scene.getObjectByName(scene.children[i].name);
-            obj.position.set(0, 0, 0);
-            obj.rotation.set(0, 0, 0);
-            obj.scale.set(1, 1, 1);
+
+            for (i = 0; i < scene.children.length; i++) {
+                var obj = scene.getObjectByName(scene.children[i].name);
+                obj.position.set(0, 0, 0);
+                obj.rotation.set(0, 0, 0);
+                obj.scale.set(1, 1, 1);
+            }
+
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
+            Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+
+            try {
+                eval(code);
+                movecode = '';
+            } catch (e) {
+                alert(e);
+            }
         }
-
-        var code = Blockly.JavaScript.workspaceToCode(workspace);
-        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-
-        try {
-            eval(code);
-            movecode = '';
-        } catch (e) {
-            alert(e);
-        }
-    }
 
     }
 

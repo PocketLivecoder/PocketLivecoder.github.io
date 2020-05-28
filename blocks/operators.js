@@ -1,3 +1,14 @@
+/**
+ * @license
+ * Copyright (c) 2020 PocketLivecoder
+ * MIT License
+ */
+
+/**
+ * @fileoverview Blocks for mathematical operations.
+ * @author Marek Lukac
+ */
+
 Blockly.Blocks['SinCos'] = {
     init: function () {
         this.appendDummyInput()
