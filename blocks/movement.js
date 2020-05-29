@@ -282,9 +282,9 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                     moveInDirection.forEach(y => {
                         if (y[0] == x.name) {
                             contains = true;
-                            if (x_num != '0') y[1][0] = x_num;
-                            if (y_num != '0') y[1][1] = y_num;
-                            if (z_num != '0') y[1][2] = z_num;
+                            if (x_num != '0') y[1][0] = x_num + " ";
+                            if (y_num != '0') y[1][1] = y_num + " ";
+                            if (z_num != '0') y[1][2] = z_num + " ";
                         }
                     })
                     if (!contains) moveInDirection.push([x.name, [x_num + " ", y_num + " ", z_num + " "]]);
@@ -312,9 +312,9 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                     scaleInDirection.forEach(y => {
                         if (y[0] == x.name) {
                             contains = true;
-                            if (x_num != '0') y[1][0] = x_num;
-                            if (y_num != '0') y[1][1] = y_num;
-                            if (z_num != '0') y[1][2] = z_num;
+                            if (x_num != '0') y[1][0] = x_num + " ";
+                            if (y_num != '0') y[1][1] = y_num + " ";
+                            if (z_num != '0') y[1][2] = z_num + " ";
                         }
                     })
                     if (!contains) scaleInDirection.push([x.name, [x_num + " ", y_num + " ", z_num + " "]]);
@@ -355,9 +355,9 @@ function recursion(blok, number_x, number_y, number_z, number, type) {
                     rotateInDirection.forEach(y => {
                         if (y[0] == x.name) {
                             contains = true;
-                            if (x_num != '0') y[1][0] = x_num;
-                            if (y_num != '0') y[1][1] = y_num;
-                            if (z_num != '0') y[1][2] = z_num;
+                            if (x_num != '0') y[1][0] = x_num + " ";
+                            if (y_num != '0') y[1][1] = y_num + " ";
+                            if (z_num != '0') y[1][2] = z_num + " ";
                         }
                     })
                     if (!contains) rotateInDirection.push([x.name, [x_num + " ", y_num + " ", z_num + " "]]);

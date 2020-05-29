@@ -1,7 +1,6 @@
 /**
  * @license
  * Copyright (c) 2020 PocketLivecoder
- * https://github.com/google/blockly-games
  * MIT License
  */
 
