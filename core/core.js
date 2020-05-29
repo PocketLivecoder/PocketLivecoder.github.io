@@ -54,10 +54,8 @@ var element = document.getElementById("scene");
 function init() {
 
     renderer = new THREE.WebGLRenderer({ alpha: true, preserveDrawingBuffer: true });
-    // renderer.setClearColor(0xffffff, 1);;
     renderer.setSize(window.innerWidth, window.innerHeight);
     element.appendChild(renderer.domElement);
-    // element.childNodes[0].style.background = 'transparent'
 
     scene = new THREE.Scene();
 
@@ -106,6 +104,7 @@ function render() {
     var vector;
     var value;
 
+
     moveInDirection.forEach(moveV => {
 
         value_x = " " + moveV[1][0];
@@ -117,14 +116,13 @@ function render() {
         if (forArr.length) {
             forArr.forEach(fa => {
                 if (moveV[0].includes(fa[3])) {
+                    value_x = " " + moveV[1][0];
 
                     moveValue = moveV[0].slice(20) || '0';
                     value = fa[1] + (Number(moveValue) % (fa[2] - fa[1] + 1));
                     value_x = value_x.split(" " + fa[0] + " ").join(value);
                     value_y = value_y.split(" " + fa[0] + " ").join(value);
                     value_z = value_z.split(" " + fa[0] + " ").join(value);
-
-                    console.log(eval(value_x) + " " + eval(value_y));
 
                     if (scene.getObjectByName(moveV[0])) {
                         evalx = "vector = [" + value_x + "," + value_y + "," + value_z + "];";
@@ -158,7 +156,7 @@ function render() {
 
         vector = [];
 
-        if (forArr.length = 0) {
+        if (forArr.length > 0) {
             forArr.forEach(fa => {
                 if (rotate[0].includes(fa[3])) {
 
@@ -187,6 +185,7 @@ function render() {
                 try {
                     eval(evalx);
                 } catch (error) {
+                    alert(error);
                 }
                 scene.getObjectByName(rotate[0]).rotation.set(vector[0] || 0, vector[1] || 0, vector[2] || 0);
             }
@@ -391,7 +390,6 @@ function playMusic() {
         duration = 0;
 
         x.forEach(note => {
-            // if (note[0] != "'  '") {
                 if(note[0] == "'  '") sample = 'C4';
                 duration += 1 / eval(note[1]);
                 timeout_id = setTimeout(function () {
@@ -421,7 +419,7 @@ function playMusic() {
                         if(Math.round(tone) == 47 || Math.round(tone) == 48) sample = 'G4';
                         if(Math.round(tone) == 49 || Math.round(tone) == 50) sample = 'A4';
 
-                        var source = "../media/samples/" + note[2].slice(1, -1) + "/" + sample + ".mp3";
+                        var source = "media/samples/" + note[2].slice(1, -1) + "/" + sample + ".mp3";
                         sound = new Howl({
                             src: source,
                             rate: eval(note[1]),
@@ -434,7 +432,6 @@ function playMusic() {
 
                 }, eval(duration * 1000));
                 timeoutArr.push(timeout_id);
-            // }
         })
 
     })
@@ -533,8 +530,6 @@ function runCode(event) {
         };
     }
 
-    // console.log(scene.children);
-
     if (event) {
 
         if ((event.type == "move" && event.oldParentId)) {
@@ -558,8 +553,8 @@ function runCode(event) {
             scene.background = new THREE.Color(0xffffff);
 
 
-            for (i = 0; i < scene.children.length; i++) {
-                var obj = scene.getObjectByName(scene.children[i].name);
+            for (index = 0; index < scene.children.length; index++) {
+                var obj = scene.getObjectByName(scene.children[index].name);
                 obj.position.set(0, 0, 0);
                 obj.rotation.set(0, 0, 0);
                 obj.scale.set(1, 1, 1);
@@ -610,15 +605,7 @@ document.addEventListener("visibilitychange", function () {
 
 var variable = [];
 
-/**
- * Construct the blocks required by the flyout for the colours category.
- * @param {!Blockly.Workspace} workspace The workspace this flyout is for.
- * @return {!Array.<!Element>} Array of XML block elements.
- */
 function createVariable(workspace) {
-    // Returns an array of hex colours, e.g. ['#4286f4', '#ef0447']
-    // var colourList = myApplication.getPalette();
-
 
     var xmlList = [];
     var blockText;

@@ -13,23 +13,23 @@ Blockly.Blocks['tone'] = {
     init: function () {
         var duration = [
             [{
-                "src": "../media/img/note1.png",
+                "src": "media/img/note1.png",
                 "width": 9, "height": 19, "alt": "whole"
             }, "1"],
             [{
-                "src": "../media/img/note0.5.png",
+                "src": "media/img/note0.5.png",
                 "width": 9, "height": 19, "alt": "half"
             }, "2"],
             [{
-                "src": "../media/img/note0.25.png",
+                "src": "media/img/note0.25.png",
                 "width": 9, "height": 19, "alt": "quarter"
             }, "4"],
             [{
-                "src": "../media/img/note0.125.png",
+                "src": "media/img/note0.125.png",
                 "width": 9, "height": 19, "alt": "eighth"
             }, "8"],
             [{
-                "src": "../media/img/note0.0625.png",
+                "src": "media/img/note0.0625.png",
                 "width": 9, "height": 19, "alt": "sixteenth"
             }, "16"]
         ];
@@ -75,23 +75,23 @@ Blockly.Blocks['music-rest'] = {
     init: function () {
         var rest = [
             [{
-                "src": "../media/img/rest1.png",
+                "src": "media/img/rest1.png",
                 "width": 10, "height": 20, "alt": "whole"
             }, "1"],
             [{
-                "src": "../media/img/rest0.5.png",
+                "src": "media/img/rest0.5.png",
                 "width": 10, "height": 20, "alt": "half"
             }, "2"],
             [{
-                "src": "../media/img/rest0.25.png",
+                "src": "media/img/rest0.25.png",
                 "width": 10, "height": 20, "alt": "quarter"
             }, "4"],
             [{
-                "src": "../media/img/rest0.125.png",
+                "src": "media/img/rest0.125.png",
                 "width": 10, "height": 20, "alt": "eighth"
             }, "8"],
             [{
-                "src": "../media/img/rest0.0625.png",
+                "src": "media/img/rest0.0625.png",
                 "width": 10, "height": 20, "alt": "sixteenth"
             }, "16"]
         ];

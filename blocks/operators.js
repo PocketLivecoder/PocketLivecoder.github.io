@@ -81,7 +81,7 @@ Blockly.JavaScript['Operation'] = function operation(block) {
     var rightValue = Blockly.JavaScript.valueToCode(block, 'right', Blockly.JavaScript.ORDER_NONE);
     var operation = '';
     if(leftValue && rightValue){
-        operation = " "+leftValue +" "+ dropdown +" "+ rightValue +" ";
+        operation = "( "+leftValue +" "+ dropdown +" "+ rightValue +" )";
     }
     return [operation, Blockly.JavaScript.ORDER_NONE];
 };

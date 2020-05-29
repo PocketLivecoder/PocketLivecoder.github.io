@@ -93,7 +93,7 @@ Blockly.JavaScript['repeat'] = function repeatLoop(block) {
     for (i = 0; i < number; i++) {
         code += statements;
     }
-    eval(movecode);
+    // eval(movecode);
     return code;
 };
 
@@ -124,11 +124,31 @@ Blockly.JavaScript['for'] = function forLoop(block) {
 
     }
 
-    for (i = Math.min(from, to); i < Math.max(from, to) + 1; i++) {
-        statements_name = statement.split(" " + varName + " ").join(i);
-        code += statements_name;
+    var loopArr = [];
+    loopArr = forRecursion(this,loopArr);
+
+    if (loopArr.length>0) {
+        for (indexVar = Math.min(from, to); indexVar < Math.max(from, to) + 1; indexVar++) {
+            statements_name = statement.split(" " + varName + " ").join(indexVar);
+            code += statements_name;
+        }
     }
 
     eval(movecode);
     return code;
 };
+
+function forRecursion(block,blocksArr){
+    while(block.childBlocks_){
+        block.childBlocks_.forEach(ch=>{
+            if(ch.type == "tone" || ch.type == "music-rest"){
+                blocksArr.push(ch.type);
+            }
+            if(ch.type == "repeat" || ch.type == "for"){
+                forRecursion(ch,blocksArr);
+            }
+        })
+        block = block.childBlocks_;
+    }
+    return blocksArr;
+}

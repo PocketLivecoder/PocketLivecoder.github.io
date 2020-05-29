@@ -123,10 +123,10 @@ Blockly.JavaScript['box'] = function createBox(block) {
         scene.add(cube);
     }
 
-    for (i = 1; i < repeat_number; i++) {
-        if (!scene.getObjectByName(name + i)){
+    for (indexFor = 1; indexFor < repeat_number; indexFor++) {
+        if (!scene.getObjectByName(name + indexFor)){
             var cube = new THREE.Mesh(boxGeometry, material);
-            cube.name = name + i;
+            cube.name = name + indexFor;
             scene.add(cube);
         }
     }
@@ -167,12 +167,12 @@ Blockly.JavaScript['ring'] = function createRing(block) {
         scene.add(ring);
     }
 
-    for (i = 1; i < repeat_number; i++) {
+    for (indexFor = 1; indexFor < repeat_number; indexFor++) {
         if (scene.getObjectByName(name + i)) {
         }
         else {
             var ring = new THREE.Mesh(ringGeometry, material);
-            ring.name = name + i;
+            ring.name = name + indexFor;
             scene.add(ring);
         }
     }
